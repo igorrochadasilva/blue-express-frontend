@@ -1,19 +1,13 @@
 import { toast } from 'react-toastify'
 
-export const notifyWrongEmailOrPasswordError = (message: string) => {
+export const notifyLoginError = (message: string) => {
   toast.error(message, {
     position: 'top-right',
   })
 }
 
-export const notifyForgetPasswordSuccess = (message: string) => {
+export const notifyLoginSuccess = (message: string) => {
   toast.success(message, {
-    position: 'top-right',
-  })
-}
-
-export const notifyForgetPasswordError = (message: string) => {
-  toast.error(message, {
     position: 'top-right',
   })
 }
