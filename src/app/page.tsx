@@ -43,7 +43,9 @@ export default function Login() {
               onClick={() => {
                 setShowForgetPassword(false)
               }}
-              className="h-6 w-6 text-slate-800 text-end cursor-pointer"
+              className={`h-6 w-6 text-slate-800 text-end cursor-pointer ${
+                showForgetPassword ? 'block' : 'hidden'
+              }`}
             />
           </div>
           <form
