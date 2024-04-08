@@ -6,7 +6,7 @@ import { handleForgetPassword, handleLogin } from '../actions/auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import Container from '../components/Container/Global/Container'
+import Container from '../components/Global/Container/Container'
 
 type LoginInputs = {
   email: string
@@ -35,7 +35,7 @@ export default function Login() {
   }
 
   return (
-    <Container bgColor="bg-gray-400">
+    <Container bgColor="bg-gray-400" showSideMenu={false}>
       <div className="w-full flex justify-center items-center">
         <div className="w-[480px] h-[500px] bg-white text-slate-800 rounded">
           <div className="flex justify-end">
@@ -119,7 +119,7 @@ export default function Login() {
               )}
               <button
                 type="submit"
-                className="h-10 text-white bg-blue_express rounded mb-5 mt-6  text-lg"
+                className="h-10 text-white bg-be_first_color rounded mb-5 mt-6  text-lg"
               >
                 {showForgetPassword ? 'Continue' : 'Log in'}
               </button>
