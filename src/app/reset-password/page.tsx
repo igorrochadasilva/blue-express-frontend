@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import Container from '../../components/Container/Global/Container'
+import Container from '../../components/Global/Container/Container'
 import { useSearchParams } from 'next/navigation'
 
 import Link from 'next/link'
@@ -80,7 +80,7 @@ export default function ResetPassword() {
               )}
               <button
                 type="submit"
-                className="h-10 text-white bg-blue_express rounded mb-5 mt-6 text-lg"
+                className="h-10 text-white bg-be_first_color rounded mb-5 mt-6 text-lg"
               >
                 Send
               </button>
