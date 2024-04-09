@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyDefaultError, notifyLoginError } from '../toast/notifications'
+import { notifyDefaultError, notifyError } from '../toast/notifications'
 
 export async function listSoftwareServiceContractRequests() {
   try {
@@ -15,7 +15,7 @@ export async function listSoftwareServiceContractRequests() {
   } catch (e) {
     const error: any = e
     if (error.response?.data.message) {
-      notifyLoginError(error.response.data.message)
+      notifyError(error.response.data.message)
       return false
     } else {
       notifyDefaultError()

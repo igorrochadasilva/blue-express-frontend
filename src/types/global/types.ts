@@ -1,4 +1,4 @@
-type TRequestBody = {
+export type TRequestBody = {
   id: number
   title: string
   clientName: string
@@ -41,4 +41,25 @@ type TRequestBody = {
   requesterName: string
   requesterEmail: string
   currentApproverName: string
+}
+
+export type TApprover = {
+  approverEmail: string
+  approverName: string
+  company: string
+  competence: number
+  id: number
+  key: string
+  level: number
+  office: string
+  title: string
+}
+
+export interface IApprover {
+  type: string
+  competence: number
+  approverName: string
+  level: string
+  companyType: string
+  id: number
 }
