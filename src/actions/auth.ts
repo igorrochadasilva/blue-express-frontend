@@ -2,8 +2,8 @@ import axios from 'axios'
 import { setCookie } from 'cookies-next'
 import {
   notifyDefaultError,
-  notifyLoginError,
-  notifyLoginSuccess,
+  notifyError,
+  notifySuccess,
 } from '../toast/notifications'
 
 interface ILogin {
@@ -36,7 +36,7 @@ export async function handleLogin({ email, password }: ILogin) {
   } catch (e) {
     const error: any = e
     if (error.response?.data.message) {
-      notifyLoginError(error.response.data.message)
+      notifyError(error.response.data.message)
       return false
     } else {
       notifyDefaultError()
@@ -52,7 +52,7 @@ export async function handleForgetPassword(email: string) {
     })
 
     if (response?.data?.message) {
-      notifyLoginSuccess(response.data.message)
+      notifySuccess(response.data.message)
       return true
     } else {
       notifyDefaultError()
@@ -61,7 +61,7 @@ export async function handleForgetPassword(email: string) {
   } catch (e) {
     const error: any = e
     if (error.response?.data.message) {
-      notifyLoginError(error.response.data.message)
+      notifyError(error.response.data.message)
       return false
     } else {
       notifyDefaultError()
@@ -72,7 +72,7 @@ export async function handleForgetPassword(email: string) {
 
 export async function handleResetPassword({ password, token }: IResetPassword) {
   if (!token) {
-    notifyLoginError(
+    notifyError(
       "You don't have access to reset password, please check your e-mail."
     )
   }
@@ -84,7 +84,7 @@ export async function handleResetPassword({ password, token }: IResetPassword) {
     })
 
     if (response.data.message) {
-      notifyLoginSuccess(response.data.message)
+      notifySuccess(response.data.message)
       return true
     } else {
       notifyDefaultError()
@@ -93,7 +93,7 @@ export async function handleResetPassword({ password, token }: IResetPassword) {
   } catch (e) {
     const error: any = e
     if (error.response?.data.message) {
-      notifyLoginError(error.response.data.message)
+      notifyError(error.response.data.message)
       return false
     } else {
       notifyDefaultError()

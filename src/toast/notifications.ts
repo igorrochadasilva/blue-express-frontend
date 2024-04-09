@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify'
 
-export const notifyLoginError = (message: string) => {
+export const notifyError = (message: string) => {
   toast.error(message, {
     position: 'top-right',
   })
 }
 
-export const notifyLoginSuccess = (message: string) => {
+export const notifySuccess = (message: string) => {
   toast.success(message, {
     position: 'top-right',
   })
