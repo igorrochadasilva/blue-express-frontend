@@ -2,18 +2,20 @@
 
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { handleForgetPassword, handleLogin } from '../actions/auth'
+import { handleForgetPassword, handleLogin } from '../../actions/auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import Container from '../components/Global/Container/Container'
+import Container from '../../components/Global/Container/Container'
+import { signIn } from 'next-auth/react'
+import { notifyDefaultError, notifyError } from '../../toast/notifications'
 
 type LoginInputs = {
   email: string
   password: string
 }
 
-export default function Login() {
+export default function Home() {
   const [showForgetPassword, setShowForgetPassword] = useState<boolean>(false)
   const router = useRouter()
   const {
@@ -24,10 +26,24 @@ export default function Login() {
   } = useForm<LoginInputs>()
 
   const onSubmitLogin: SubmitHandler<LoginInputs> = async (data) => {
-    if (!showForgetPassword) {
-      const isLogin = await handleLogin(data)
+    const { email, password } = data
 
-      isLogin && router.push('/dashboard')
+    if (!showForgetPassword) {
+      const res = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+
+      if (res?.status === 200) {
+        router.replace('/dashboard')
+      } else if (res?.status === 401) {
+        notifyError(res.error as string)
+      } else {
+        notifyDefaultError()
+      }
+
+      //isLogin && router.replace('/dashboard')
     } else {
       const isSendEmail = await handleForgetPassword(data.email)
       isSendEmail && setShowForgetPassword(false)
@@ -35,7 +51,7 @@ export default function Login() {
   }
 
   return (
-    <Container bgColor="bg-gray-400" showSideMenu={false}>
+    <Container isLoginPage bgColor="bg-gray-400" showSideMenu={false}>
       <div className="w-full flex justify-center items-center">
         <div className="w-[480px] h-[500px] bg-white text-slate-800 rounded">
           <div className="flex justify-end">

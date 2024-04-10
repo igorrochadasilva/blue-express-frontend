@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { listSoftwareServiceContractRequests } from '../../actions/software-service-contract'
 import { listDistributorRepresentativesContractRequests } from '../../actions/distributor-representatives-contract'
 import RequestsList from '../../components/Pages/Dashboard/RequestsList/RequestsList'
+import { useSession } from 'next-auth/react'
 
 export default function Dashboard() {
   const [requests, setRequests] = useState([])
@@ -16,14 +17,9 @@ export default function Dashboard() {
   useEffect(() => {
     const getAllContracts = async () => {
       const maintenanceContracts = await listMaintenanceContractRequests()
-      const softwareServiceContracts =
-        await listSoftwareServiceContractRequests()
-      const distributorRepresentativesContracts =
-        await listDistributorRepresentativesContractRequests()
-      const allRequests = maintenanceContracts.concat(
-        softwareServiceContracts,
-        distributorRepresentativesContracts
-      )
+      const softwareServiceContracts = await listSoftwareServiceContractRequests()
+      const distributorRepresentativesContracts = await listDistributorRepresentativesContractRequests()
+      const allRequests = maintenanceContracts.concat(softwareServiceContracts, distributorRepresentativesContracts)
       setRequests(allRequests)
       setLoadingRequests(false)
     }
