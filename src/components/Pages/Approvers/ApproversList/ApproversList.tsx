@@ -36,10 +36,6 @@ const ApproversList = ({ approvers }: IApproversList) => {
     setListApprover(data)
   }, [])
 
-  useEffect(() => {
-    console.log('batata')
-  }, [listApprover])
-
   const handleTrashClick = (id: number) => {
     setShowTrashModal(true)
     setSelectedApproverId(id)

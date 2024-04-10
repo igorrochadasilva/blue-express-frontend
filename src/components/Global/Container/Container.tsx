@@ -14,6 +14,7 @@ interface IContainer {
   showBtnNavigate?: boolean
   btnNavigateText?: string
   btnNavigateLink?: string
+  isLoginPage?: boolean
 }
 
 const Container = ({
@@ -24,6 +25,7 @@ const Container = ({
   showBtnNavigate = false,
   btnNavigateText = 'btn text',
   btnNavigateLink,
+  isLoginPage = false,
 }: IContainer) => {
   const [route, setRoute] = useState('/approvers/new-approver')
 
@@ -31,7 +33,7 @@ const Container = ({
     <main className={`flex w-full min-h-screen  ${bgColor}`}>
       <ToastContainer />
       {showSideMenu && <SideMenu />}
-      <div className="flex flex-col w-full ml-[228px]">
+      <div className={`flex flex-col w-full ${!isLoginPage && 'ml-[228px]'} `}>
         <div className="flex flex-row items-center justify-between mx-10 ">
           <Title title={title} />
           {showBtnNavigate && (
