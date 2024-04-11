@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { TRequestBody } from '../../../../types/global/types'
 
 interface IRequestsChart {
   requests: TRequestBody[]
@@ -22,25 +23,17 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
   const [barsData, setBarsData] = useState<any>()
 
   useEffect(() => {
-    const statusWaitingApprovalAmount = requests.filter(
-      (request) => request.status === 'waiting for approval'
-    ).length
+    const statusWaitingApprovalAmount = requests.filter((request) => request.status === 'waiting for approval').length
 
-    const statusApprovedAmount = requests.filter(
-      (request) => request.status === 'approved'
-    ).length
+    const statusApprovedAmount = requests.filter((request) => request.status === 'approved').length
 
-    const statusDisapprovedAmount = requests.filter(
-      (request) => request.status === 'disapproved'
-    ).length
+    const statusDisapprovedAmount = requests.filter((request) => request.status === 'disapproved').length
 
     const statusWaitingInformationAmount = requests.filter(
       (request) => request.status === 'waiting for information'
     ).length
 
-    const statusSketchAmount = requests.filter(
-      (request) => request.status === 'sketch'
-    ).length
+    const statusSketchAmount = requests.filter((request) => request.status === 'sketch').length
 
     const statusAmounts = [
       statusWaitingApprovalAmount,
@@ -89,23 +82,17 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
   }, [])
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ">
       <div className="mb-8">
-        <span className="text-base font-medium">Total status of requests</span>
+        <span className="text-sm font-medium">Total status of requests</span>
       </div>
       <div className="flex flex-row align-self justify-around h-[288px]  text-center">
         {barsData ? (
           barsData?.map((bar: barData, i: number) => (
-            <div
-              className="flex flex-col items-center w-[148px] self-end"
-              key={i}
-            >
-              <span className="text-base h-6">{bar.qtd}</span>
-              <div
-                className="rounded w-[132px]"
-                style={{ height: bar.barSize, background: bar.color }}
-              ></div>
-              <span className="text-base h-6 mt-1">{bar.text}</span>
+            <div className="flex flex-col items-center w-[148px] self-end" key={i}>
+              <span className="text-sm h-6">{bar.qtd}</span>
+              <div className="rounded w-[132px]" style={{ height: bar.barSize, background: bar.color }}></div>
+              <span className="text-sm h-6 mt-1">{bar.text}</span>
             </div>
           ))
         ) : (

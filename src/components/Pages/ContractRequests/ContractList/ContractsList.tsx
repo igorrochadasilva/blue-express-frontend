@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { calculateSLA, formatDate } from '../../../../libs/utils'
 import { TRequestBody } from '../../../../types/global/types'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 
-interface IRequestsList {
+interface IContractsList {
   requests: TRequestBody[]
 }
 
@@ -10,14 +10,13 @@ interface IRequest {
   type: string
   status: string
   statusColor: string
-  requestData: string
-  requester: string
-  approver: string
-  SLA: string
+  validity: string
   requestId: string
+  level: number
+  approver: string
 }
 
-const RequestsList = ({ requests }: IRequestsList) => {
+const ContractsList = ({ requests }: IContractsList) => {
   const [listRequests, setListRequests] = useState<any>()
 
   useEffect(() => {
@@ -31,15 +30,17 @@ const RequestsList = ({ requests }: IRequestsList) => {
           sketch: '#98A4AE',
         }[request.status] || '#ccc'
 
+      let validity =
+        request.title === 'Distributor Representatives Contract' ? request.endContractDate : request.renewEndDate
+
       return {
         type: request.title,
         status: request.status,
         statusColor: statusColor,
-        requestData: formatDate(request.createdAt),
-        requester: request.requesterName,
-        approver: request.currentApproverName,
-        SLA: calculateSLA(request.createdAt),
+        validity,
         requestId: request.requestId,
+        level: request.currentLevel,
+        approver: request.currentApproverName,
       }
     })
 
@@ -48,20 +49,16 @@ const RequestsList = ({ requests }: IRequestsList) => {
 
   return (
     <div className="flex flex-col text-sm">
-      <div className="mb-8">
-        <span className="text-sm font-medium">Total status of requests</span>
-      </div>
       <div className="flex flex-col justify-normal">
         <table>
-          <thead>
+          <thead className="h-16 bg-[#F8F8F8]">
             <tr>
               <th>Type</th>
               <th>Status</th>
-              <th>Request Date</th>
-              <th>Requester</th>
+              <th>Validity</th>
+              <th>Request ID</th>
+              <th>Level</th>
               <th>Approver</th>
-              <th>SLA</th>
-              <th>ID Requester</th>
               <th></th>
             </tr>
           </thead>
@@ -74,13 +71,12 @@ const RequestsList = ({ requests }: IRequestsList) => {
                     <td style={{ color: `${request.statusColor}` }} className="w-1/7 py-3">
                       {request.status}
                     </td>
-                    <td className="w-1/7 py-3">{request.requestData}</td>
-                    <td className="w-1/7 py-3">{request.requester}</td>
-                    <td className="w-1/7 py-3">{request.approver}</td>
-                    <td className="w-1/7 py-3">{request.SLA}</td>
+                    <td className="w-1/7 py-3">{request.validity}</td>
                     <td className="w-1/7 py-3">{request.requestId}</td>
+                    <td className="w-1/7 py-3">{request.level}</td>
+                    <td className="w-1/7 py-3">{request.approver}</td>
                     <td className="w-1/7 py-3">
-                      <button className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]">Assess</button>
+                      <ArrowTopRightOnSquareIcon />
                     </td>
                   </tr>
                 )
@@ -91,4 +87,4 @@ const RequestsList = ({ requests }: IRequestsList) => {
     </div>
   )
 }
-export default RequestsList
+export default ContractsList

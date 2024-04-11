@@ -3,9 +3,8 @@ import { notifyDefaultError, notifyError } from '../toast/notifications'
 
 export async function listMaintenanceContractRequests() {
   try {
-    const res = await axios.get(
-      'http://localhost:3001/request/maintenance-contract'
-    )
+    const res = await axios.get('http://localhost:3001/request/maintenance-contract')
+
     if (res.data) {
       return res.data
     } else {

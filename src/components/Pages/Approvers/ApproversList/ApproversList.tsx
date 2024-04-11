@@ -36,10 +36,6 @@ const ApproversList = ({ approvers }: IApproversList) => {
     setListApprover(data)
   }, [])
 
-  useEffect(() => {
-    console.log('batata')
-  }, [listApprover])
-
   const handleTrashClick = (id: number) => {
     setShowTrashModal(true)
     setSelectedApproverId(id)
@@ -47,9 +43,7 @@ const ApproversList = ({ approvers }: IApproversList) => {
 
   const handleDeleteApprover = () => {
     if (selectedApproverId) {
-      const data = listApprover.filter(
-        (approver: IApprover) => approver.id !== selectedApproverId
-      )
+      const data = listApprover.filter((approver: IApprover) => approver.id !== selectedApproverId)
       setListApprover(data)
       deleteApprover(selectedApproverId)
       setShowTrashModal(false)
