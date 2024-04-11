@@ -20,7 +20,7 @@ export default function ContractRequests(): JSX.Element {
     <Container
       title="Contract Requests"
       showBtnNavigate
-      btnNavigateLink="/generate-request"
+      btnNavigateLink="/contract-requests/generate-request"
       btnNavigateText="Generate Contracts"
       btnBgColor="bg-white"
       btnTextColor="text-be_first_color"
@@ -38,7 +38,9 @@ export default function ContractRequests(): JSX.Element {
               <StatusInput />
               <PeriodStatus />
               <CloseExpirationInput />
-              <BtnIssueReport />
+              <div className="flex justify-end flex-1">
+                <BtnIssueReport />
+              </div>
             </div>
             <ContractsList requests={requests} />
           </Content>

@@ -5,9 +5,7 @@ const StatusInput = () => {
     { value: 'software_service', label: 'Software Service Contract' },
   ]
 
-  const handleSelectChange = (event: any) => {
-    console.log('Selected contract type:', event.target.value)
-  }
+  const handleSelectChange = (event: any) => {}
 
   return (
     <div className="flex flex-col w-[200px] gap-2 text-be_second_color">
