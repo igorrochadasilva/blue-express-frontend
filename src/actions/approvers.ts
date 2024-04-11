@@ -1,15 +1,11 @@
 import axios from 'axios'
-import {
-  notifyDefaultError,
-  notifyError,
-  notifySuccess,
-} from '../toast/notifications'
+import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 
-export async function listApprovers() {
+export async function listApprovers(token: string | undefined) {
   try {
     const res = await axios.get('http://localhost:3001/approvers', {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaWdvciByb2NoYSIsImVtYWlsIjoiaWdvcjA4MjAxMUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzEyNjIyMTM5LCJleHAiOjE3MTI3MDg1MzksImF1ZCI6InVzZXJzIiwiaXNzIjoibG9naW4iLCJzdWIiOiIxIn0.qK6EK7bRU-C6wCAvMIS-qRdAX89KQ_9ZULii3tgwYvg`,
+        Authorization: `Bearer ${token}`,
       },
     })
     if (res.data) {
@@ -29,11 +25,11 @@ export async function listApprovers() {
   }
 }
 
-export async function deleteApprover(id: number) {
+export async function deleteApprover(id: number, token: string | undefined) {
   try {
     const res = await axios.delete(`http://localhost:3001/approvers/${id}`, {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaWdvciByb2NoYSIsImVtYWlsIjoiaWdvcjA4MjAxMUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzEyNjIyMTM5LCJleHAiOjE3MTI3MDg1MzksImF1ZCI6InVzZXJzIiwiaXNzIjoibG9naW4iLCJzdWIiOiIxIn0.qK6EK7bRU-C6wCAvMIS-qRdAX89KQ_9ZULii3tgwYvg`,
+        Authorization: `Bearer ${token}`,
       },
     })
     if (res.data) {

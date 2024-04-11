@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react'
-import {
-  calculateSLA,
-  formatDate,
-  formatToUSD,
-  sortAlphabetically,
-  sortNumber,
-  sortRequestType,
-} from '../../../../libs/utils'
-import { ChevronUpIcon, TrashIcon } from '@heroicons/react/24/solid'
+import { formatToUSD } from '../../../../libs/utils'
+import { TrashIcon } from '@heroicons/react/24/solid'
 import Modal from '../../../Global/Modal/Modal'
 import { deleteApprover } from '../../../../actions/approvers'
 import { IApprover, TApprover } from '../../../../types/global/types'
 
 interface IApproversList {
   approvers: TApprover[]
+  token: string | undefined
 }
 
-const ApproversList = ({ approvers }: IApproversList) => {
+const ApproversList = ({ approvers, token }: IApproversList) => {
   const [listApprover, setListApprover] = useState<any>([])
   const [showTrashModal, setShowTrashModal] = useState<boolean>(false)
   const [selectedApproverId, setSelectedApproverId] = useState<number>()
@@ -43,11 +37,9 @@ const ApproversList = ({ approvers }: IApproversList) => {
 
   const handleDeleteApprover = () => {
     if (selectedApproverId) {
-      const data = listApprover.filter(
-        (approver: IApprover) => approver.id !== selectedApproverId
-      )
+      const data = listApprover.filter((approver: IApprover) => approver.id !== selectedApproverId)
       setListApprover(data)
-      deleteApprover(selectedApproverId)
+      deleteApprover(selectedApproverId, token)
       setShowTrashModal(false)
     }
   }
@@ -70,7 +62,7 @@ const ApproversList = ({ approvers }: IApproversList) => {
             <tbody>
               {listApprover.map((approver: IApprover) => {
                 return (
-                  <tr key={approver.id} className="text-center border">
+                  <tr key={approver.id} className="text-center border text-sm">
                     <td className="w-1/6 py-3 pl-3">{approver.type}</td>
                     <td className="w-1/6 py-3">{approver.competence}</td>
                     <td className="w-1/6 py-3">{approver.approverName}</td>

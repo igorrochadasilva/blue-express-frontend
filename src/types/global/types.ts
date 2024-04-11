@@ -26,6 +26,8 @@ export type TRequestBody = {
   legalDamageCap: string
   legalDamageCave: string
   legalLiquidatedDamages: string
+  startContractDate: string
+  endContractDate: string
   justify: string
   requestId: string
   currentLevel: number

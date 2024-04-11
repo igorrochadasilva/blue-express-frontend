@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { handleForgetPassword, handleLogin } from '../../actions/auth'
+import { handleForgetPassword } from '../../actions/auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
@@ -42,8 +42,6 @@ export default function Home() {
       } else {
         notifyDefaultError()
       }
-
-      //isLogin && router.replace('/dashboard')
     } else {
       const isSendEmail = await handleForgetPassword(data.email)
       isSendEmail && setShowForgetPassword(false)
@@ -59,32 +57,18 @@ export default function Home() {
               onClick={() => {
                 setShowForgetPassword(false)
               }}
-              className={`h-6 w-6 text-slate-800 text-end cursor-pointer ${
-                showForgetPassword ? 'block' : 'hidden'
-              }`}
+              className={`h-6 w-6 text-slate-800 text-end cursor-pointer ${showForgetPassword ? 'block' : 'hidden'}`}
             />
           </div>
-          <form
-            onSubmit={handleSubmit(onSubmitLogin)}
-            className="px-12 py-6"
-            action=""
-          >
-            <div className="flex justify-center">
-              <Image
-                src="/logo-dell.svg"
-                width={100}
-                height={100}
-                alt="Logo"
-                className="rounded-full"
-                priority={true}
-              />
+          <form onSubmit={handleSubmit(onSubmitLogin)} className="px-12 py-6" action="">
+            <div className="flex justify-center mb-14">
+              <Image src="/eaton_logo.svg" width={150} height={150} alt="Logo" priority={true} />
             </div>
 
             <div className="flex flex-col">
               {showForgetPassword && (
                 <span className="my-4 mx-4 text-center">
-                  Enter your email and we will send you instructions to reset
-                  your password.
+                  Enter your email and we will send you instructions to reset your password.
                 </span>
               )}
               <label htmlFor="E-mail" className="mb-2">
@@ -126,24 +110,14 @@ export default function Home() {
                     })}
                     type="password"
                   />
-                  {errors.password && (
-                    <span className="text-sm text-red-500">
-                      {errors.password.message}
-                    </span>
-                  )}
+                  {errors.password && <span className="text-sm text-red-500">{errors.password.message}</span>}
                 </>
               )}
-              <button
-                type="submit"
-                className="h-10 text-white bg-be_first_color rounded mb-5 mt-6  text-lg"
-              >
+              <button type="submit" className="h-10 text-white bg-be_first_color rounded mb-5 mt-6  text-lg">
                 {showForgetPassword ? 'Continue' : 'Log in'}
               </button>
               {!showForgetPassword && (
-                <span
-                  className="m-auto cursor-pointer"
-                  onClick={() => setShowForgetPassword(true)}
-                >
+                <span className="m-auto cursor-pointer" onClick={() => setShowForgetPassword(true)}>
                   Forgot <a href="#">password?</a>
                 </span>
               )}
