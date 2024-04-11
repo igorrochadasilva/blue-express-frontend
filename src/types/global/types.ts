@@ -65,3 +65,16 @@ export interface IApprover {
   companyType: string
   id: number
 }
+
+export type TUser =
+  | {
+      accessToken?: string
+      department?: string
+      id?: number
+      position?: string
+      role?: number
+      name?: string | null | undefined
+      email?: string | null | undefined
+      image?: string | null | undefined
+    }
+  | undefined

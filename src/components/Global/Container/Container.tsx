@@ -17,6 +17,7 @@ interface IContainer {
   btnTextColor?: string
   btnBorderColor?: string
   btnBgHover?: string
+  isLoginPage?: boolean
 }
 
 const Container = ({
@@ -31,12 +32,13 @@ const Container = ({
   btnBgColor = 'bg-be_first_color',
   btnBorderColor = 'border-white',
   btnBgHover = 'bg-blue-500',
+  isLoginPage = false,
 }: IContainer) => {
   return (
     <main className={`flex w-full min-h-screen ${bgColor}`}>
       <ToastContainer />
       {showSideMenu && <SideMenu />}
-      <div className="flex flex-col w-full ml-[228px]">
+      <div className={`flex flex-col w-full ${!isLoginPage && 'ml-[228px]'} `}>
         <div className="flex flex-row items-center justify-between mx-10 ">
           <Title title={title} />
           {showBtnNavigate && (
