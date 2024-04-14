@@ -1,6 +1,6 @@
 'use client'
 
-import Container from '../../../../components/Global/Container/Container'
+import Container from '../../../../../components/Global/Container/Container'
 
 export default function DistributorRepresentativesContract() {
   return (

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { notifyDefaultError, notifyError } from '../toast/notifications'
+import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
+import { TMaintenanceContractForm, TUser } from '../types/global/types'
 
 export async function listMaintenanceContractRequests() {
   try {
@@ -14,6 +15,47 @@ export async function listMaintenanceContractRequests() {
     const error: any = e
     if (error.response?.data.message) {
       notifyError(error.response.data.message)
+      return false
+    } else {
+      notifyDefaultError()
+      return false
+    }
+  }
+}
+
+export async function createMaintenanceContractRequest(data: TMaintenanceContractForm, user: TUser) {
+  const formatData = {
+    ...data,
+    title: 'Maintenance Contract',
+    status: 'waiting for approval',
+    requester: user?.id,
+    contractRenewQtd: Number(data.contractTotalValue),
+    contractTotalValue: Number(data.contractTotalValue),
+    dollarExchangeRate: Number(data.dollarExchangeRate),
+    totalValueUSD: Number(data.totalValueUSD),
+    gm: Number(data.gm),
+    renewIndexPercentage: Number(data.renewIndexPercentage),
+    index: Number(data.index),
+  }
+
+  try {
+    const res = await axios.post('http://localhost:3001/request/maintenance-contract', formatData)
+
+    if (res.data) {
+      notifySuccess('Request Created Successfully.')
+      return res.data
+    } else {
+      return false
+    }
+  } catch (e) {
+    const error: any = e
+    if (error.response?.data.message) {
+      if (Array.isArray(error.response?.data.message)) {
+        notifyError(error.response.data.message[0])
+      } else {
+        notifyError(error.response.data.message)
+      }
+
       return false
     } else {
       notifyDefaultError()

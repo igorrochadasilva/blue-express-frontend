@@ -1,7 +1,7 @@
 'use client'
 
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
-import Container from '../../../components/Global/Container/Container'
+import Container from '../../../../components/Global/Container/Container'
 import Link from 'next/link'
 
 export default function GenerateContracts(): JSX.Element {

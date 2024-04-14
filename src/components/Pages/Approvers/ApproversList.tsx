@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { formatToUSD } from '../../../../libs/utils'
+import { formatToUSD } from '../../../libs/utils'
 import { TrashIcon } from '@heroicons/react/24/solid'
-import Modal from '../../../Global/Modal/Modal'
-import { deleteApprover } from '../../../../actions/approvers'
-import { IApprover, TApprover } from '../../../../types/global/types'
+import Modal from '../../Global/Modal/Modal'
+import { deleteApprover } from '../../../actions/approvers'
+import { IApprover, TApprover } from '../../../types/global/types'
 
 interface IApproversList {
   approvers: TApprover[]

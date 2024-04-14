@@ -1,7 +1,5 @@
 const PeriodStatus = () => {
-  const handleSelectPeriod = (event: any) => {
-    console.log('Show period')
-  }
+  const handleSelectPeriod = (event: any) => {}
 
   return (
     <div className="flex flex-col w-[200px] gap-2 text-be_second_color">

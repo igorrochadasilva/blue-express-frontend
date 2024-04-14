@@ -1,17 +1,13 @@
 'use client'
 
-import Container from '../../components/Global/Container/Container'
-import Content from '../../components/Global/Content/Content'
-import { listMaintenanceContractRequests } from '../../actions/maintenence-contract'
-import { useEffect, useState } from 'react'
-import { listSoftwareServiceContractRequests } from '../../actions/software-service-contract'
-import { listDistributorRepresentativesContractRequests } from '../../actions/distributor-representatives-contract'
-import StatusInput from '../../components/Global/InputsFilter/StatusInput'
-import PeriodStatus from '../../components/Global/InputsFilter/PeriodInput'
-import CloseExpirationInput from '../../components/Global/InputsFilter/CloseExpirationInput'
-import ContractsList from '../../components/Pages/ContractRequests/ContractList/ContractsList'
-import useRequestData from '../../hooks/UseRequestData/UseRequestData'
-import BtnIssueReport from '../../components/Global/BtnIssueReport/BtnIssueReport'
+import Container from '../../../components/Global/Container/Container'
+import Content from '../../../components/Global/Content/Content'
+import StatusInput from '../../../components/Global/InputsFilter/StatusInput'
+import PeriodStatus from '../../../components/Global/InputsFilter/PeriodInput'
+import CloseExpirationInput from '../../../components/Global/InputsFilter/CloseExpirationInput'
+import ContractsList from '../../../components/Pages/ContractRequests/ContractsList'
+import useRequestData from '../../../hooks/UseRequestData'
+import BtnIssueReport from '../../../components/Global/BtnIssueReport/BtnIssueReport'
 
 export default function ContractRequests(): JSX.Element {
   const { requests, isLoading, error } = useRequestData()
