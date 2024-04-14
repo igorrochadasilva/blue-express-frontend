@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Container from '../../components/Global/Container/Container'
-import Content from '../../components/Global/Content/Content'
-import ApproversList from '../../components/Pages/Approvers/ApproversList/ApproversList'
-import { listApprovers } from '../../actions/approvers'
-import { TUser } from '../../types/global/types'
+import Container from '../../../components/Global/Container/Container'
+import Content from '../../../components/Global/Content/Content'
+import ApproversList from '../../../components/Pages/Approvers/ApproversList'
+import { listApprovers } from '../../../actions/approvers'
+import { TUser } from '../../../types/global/types'
 import { useSession } from 'next-auth/react'
 
 export default function Approvers() {

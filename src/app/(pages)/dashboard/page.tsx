@@ -1,10 +1,10 @@
 'use client'
 
-import Container from '../../components/Global/Container/Container'
-import Content from '../../components/Global/Content/Content'
-import RequestsChart from '../../components/Pages/Dashboard/RequestsChart/RequestsChart'
-import RequestsList from '../../components/Pages/Dashboard/RequestsList/RequestsList'
-import useRequestData from '../../hooks/UseRequestData/UseRequestData'
+import Container from '../../../components/Global/Container/Container'
+import Content from '../../../components/Global/Content/Content'
+import RequestsChart from '../../../components/Pages/Dashboard/RequestsChart'
+import RequestsList from '../../../components/Pages/Dashboard/RequestsList'
+import useRequestData from '../../../hooks/UseRequestData'
 
 export default function Dashboard() {
   const { requests, isLoading, error } = useRequestData()

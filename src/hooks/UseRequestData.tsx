@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { listMaintenanceContractRequests } from '../../actions/maintenence-contract'
-import { listSoftwareServiceContractRequests } from '../../actions/software-service-contract'
-import { listDistributorRepresentativesContractRequests } from '../../actions/distributor-representatives-contract'
+import { listMaintenanceContractRequests } from '../actions/maintenence-contract'
+import { listSoftwareServiceContractRequests } from '../actions/software-service-contract'
+import { listDistributorRepresentativesContractRequests } from '../actions/distributor-representatives-contract'
 
 const useRequestData = () => {
   const [requests, setRequests] = useState([])

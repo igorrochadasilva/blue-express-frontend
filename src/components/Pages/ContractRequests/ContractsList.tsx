@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { TRequestBody } from '../../../../types/global/types'
+import { TRequestBody } from '../../../types/global/types'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 
 interface IContractsList {
@@ -33,6 +33,9 @@ const ContractsList = ({ requests }: IContractsList) => {
       let validity =
         request.title === 'Distributor Representatives Contract' ? request.endContractDate : request.renewEndDate
 
+      const charsToRemove = /\{|\}|"/g
+      const formattedApprovers = request.currentApproverName.replace(charsToRemove, '')
+
       return {
         type: request.title,
         status: request.status,
@@ -40,7 +43,7 @@ const ContractsList = ({ requests }: IContractsList) => {
         validity,
         requestId: request.requestId,
         level: request.currentLevel,
-        approver: request.currentApproverName,
+        approver: formattedApprovers,
       }
     })
 
