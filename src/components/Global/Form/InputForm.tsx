@@ -1,7 +1,7 @@
 'use client'
 
 import { UseFormRegister } from 'react-hook-form'
-import { TMaintenanceContractForm } from '../../../types/global/types'
+import { TMaintenanceContractForm, TSoftwareServiceContractForm } from '../../../types/global/types'
 
 type TInputForm = {
   labelText: string
@@ -14,7 +14,7 @@ type TInputForm = {
   placeholder?: string
   pattern?: string
   errors?: any
-  register: UseFormRegister<TMaintenanceContractForm>
+  register: UseFormRegister<TMaintenanceContractForm | TSoftwareServiceContractForm>
 }
 
 const InputForm = ({
