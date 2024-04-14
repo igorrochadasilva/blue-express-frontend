@@ -79,73 +79,49 @@ export type TUser =
     }
   | undefined
 
-export type TMaintenanceContractForm = {
-  requesterName: string
-  clientName: string
-  clmHeaderNumber: string
-  clmLineNumber: string
-  typeContract: string
-  company: string
-  renewStartDate: string
-  renewEndDate: string
-  contractRenewQtd: number
-  frequency: string
-  scope: string
-  contractTotalValue: number
-  dollarExchangeRate: number
-  totalValueUSD: number
-  gm: number
-  renewIndexPercentage: number
-  index: number
-  paymentCondition: string
-  inclusionClauses: string
-  inclusionDescription: string
-  legalIndemnificationObligations: string
-  legalWarrantyObligations: string
-  legalLiquidatedDamages: string
-  legalDamageCap: string
-  legalDamageCave: string
-  antiCorruption: string
-  justify: string
-  phone: string
-  contact: string
-  uf: string
-  sap: string
+export type TContracts = {
+  title?: string
   requester?: string
-  approvalLevel: string
-  uploadedFile?: any
-}
-
-export type TSoftwareServiceContractForm = {
-  title: string
-  requester: string
-  requesterName: string
-  clientName: string
-  clmHeaderNumber: string
-  clmLineNumber: string
-  typeContract: string
-  companyType: string
-  company: string
-  renewStartDate: string
-  renewEndDate: string
-  scope: string
+  requesterName?: string
+  clientName?: string
+  clmHeaderNumber?: string
+  clmLineNumber?: string
+  typeContract?: string
+  companyType?: string
+  company?: string
+  renewStartDate?: string
+  renewEndDate?: string
+  scope?: string
   contractTotalValue: number
   dollarExchangeRate: number
-  totalValueUSD: number
-  gm: number
-  paymentCondition: string
-  inclusionClauses: string
-  inclusionDescription: string
-  legalIndemnificationObligations: string
-  legalWarrantyObligations: string
-  legalDamageCap: string
-  legalDamageCave: string
-  legalLiquidatedDamages: string
-  justify: string
-  approvalLevel: string
-  phone: string
-  contact: string
-  antiCorruption: string
-  uf: string
-  sap: string
+  totalValueUSD?: number
+  gm?: number
+  paymentCondition?: string
+  inclusionClauses?: string
+  inclusionDescription?: string
+  legalIndemnificationObligations?: string
+  legalWarrantyObligations?: string
+  legalDamageCap?: string
+  legalDamageCave?: string
+  legalLiquidatedDamages?: string
+  justify?: string
+  approvalLevel?: string
+  phone?: string
+  contact?: string
+  antiCorruption?: string
+  uf?: string
+  sap?: string
+  typeRepresentativeDistributor?: string
+  nameRepresentativeDistributor?: string
+  vendor?: string
+  commissionPercentage?: number
+  manager?: string
+  activity?: string
+  approvalDate?: string
+  typeRequestOrder?: string
+  contractRenewQtd?: number
+  frequency?: string
+  renewIndexPercentage?: number
+  index?: number
+  uploadedFile?: any
 }

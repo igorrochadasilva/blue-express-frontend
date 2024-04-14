@@ -14,13 +14,14 @@ interface IRequest {
   requestId: string
   level: number
   approver: string
+  order: number
 }
 
 const ContractsList = ({ requests }: IContractsList) => {
   const [listRequests, setListRequests] = useState<any>()
 
   useEffect(() => {
-    const data = requests.map((request) => {
+    const data = requests.map((request, index) => {
       const statusColor =
         {
           approved: '#00D134',
@@ -44,6 +45,7 @@ const ContractsList = ({ requests }: IContractsList) => {
         requestId: request.requestId,
         level: request.currentLevel,
         approver: formattedApprovers,
+        order: index,
       }
     })
 
@@ -69,7 +71,7 @@ const ContractsList = ({ requests }: IContractsList) => {
             {listRequests &&
               listRequests.map((request: IRequest) => {
                 return (
-                  <tr key={request.requestId} className="text-center">
+                  <tr key={request.order} className="text-center">
                     <td className="w-1/7 py-3 w-48">{request.type}</td>
                     <td style={{ color: `${request.statusColor}` }} className="w-1/7 py-3">
                       {request.status}

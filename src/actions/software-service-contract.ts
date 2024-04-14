@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
-import { TMaintenanceContractForm, TSoftwareServiceContractForm, TUser } from '../types/global/types'
+import { TContracts, TUser } from '../types/global/types'
 
 export async function listSoftwareServiceContractRequests() {
   try {
@@ -23,10 +23,7 @@ export async function listSoftwareServiceContractRequests() {
   }
 }
 
-export async function createSoftwareServiceContractRequest(
-  data: TMaintenanceContractForm | TSoftwareServiceContractForm,
-  user: TUser
-) {
+export async function createSoftwareServiceContractRequest(data: TContracts, user: TUser) {
   const formatData = {
     ...data,
     title: 'Software Service Contract',
