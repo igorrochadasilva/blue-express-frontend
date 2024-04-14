@@ -113,3 +113,8 @@ export const ufOptions = [
   { value: 'SP', label: 'São Paulo' },
   { value: 'TO', label: 'Tocantins' },
 ]
+
+export const typeRequestOrderOptions = [
+  { value: 'representative', label: 'representative' },
+  { value: 'distributor', label: 'distributor' },
+]
