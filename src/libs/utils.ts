@@ -67,6 +67,11 @@ export const frequencyOptions = [
   { value: 'mixed/diverse', label: 'mixed/diverse' },
 ]
 
+export const companyTypeOptions = [
+  { value: 'private', label: 'private' },
+  { value: 'public', label: 'public' },
+]
+
 export const approverLevelOptions = [
   { value: 'controller', label: 'controller' },
   { value: 'supervisor', label: 'supervisor' },

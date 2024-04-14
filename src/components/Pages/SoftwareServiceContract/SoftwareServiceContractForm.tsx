@@ -5,17 +5,18 @@ import Content from '../../Global/Content/Content'
 import {
   approverLevelOptions,
   companyOptions,
+  companyTypeOptions,
   contractTypeOptions,
   frequencyOptions,
   ufOptions,
 } from '../../../libs/utils'
-import { TSoftwareServiceContractForm, TUser } from '../../../types/global/types'
-import { createMaintenanceContractRequest } from '../../../actions/maintenence-contract'
+import { TMaintenanceContractForm, TSoftwareServiceContractForm, TUser } from '../../../types/global/types'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import InputGroup from '../../Global/Form/InputGroup'
 import InputForm from '../../Global/Form/InputForm'
+import { createSoftwareServiceContractRequest } from '../../../actions/software-service-contract'
 
 const SoftwareServiceContractForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -28,15 +29,15 @@ const SoftwareServiceContractForm: React.FC = () => {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<TSoftwareServiceContractForm>({ mode: 'all' })
+  } = useForm<TMaintenanceContractForm | TSoftwareServiceContractForm>({ mode: 'all' })
 
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
   const inputTotalValueUSD = String(inputContractTotalValue / inputDollarExchangeRate)
 
-  const onSubmitLogin: SubmitHandler<TSoftwareServiceContractForm> = async (data) => {
+  const onSubmitLogin: SubmitHandler<TMaintenanceContractForm | TSoftwareServiceContractForm> = async (data) => {
     setIsLoading(true)
-    const res = await createMaintenanceContractRequest(data, user)
+    const res = await createSoftwareServiceContractRequest(data, user)
     if (res) {
       router.push('/contract-requests')
     }
@@ -70,10 +71,7 @@ const SoftwareServiceContractForm: React.FC = () => {
               <InputForm labelText="CLM Number (Line)" inputName="clmLineNumber" inputType="text" register={register} />
               <label className="flex flex-col flex-1 mb-2">
                 Contract Type
-                <select
-                  className="rounded border-[1px] py-1 px-2 mt-2"
-                  {...register('typeContract', { required: 'This field is required' })}
-                >
+                <select className="rounded border-[1px] py-1 px-2 mt-2" {...register('typeContract')}>
                   {contractTypeOptions.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
@@ -110,29 +108,25 @@ const SoftwareServiceContractForm: React.FC = () => {
                 register={register}
                 required
               />
-              <InputForm
-                labelText="contract Renew Qtd"
-                inputName="contractRenewQtd"
-                inputType="number"
-                register={register}
-                required
-              />
-            </InputGroup>
-            <InputGroup>
-              <label htmlFor="frequency" className="flex flex-col flex-1 mb-2">
-                Frequency
-                <select
-                  className="rounded border-[1px] py-1 px-2 mt-2"
-                  {...register('frequency', { required: 'This field is required' })}
-                >
-                  {frequencyOptions.map((option) => (
+              <label htmlFor="companyType" className="flex flex-col flex-1 mb-2">
+                Company Type
+                <select required className="rounded border-[1px] py-1 px-2 mt-2" {...register('companyType')}>
+                  {companyTypeOptions.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
                 </select>
               </label>
+            </InputGroup>
+            <InputGroup>
               <InputForm labelText="Scope" inputName="scope" inputType="text" register={register} required />
+              <InputForm
+                labelText="Payment Condition"
+                inputName="paymentCondition"
+                inputType="text"
+                register={register}
+              />
               <InputForm
                 labelText="Contract Total Value"
                 inputName="contractTotalValue"
@@ -159,21 +153,6 @@ const SoftwareServiceContractForm: React.FC = () => {
                 required
               />
               <InputForm labelText="GM" inputName="gm" inputType="number" register={register} required />
-            </InputGroup>
-            <InputGroup>
-              <InputForm
-                labelText="Renew Index Percentage"
-                inputName="renewIndexPercentage"
-                inputType="number"
-                register={register}
-              />
-              <InputForm labelText="Index" inputName="index" inputType="text" register={register} />
-              <InputForm
-                labelText="Payment Condition"
-                inputName="paymentCondition"
-                inputType="text"
-                register={register}
-              />
             </InputGroup>
             <InputGroup>
               <InputForm
