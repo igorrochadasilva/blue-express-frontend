@@ -2,9 +2,17 @@ import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { TContracts, TUser } from '../types/global/types'
 
-export async function listDistributorRepresentativesContractRequests() {
+export async function listDistributorRepresentativesContractRequests(
+  email: string | null | undefined,
+  role: number | undefined
+) {
   try {
-    const res = await axios.get('http://localhost:3001/request/distributor-representatives-contract')
+    const res = await axios.get('http://localhost:3001/request/distributor-representatives-contract', {
+      params: {
+        email,
+        role,
+      },
+    })
     if (res.status === 200) {
       return res.data
     } else {
@@ -30,7 +38,6 @@ export async function createDistributorRepresentativesContractsRequest(data: TCo
     requester: user?.id,
     commissionPercentage: Number(data.commissionPercentage),
   }
-  console.log('🚀 ~ createDistributorRepresentativesContractsRequest ~ formatData:', formatData)
 
   try {
     const res = await axios.post('http://localhost:3001/request/distributor-representatives-contract', formatData)
