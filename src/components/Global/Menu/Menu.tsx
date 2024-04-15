@@ -1,10 +1,10 @@
-import { UserGroupIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftStartOnRectangleIcon, UserGroupIcon } from '@heroicons/react/24/solid'
 import { ListBulletIcon } from '@heroicons/react/24/solid'
 import { HomeIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import { ReactElement, useState } from 'react'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { TUser } from '../../../types/global/types'
 
 type IMenuItems = {
@@ -49,6 +49,11 @@ const SideMenu: React.FC = () => {
       icon: <UserGroupIcon className="h-5" />,
       path: '/approvers',
     },
+    {
+      title: 'Log out',
+      icon: <ArrowLeftStartOnRectangleIcon className="h-5" />,
+      path: 'logout',
+    },
   ]
 
   if (user?.role === 1) {
@@ -58,6 +63,14 @@ const SideMenu: React.FC = () => {
   const handleSubMenuToggle = (item: any) => {
     if (item.subItems) {
       setActiveSubMenu(item.title === activeSubMenu ? null : item.title)
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Error signing out:', error)
     }
   }
 
@@ -76,7 +89,11 @@ const SideMenu: React.FC = () => {
             }`}
           >
             {item.path ? (
-              <Link href={item.path} className="flex items-center gap-2" onClick={() => handleSubMenuToggle(item)}>
+              <Link
+                href={item.path === 'logout' ? '' : item.path}
+                className="flex items-center gap-2"
+                onClick={item.path === 'logout' ? () => handleLogout() : () => handleSubMenuToggle(item)}
+              >
                 {item.icon}
                 {item.title}
                 {item.subItems && (

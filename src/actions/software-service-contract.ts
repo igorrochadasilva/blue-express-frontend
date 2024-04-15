@@ -2,9 +2,14 @@ import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { TContracts, TUser } from '../types/global/types'
 
-export async function listSoftwareServiceContractRequests() {
+export async function listSoftwareServiceContractRequests(email: string | null | undefined, role: number | undefined) {
   try {
-    const res = await axios.get('http://localhost:3001/request/software-service-contract')
+    const res = await axios.get('http://localhost:3001/request/software-service-contract', {
+      params: {
+        email,
+        role,
+      },
+    })
 
     if (res.status === 200) {
       return res.data
@@ -15,10 +20,10 @@ export async function listSoftwareServiceContractRequests() {
     const error: any = e
     if (error.response?.data.message) {
       notifyError(error.response.data.message)
-      return false
+      return []
     } else {
       notifyDefaultError()
-      return false
+      return []
     }
   }
 }

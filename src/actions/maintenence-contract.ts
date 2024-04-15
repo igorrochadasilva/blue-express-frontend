@@ -2,9 +2,14 @@ import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { TContracts, TUser } from '../types/global/types'
 
-export async function listMaintenanceContractRequests() {
+export async function listMaintenanceContractRequests(email: string | null | undefined, role: number | undefined) {
   try {
-    const res = await axios.get('http://localhost:3001/request/maintenance-contract')
+    const res = await axios.get('http://localhost:3001/request/maintenance-contract', {
+      params: {
+        email,
+        role,
+      },
+    })
 
     if (res.data) {
       return res.data
