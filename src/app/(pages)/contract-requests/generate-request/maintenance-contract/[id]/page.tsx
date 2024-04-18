@@ -7,20 +7,26 @@ import { usePathname, useRouter } from 'next/navigation'
 
 import { IRequestBody, TUser } from '../../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import Form from '../../../../../../components/Pages/MaitenanceContract/Form'
+import Form from '../../../../../../components/Pages/MaintenanceContract/Form'
 import {
   getMaintenanceContractRequest,
   updateMaintenanceContractRequest,
 } from '../../../../../../actions/maintenence-contract'
+import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 
 export default function MaintenanceContractRequest() {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
+  const [isLoading, setIsLoading] = useState(false)
+  const [requestData, setRequestData] = useState<IRequestBody>()
+
+  //approver modal states
+  const [showApproverModal, setShowApproverModal] = useState(false)
+  const [modalStatus, setModalStatus] = useState('')
+
   const pathName = usePathname()
   const pathSegments = pathName.split('/')
   const requestId = pathSegments[pathSegments.length - 1]
-  const [requestData, setRequestData] = useState<IRequestBody>()
 
   const user: TUser = session?.user
 
@@ -48,13 +54,25 @@ export default function MaintenanceContractRequest() {
     setIsLoading(false)
   }
 
+  const handleApproverModal = () => setShowApproverModal(!showApproverModal)
+
+  const handleModalStatus = (status: string) => setModalStatus(status)
+
   if (isLoading) {
     return <Container title="Loading..."></Container>
   }
 
   return (
     <Container title={requestData?.clmHeaderNumber}>
-      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} requesterName={user?.name} requestData={requestData} />
+      <Form
+        handleApproverModal={handleApproverModal}
+        onSubmitLogin={onSubmitLogin}
+        isLoading={isLoading}
+        user={user}
+        requestData={requestData}
+        handleModalStatus={handleModalStatus}
+      />
+      {showApproverModal && <ApproverModal handleApproverModal={handleApproverModal} modalStatus={modalStatus} />}
     </Container>
   )
 }

@@ -38,10 +38,6 @@ const SideMenu: React.FC = () => {
           title: 'Contracts',
           path: '/contract-requests',
         },
-        {
-          title: 'General',
-          path: '/general-requests',
-        },
       ],
     },
     {

@@ -53,12 +53,7 @@ export default function DistributorRepresentativeContractRequest() {
 
   return (
     <Container title="Distributor Representative Contract">
-      <Form
-        isLoading={isLoading}
-        onSubmitLogin={onSubmitLogin}
-        requestData={requestData}
-        requesterName={requestData?.requesterName}
-      />
+      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} requestData={requestData} user={user} />
     </Container>
   )
 }

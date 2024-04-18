@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
 import { createMaintenanceContractRequest } from '../../../../../actions/maintenence-contract'
-import Form from '../../../../../components/Pages/MaitenanceContract/Form'
+import Form from '../../../../../components/Pages/MaintenanceContract/Form'
 
 export default function MaintenanceContract() {
   const [isLoading, setIsLoading] = useState(false)
@@ -26,7 +26,7 @@ export default function MaintenanceContract() {
 
   return (
     <Container title="Maintenance Contract">
-      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} requesterName={user?.name} />
+      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} user={user} />
     </Container>
   )
 }
