@@ -53,7 +53,7 @@ export default function SoftwareServiceContractRequest() {
 
   return (
     <Container title={requestData?.clmHeaderNumber}>
-      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} requesterName={user?.name} requestData={requestData} />
+      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} user={user} requestData={requestData} />
     </Container>
   )
 }

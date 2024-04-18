@@ -1,7 +1,7 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { IRequestBody } from '../../../types/global/types'
+import { IRequestBody, TUser } from '../../../types/global/types'
 import Content from '../../Global/Content/Content'
 import InputForm from '../../Global/Inputs/InputForm'
 import InputGroup from '../../Global/Inputs/InputGroup'
@@ -12,16 +12,19 @@ import {
   frequencyOptions,
   ufOptions,
 } from '../../../libs/utils'
-import GroupButtons from '../../Global/GroupButtons/GroupButtons'
+import GroupButtons from '../../Global/RequesterButtons/RequesterButtons'
+import ApproverButtons from '../../Global/ApproverButtons/ApproverButtons'
 
 interface IForm {
   onSubmitLogin: SubmitHandler<IRequestBody>
   isLoading: boolean
-  requesterName: string
+  user: TUser
   requestData?: IRequestBody
+  handleApproverModal?: (() => void) | undefined
+  handleModalStatus?: ((status: string) => void) | undefined
 }
 
-const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) => {
+const Form = ({ handleApproverModal, handleModalStatus, onSubmitLogin, isLoading, user, requestData }: IForm) => {
   const { register, watch, handleSubmit } = useForm<IRequestBody>({
     mode: 'all',
     defaultValues: {
@@ -31,6 +34,8 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
       totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
     },
   })
+
+  const showApproverButtons = user?.role !== 1 && requestData?.status === 'waiting for approval'
 
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
@@ -46,7 +51,7 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
               inputName="requesterName"
               inputType="text"
               register={register}
-              inputValue={requesterName}
+              inputValue={user?.name}
               readonly={true}
             />
             <InputForm labelText="Client Name" inputName="clientName" inputType="text" register={register} required />
@@ -261,7 +266,11 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
           </InputGroup>
         </div>
       </Content>
-      <GroupButtons isLoading={isLoading} />
+      {showApproverButtons ? (
+        <ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
+      ) : (
+        <GroupButtons isLoading={isLoading} />
+      )}
     </form>
   )
 }

@@ -25,7 +25,7 @@ export default function SoftwareServiceContract() {
   }
   return (
     <Container title="Software Service Contract">
-      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} requesterName={user?.name} />
+      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} user={user} />
     </Container>
   )
 }

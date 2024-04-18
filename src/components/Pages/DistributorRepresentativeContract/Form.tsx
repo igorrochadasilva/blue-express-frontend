@@ -1,7 +1,7 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { IRequestBody } from '../../../types/global/types'
+import { IRequestBody, TUser } from '../../../types/global/types'
 import Content from '../../Global/Content/Content'
 import InputForm from '../../Global/Inputs/InputForm'
 import InputGroup from '../../Global/Inputs/InputGroup'
@@ -12,16 +12,16 @@ import {
   typeRequestOrderOptions,
   ufOptions,
 } from '../../../libs/utils'
-import GroupButtons from '../../Global/GroupButtons/GroupButtons'
+import GroupButtons from '../../Global/RequesterButtons/RequesterButtons'
 
 interface IForm {
   onSubmitLogin: SubmitHandler<IRequestBody>
   isLoading: boolean
-  requesterName?: string
+  user?: TUser
   requestData?: IRequestBody
 }
 
-const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) => {
+const Form = ({ onSubmitLogin, isLoading, user, requestData }: IForm) => {
   const { register, handleSubmit } = useForm<IRequestBody>({
     mode: 'all',
     defaultValues: {
@@ -39,7 +39,7 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
               inputName="requesterName"
               inputType="text"
               register={register}
-              inputValue={requesterName}
+              inputValue={user?.name}
               readonly={true}
             />
             <InputForm

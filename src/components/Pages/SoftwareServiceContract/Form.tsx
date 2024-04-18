@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { IRequestBody } from '../../../types/global/types'
+import { IRequestBody, TUser } from '../../../types/global/types'
 import Container from '../../Global/Container/Container'
 import Content from '../../Global/Content/Content'
 import InputGroup from '../../Global/Inputs/InputGroup'
@@ -16,16 +16,17 @@ import {
   contractTypeOptions,
   ufOptions,
 } from '../../../libs/utils'
-import GroupButtons from '../../Global/GroupButtons/GroupButtons'
+import GroupButtons from '../../Global/RequesterButtons/RequesterButtons'
+import ApproverButtons from '../../Global/ApproverButtons/ApproverButtons'
 
 interface IForm {
   onSubmitLogin: SubmitHandler<IRequestBody>
   isLoading: boolean
-  requesterName: string
+  user: TUser
   requestData?: IRequestBody
 }
 
-const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) => {
+const Form = ({ onSubmitLogin, isLoading, user, requestData }: IForm) => {
   const { register, watch, handleSubmit } = useForm<IRequestBody>({
     mode: 'all',
     defaultValues: {
@@ -35,6 +36,8 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
       totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
     },
   })
+
+  const showApproverButtons = user?.role !== 1 && requestData?.status === 'waiting for approval'
 
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
@@ -50,7 +53,7 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
               inputName="requesterName"
               inputType="text"
               register={register}
-              inputValue={requesterName}
+              inputValue={user?.name}
               readonly={true}
             />
             <InputForm labelText="Client Name" inputName="clientName" inputType="text" register={register} required />
@@ -242,7 +245,7 @@ const Form = ({ onSubmitLogin, isLoading, requesterName, requestData }: IForm) =
           </InputGroup>
         </div>
       </Content>
-      <GroupButtons isLoading={isLoading} />
+      {showApproverButtons ? <ApproverButtons isLoading={isLoading} /> : <GroupButtons isLoading={isLoading} />}
     </form>
   )
 }
