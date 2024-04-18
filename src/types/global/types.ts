@@ -1,20 +1,23 @@
-export type TRequestBody = {
+export interface IRequestBody {
   id: number
   title: string
   clientName: string
   clmHeaderNumber: string
   clmLineNumber: string
   typeContract: string
+  typeRequestOrder?: string
   company: string
+  companyType?: string
   status: string
   renewStartDate: string
   renewEndDate: string
   contractRenewQtd: number
+  commissionPercentage?: number
   frequency: string
   scope: string
   contractTotalValue: number
-  dollarExchangeRate: string
-  totalValueUSD: string
+  dollarExchangeRate: number
+  totalValueUSD: number
   gm: string
   renewIndexPercentage: string
   index: number
@@ -78,50 +81,3 @@ export type TUser =
       image?: string | null | undefined
     }
   | undefined
-
-export type TContracts = {
-  title?: string
-  requester?: string
-  requesterName?: string
-  clientName?: string
-  clmHeaderNumber?: string
-  clmLineNumber?: string
-  typeContract?: string
-  companyType?: string
-  company?: string
-  renewStartDate?: string
-  renewEndDate?: string
-  scope?: string
-  contractTotalValue: number
-  dollarExchangeRate: number
-  totalValueUSD?: number
-  gm?: number
-  paymentCondition?: string
-  inclusionClauses?: string
-  inclusionDescription?: string
-  legalIndemnificationObligations?: string
-  legalWarrantyObligations?: string
-  legalDamageCap?: string
-  legalDamageCave?: string
-  legalLiquidatedDamages?: string
-  justify?: string
-  approvalLevel?: string
-  phone?: string
-  contact?: string
-  antiCorruption?: string
-  uf?: string
-  sap?: string
-  typeRepresentativeDistributor?: string
-  nameRepresentativeDistributor?: string
-  vendor?: string
-  commissionPercentage?: number
-  manager?: string
-  activity?: string
-  approvalDate?: string
-  typeRequestOrder?: string
-  contractRenewQtd?: number
-  frequency?: string
-  renewIndexPercentage?: number
-  index?: number
-  uploadedFile?: any
-}

@@ -10,9 +10,11 @@ import useRequestData from '../../../hooks/UseRequestData'
 import BtnIssueReport from '../../../components/Global/BtnIssueReport/BtnIssueReport'
 
 export default function ContractRequests(): JSX.Element {
-  const { requests, isLoading, error } = useRequestData()
+  const { requests, isLoading } = useRequestData()
 
-  return (
+  return isLoading ? (
+    <Container title="Loading..."></Container>
+  ) : (
     <Container
       title="Contract Requests"
       showBtnNavigate
@@ -23,25 +25,17 @@ export default function ContractRequests(): JSX.Element {
       btnBorderColor="border-be_first_color"
       btnBgHover="bg-slate-300"
     >
-      {isLoading ? (
-        <div className="flex justify-center items-center w-40 m-auto h-10 rounded bg-white font-bold">
-          <p>Loading ...</p>
+      <Content>
+        <div className="flex flex-row gap-4 mb-12 items-center text-sm">
+          <StatusInput />
+          <PeriodStatus />
+          <CloseExpirationInput />
+          <div className="flex justify-end flex-1">
+            <BtnIssueReport />
+          </div>
         </div>
-      ) : (
-        <>
-          <Content>
-            <div className="flex flex-row gap-4 mb-12 items-center text-sm">
-              <StatusInput />
-              <PeriodStatus />
-              <CloseExpirationInput />
-              <div className="flex justify-end flex-1">
-                <BtnIssueReport />
-              </div>
-            </div>
-            <ContractsList requests={requests} />
-          </Content>
-        </>
-      )}
+        <ContractsList requests={requests} />
+      </Content>
     </Container>
   )
 }

@@ -1,8 +1,10 @@
 const StatusInput = () => {
   const contractTypes = [
-    { value: 'maintenance', label: 'Maintenance Contract' },
-    { value: 'distributor_representatives', label: 'Distributor Representatives Contract' },
-    { value: 'software_service', label: 'Software Service Contract' },
+    { value: 'waiting for approval', label: 'waiting for approval' },
+    { value: 'waiting for information', label: 'waiting for information' },
+    { value: 'approved', label: 'approved' },
+    { value: 'disapproved', label: 'disapproved' },
+    { value: 'sketch', label: 'sketch' },
   ]
 
   const handleSelectChange = (event: any) => {}

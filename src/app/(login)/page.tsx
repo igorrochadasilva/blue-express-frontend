@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { handleForgetPassword } from '../../actions/auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { ArrowPathIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import Container from '../../components/Global/Container/Container'
 import { signIn } from 'next-auth/react'
 import { notifyDefaultError, notifyError } from '../../toast/notifications'
@@ -23,7 +23,6 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<LoginInputs>()
 
@@ -40,18 +39,20 @@ export default function Home() {
 
       if (res?.status === 200) {
         setIsLoading(true)
-        router.replace('/dashboard')
+
+        router.push('/dashboard')
       } else if (res?.status === 401) {
         notifyError(res.error as string)
+        setIsLoading(false)
       } else {
         notifyDefaultError()
+        setIsLoading(false)
       }
     } else {
       const isSendEmail = await handleForgetPassword(data.email)
       isSendEmail && setShowForgetPassword(false)
+      setIsLoading(false)
     }
-
-    setIsLoading(false)
   }
 
   return (

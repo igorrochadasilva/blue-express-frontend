@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { TRequestBody } from '../../../types/global/types'
+import { IRequestBody } from '../../../types/global/types'
 
 interface IRequestsChart {
-  requests: TRequestBody[]
+  requests: IRequestBody[]
 }
 
 export type requestsList = {
