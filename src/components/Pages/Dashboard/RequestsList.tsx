@@ -1,9 +1,9 @@
 import { useEffect, useId, useState } from 'react'
 import { calculateSLA, formatDate } from '../../../libs/utils'
-import { TRequestBody } from '../../../types/global/types'
+import { IRequestBody } from '../../../types/global/types'
 
 interface IRequestsList {
-  requests: TRequestBody[]
+  requests: IRequestBody[]
 }
 
 interface IRequest {

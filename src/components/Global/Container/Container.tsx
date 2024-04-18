@@ -3,10 +3,9 @@ import SideMenu from '../Menu/Menu'
 import Title from '../Title/Title'
 import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/24/solid'
-import { useState } from 'react'
 
 interface IContainer {
-  children: React.ReactNode
+  children?: React.ReactNode
   bgColor?: string
   showSideMenu?: boolean
   title?: string

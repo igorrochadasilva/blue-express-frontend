@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import { TRequestBody } from '../../../types/global/types'
+import { IRequestBody } from '../../../types/global/types'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 interface IContractsList {
-  requests: TRequestBody[]
+  requests: IRequestBody[]
 }
 
 interface IRequest {
+  id: string
   type: string
   status: string
   statusColor: string
@@ -15,6 +17,7 @@ interface IRequest {
   level: number
   approver: string
   order: number
+  link: string
 }
 
 const ContractsList = ({ requests }: IContractsList) => {
@@ -31,13 +34,23 @@ const ContractsList = ({ requests }: IContractsList) => {
           sketch: '#98A4AE',
         }[request.status] || '#ccc'
 
+      let requestLink = ''
       let validity =
         request.title === 'Distributor Representatives Contract' ? request.endContractDate : request.renewEndDate
 
       const charsToRemove = /\{|\}|"/g
       const formattedApprovers = request.currentApproverName.replace(charsToRemove, '')
 
+      if (request.requestId.includes('MC')) {
+        requestLink = `/contract-requests/generate-request/maintenance-contract/${request.id}`
+      } else if (request.requestId.includes('SSC')) {
+        requestLink = `/contract-requests/generate-request/software-service-contract/${request.id}`
+      } else {
+        requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${request.id}`
+      }
+
       return {
+        id: request.id,
         type: request.title,
         status: request.status,
         statusColor: statusColor,
@@ -46,6 +59,7 @@ const ContractsList = ({ requests }: IContractsList) => {
         level: request.currentLevel,
         approver: formattedApprovers,
         order: index,
+        link: requestLink,
       }
     })
 
@@ -81,7 +95,9 @@ const ContractsList = ({ requests }: IContractsList) => {
                     <td className="w-1/7 py-3">{request.level}</td>
                     <td className="w-1/7 py-3">{request.approver}</td>
                     <td className="w-1/7 py-3">
-                      <ArrowTopRightOnSquareIcon />
+                      <Link href={request.link}>
+                        <ArrowTopRightOnSquareIcon className="h-5" />
+                      </Link>
                     </td>
                   </tr>
                 )

@@ -8,12 +8,11 @@ import { TUser } from '../types/global/types'
 const useRequestData = () => {
   const { data: session, status } = useSession()
   const [requests, setRequests] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true)
       setError(null)
 
       const user: TUser = session?.user
