@@ -7,15 +7,17 @@ import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
 import { createDistributorRepresentativesContractsRequest } from '../../../../../actions/distributor-representatives-contract'
-import Form from '../../../../../components/Pages/DistributorRepresentativeContract/Form'
+import Form from '../../../../../components/Global/Form/Form'
+import { DRCFormDataInputs } from '../../../../../components/Global/Form/DRCFormDataInputs'
 
 export default function DistributorRepresentativeContract() {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session, status } = useSession()
   const router = useRouter()
   const user: TUser = session?.user
+  const FormDataInputs = DRCFormDataInputs
 
-  const onSubmitLogin: SubmitHandler<IRequestBody> = async (data) => {
+  const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
     const res = await createDistributorRepresentativesContractsRequest(data, user)
     if (res) {
@@ -23,10 +25,9 @@ export default function DistributorRepresentativeContract() {
     }
     setIsLoading(false)
   }
-
   return (
     <Container title="Distributor Representative Contract">
-      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} user={user} />
+      <Form user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
     </Container>
   )
 }
