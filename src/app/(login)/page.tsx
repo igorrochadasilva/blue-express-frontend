@@ -39,7 +39,6 @@ export default function Home() {
 
       if (res?.status === 200) {
         setIsLoading(true)
-
         router.push('/dashboard')
       } else if (res?.status === 401) {
         notifyError(res.error as string)

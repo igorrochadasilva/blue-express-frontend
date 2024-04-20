@@ -1,44 +1,65 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { MouseEventHandler } from 'react'
+import { ChangeEvent, MouseEventHandler } from 'react'
+import { SubmitHandler } from 'react-hook-form'
+import { IRequestBody } from '../../../types/global/types'
 
 interface IApproverModal {
+  handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  handleApproverActionOnRequest: (statusAction: string) => Promise<void>
   handleApproverModal: () => void
   modalStatus: string
+  justifyApproverModal: string
 }
 
 interface IModalOptions {
-  color?: string
-  showNextLevel?: boolean
-  text?: string
+  color: string
+  showNextLevel: boolean
+  text: string
 }
 
-const ApproverModal = ({ handleApproverModal, modalStatus }: IApproverModal) => {
-  let modalOptions: IModalOptions = {}
+const ApproverModal = ({
+  handleJustifyApproverModal,
+  handleApproverActionOnRequest,
+  handleApproverModal,
+  modalStatus,
+  justifyApproverModal,
+}: IApproverModal) => {
+  let modalOptions: IModalOptions = {
+    color: '',
+    showNextLevel: false,
+    text: 'string',
+  }
 
-  if (modalStatus === 'information') {
-    modalOptions = {
-      color: '#ED8B00',
-      showNextLevel: false,
-      text: 'confirm',
-    }
-  } else if (modalStatus === 'disapprove') {
-    modalOptions = {
-      color: '#EB1400',
-      showNextLevel: false,
-      text: 'disapprove',
-    }
-  } else if (modalStatus === 'forward') {
-    modalOptions = {
-      color: '#005EB8',
-      showNextLevel: true,
-      text: 'approve',
-    }
-  } else {
-    modalOptions = {
-      color: '#005EB8',
-      showNextLevel: false,
-      text: 'approve',
-    }
+  const disableButton = justifyApproverModal.length === 0 ? true : false
+
+  switch (modalStatus) {
+    case 'information':
+      modalOptions = {
+        color: '#ED8B00',
+        showNextLevel: false,
+        text: 'information',
+      }
+      break
+    case 'disapprove':
+      modalOptions = {
+        color: '#EB1400',
+        showNextLevel: false,
+        text: 'disapprove',
+      }
+      break
+    case 'forward':
+      modalOptions = {
+        color: '#005EB8',
+        showNextLevel: true,
+        text: 'approve',
+      }
+      break
+    default:
+      modalOptions = {
+        color: '#005EB8',
+        showNextLevel: false,
+        text: 'approve',
+      }
   }
 
   return (
@@ -51,6 +72,7 @@ const ApproverModal = ({ handleApproverModal, modalStatus }: IApproverModal) => 
         </div>
         <div className="mb-3">
           <textarea
+            onChange={(e) => handleJustifyApproverModal(e)}
             placeholder="provide a justification"
             className="border-[1px] rounded w-full h-[100px] p-2"
             name="justify"
@@ -71,7 +93,12 @@ const ApproverModal = ({ handleApproverModal, modalStatus }: IApproverModal) => 
           >
             Cancel
           </button>
-          <button style={{ background: modalOptions.color }} className={`flex-1 rounded h-10 text-white font-medium`}>
+          <button
+            disabled={disableButton}
+            onClick={() => handleApproverActionOnRequest(modalOptions.text)}
+            style={{ background: modalOptions.color }}
+            className={`flex-1 rounded h-10 text-white font-medium`}
+          >
             {modalOptions.text}
           </button>
         </div>

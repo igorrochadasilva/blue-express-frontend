@@ -1,28 +1,30 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Container from '../../../../../../components/Global/Container/Container'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
-
 import { IRequestBody, TUser } from '../../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import Form from '../../../../../../components/Pages/MaintenanceContract/Form'
 import {
   getMaintenanceContractRequest,
   updateMaintenanceContractRequest,
 } from '../../../../../../actions/maintenence-contract'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
+import { createApproval } from '../../../../../../actions/approvals'
+import Form from '../../../../../../components/Global/Form/Form'
+import { MCFormDataInputs } from '../../../../../../components/Global/Form/MCFormDataInputs'
 
 export default function MaintenanceContractRequest() {
   const router = useRouter()
   const { data: session } = useSession()
   const [isLoading, setIsLoading] = useState(false)
   const [requestData, setRequestData] = useState<IRequestBody>()
-
+  const FormDataInputs = MCFormDataInputs
   //approver modal states
   const [showApproverModal, setShowApproverModal] = useState(false)
   const [modalStatus, setModalStatus] = useState('')
+  const [justifyApproverModal, setJustifyApproverModal] = useState('')
 
   const pathName = usePathname()
   const pathSegments = pathName.split('/')
@@ -30,22 +32,18 @@ export default function MaintenanceContractRequest() {
 
   const user: TUser = session?.user
 
-  useEffect(() => {
-    const fetchData = async (id: string) => {
-      setIsLoading(true)
+  const fetchRequestData = async (id: string) => {
+    setIsLoading(true)
 
-      const request = await getMaintenanceContractRequest(id)
+    const request = await getMaintenanceContractRequest(id)
 
-      if (request) {
-        setRequestData(request)
-        setIsLoading(false)
-      }
+    if (request) {
+      setRequestData(request)
+      setIsLoading(false)
     }
+  }
 
-    fetchData(requestId)
-  }, [])
-
-  const onSubmitLogin: SubmitHandler<IRequestBody> = async (data) => {
+  const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
     const res = await updateMaintenanceContractRequest(data)
     if (res) {
@@ -54,25 +52,63 @@ export default function MaintenanceContractRequest() {
     setIsLoading(false)
   }
 
-  const handleApproverModal = () => setShowApproverModal(!showApproverModal)
+  const handleApproverActionOnRequest = async (statusAction: string) => {
+    const data = {
+      user: user,
+      statusAction: statusAction,
+      requestData: requestData,
+      justify: justifyApproverModal,
+      url: 'maintenance-contract',
+    }
+
+    setIsLoading(true)
+    const res = await createApproval(data)
+    if (res) {
+      router.push('/contract-requests')
+    } else {
+      setJustifyApproverModal('')
+      setIsLoading(false)
+      setShowApproverModal(!showApproverModal)
+    }
+  }
+
+  const handleApproverModal = () => {
+    setShowApproverModal(!showApproverModal), setJustifyApproverModal('')
+  }
 
   const handleModalStatus = (status: string) => setModalStatus(status)
+
+  const handleJustifyApproverModal = (event: ChangeEvent<HTMLTextAreaElement>) =>
+    setJustifyApproverModal(event.target.value)
+
+  useEffect(() => {
+    fetchRequestData(requestId)
+  }, [])
 
   if (isLoading) {
     return <Container title="Loading..."></Container>
   }
 
   return (
-    <Container title={requestData?.clmHeaderNumber}>
+    <Container title={requestData?.requestId}>
       <Form
+        FormDataInputs={FormDataInputs}
         handleApproverModal={handleApproverModal}
-        onSubmitLogin={onSubmitLogin}
+        onSubmitForm={onSubmitForm}
         isLoading={isLoading}
         user={user}
         requestData={requestData}
         handleModalStatus={handleModalStatus}
       />
-      {showApproverModal && <ApproverModal handleApproverModal={handleApproverModal} modalStatus={modalStatus} />}
+      {showApproverModal && (
+        <ApproverModal
+          handleJustifyApproverModal={handleJustifyApproverModal}
+          handleApproverActionOnRequest={handleApproverActionOnRequest}
+          handleApproverModal={handleApproverModal}
+          modalStatus={modalStatus}
+          justifyApproverModal={justifyApproverModal}
+        />
+      )}
     </Container>
   )
 }

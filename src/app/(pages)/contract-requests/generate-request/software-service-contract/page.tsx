@@ -1,21 +1,23 @@
 'use client'
 
+import { useState } from 'react'
+import Container from '../../../../../components/Global/Container/Container'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { SubmitHandler } from 'react-hook-form'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { createSoftwareServiceContractRequest } from '../../../../../actions/software-service-contract'
-import Container from '../../../../../components/Global/Container/Container'
-import Form from '../../../../../components/Pages/SoftwareServiceContract/Form'
+import { SubmitHandler } from 'react-hook-form'
+import Form from '../../../../../components/Global/Form/Form'
+import { SSCFormDataInputs } from '../../../../../components/Global/Form/SSCFormDataInputs'
 
 export default function SoftwareServiceContract() {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session, status } = useSession()
   const router = useRouter()
   const user: TUser = session?.user
+  const FormDataInputs = SSCFormDataInputs
 
-  const onSubmitLogin: SubmitHandler<IRequestBody> = async (data) => {
+  const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
     const res = await createSoftwareServiceContractRequest(data, user)
     if (res) {
@@ -25,7 +27,7 @@ export default function SoftwareServiceContract() {
   }
   return (
     <Container title="Software Service Contract">
-      <Form isLoading={isLoading} onSubmitLogin={onSubmitLogin} user={user} />
+      <Form user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
     </Container>
   )
 }

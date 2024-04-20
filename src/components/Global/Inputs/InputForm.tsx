@@ -6,21 +6,19 @@ import { IRequestBody } from '../../../types/global/types'
 type TInputForm = {
   labelText: string
   inputName: any
-  inputType: string
+  inputType: string | undefined
   inputValue?: string | number
   validationSchema?: any
-  readonly?: boolean
+  readonly: boolean | undefined
   required?: boolean
   placeholder?: string
   pattern?: string
-  errors?: any
   register: UseFormRegister<IRequestBody>
 }
 
 const InputForm = ({
   inputName,
   inputType,
-  inputValue,
   validationSchema,
   labelText,
   readonly = false,
@@ -37,7 +35,6 @@ const InputForm = ({
         className="rounded border-[1px] py-1 px-2 mt-2"
         {...register(inputName, validationSchema)}
         name={inputName}
-        value={inputValue}
         readOnly={readonly}
         required={required}
         placeholder={placeholder}
