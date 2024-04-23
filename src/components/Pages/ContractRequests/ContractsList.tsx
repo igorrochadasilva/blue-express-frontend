@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { IRequestBody } from '../../../types/global/types'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
+import { formatApproverName, generateRouteForId } from '../../../libs/utils'
 
 interface IContractsList {
   requests: IRequestBody[]
@@ -34,20 +35,12 @@ const ContractsList = ({ requests }: IContractsList) => {
           sketch: '#98A4AE',
         }[request.status] || '#ccc'
 
-      let requestLink = ''
       let validity =
         request.title === 'Distributor Representatives Contract' ? request.endContractDate : request.renewEndDate
 
-      const charsToRemove = /\{|\}|"/g
-      const formattedApprovers = request.currentApproverName.replace(charsToRemove, '')
+      const formattedApprovers = formatApproverName(request.currentApproverName)
 
-      if (request.requestId.includes('MC')) {
-        requestLink = `/contract-requests/generate-request/maintenance-contract/${request.id}`
-      } else if (request.requestId.includes('SSC')) {
-        requestLink = `/contract-requests/generate-request/software-service-contract/${request.id}`
-      } else {
-        requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${request.id}`
-      }
+      const requestLink = generateRouteForId(request.requestId, request.id)
 
       return {
         id: request.id,

@@ -261,6 +261,8 @@ export const MCFormDataInputs = [
       required: false,
       readonly: false,
     },
+  ],
+  [
     {
       id: 27,
       type: 'input',
@@ -270,8 +272,6 @@ export const MCFormDataInputs = [
       required: false,
       readonly: false,
     },
-  ],
-  [
     {
       id: 28,
       type: 'input',
@@ -291,6 +291,8 @@ export const MCFormDataInputs = [
       required: false,
       options: ufOptions,
     },
+  ],
+  [
     {
       id: 30,
       type: 'input',
@@ -300,8 +302,6 @@ export const MCFormDataInputs = [
       required: false,
       readonly: false,
     },
-  ],
-  [
     {
       id: 31,
       type: 'input',

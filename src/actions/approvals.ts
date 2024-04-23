@@ -10,7 +10,7 @@ interface ICreateApproval {
   url: string
 }
 
-export async function createApproval({ user, statusAction, requestData, justify, url }: ICreateApproval) {
+export const createApproval = async ({ user, statusAction, requestData, justify, url }: ICreateApproval) => {
   let requestStatus = ''
 
   switch (statusAction) {
@@ -39,6 +39,8 @@ export async function createApproval({ user, statusAction, requestData, justify,
     justify: justify,
     typeRequest: requestData?.title,
     author: user?.name,
+    approver: user?.id,
+    maintenanceContract: requestData?.id,
   }
 
   const formatRequestData = {
