@@ -65,7 +65,7 @@ const ApproverModal = ({
   return (
     <div className="fixed inset-0 overflow-hidden flex justify-center items-center h-screen bg-gray-900 bg-opacity-50 transition-opacity text-be_second_color">
       <div className="absolute w-full h-full bg-black opacity-90"></div>
-      <div className="z-10 bg-white w-[415px] h-[305px] p-4 rounded">
+      <div className="z-10 bg-white w-[415px] h-auto p-4 rounded">
         <div className="flex justify-between mb-4">
           <span className="text-be_first_color text-md font-semibold">Justify</span>
           <XMarkIcon onClick={handleApproverModal} className="h-6 w-6 text-slate-800 text-end cursor-pointer" />

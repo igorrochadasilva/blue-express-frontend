@@ -1,6 +1,6 @@
 import { IApprover, IRequestBody, TUser } from '../types/global/types'
 
-export function formatDate(dateString: string) {
+export const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   const day = String(date.getDate()).padStart(2, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -9,7 +9,7 @@ export function formatDate(dateString: string) {
   return `${day}-${month}-${year}`
 }
 
-export function calculateSLA(date: string) {
+export const calculateSLA = (date: string) => {
   const requestDate = new Date(date)
   const currentDate = new Date()
   const timeDiffMs = currentDate.getTime() - requestDate.getTime()
@@ -18,14 +18,14 @@ export function calculateSLA(date: string) {
   return daysSinceCreation
 }
 
-export function sortRequestType(a: IApprover, b: IApprover) {
+export const sortRequestType = (a: IApprover, b: IApprover) => {
   const typeOrder = ['Maintenance Contract', 'Software Service Contract', 'Distributor Representatives Contract'] // Desired order
   const aIndex = typeOrder.indexOf(a.type)
   const bIndex = typeOrder.indexOf(b.type)
   return aIndex - bIndex
 }
 
-export function sortNumber(a: string, b: string) {
+export const sortNumber = (a: string, b: string) => {
   // Extract the numerical value from the dollar-formatted string:
   const competenceA = parseFloat(a.replace(/\$/g, ''))
   const competenceB = parseFloat(b.replace(/\$/g, ''))
@@ -34,11 +34,11 @@ export function sortNumber(a: string, b: string) {
   return competenceA - competenceB
 }
 
-export function sortAlphabetically(a: string, b: string) {
+export const sortAlphabetically = (a: string, b: string) => {
   return a.localeCompare(b) // Alphabetical sorting
 }
 
-export function formatToUSD(value: number) {
+export const formatToUSD = (value: number) => {
   const formattedValue = value.toFixed(2)
   return `$${formattedValue}`
 }
@@ -118,3 +118,23 @@ export const typeRequestOrderOptions = [
   { value: 'representative', label: 'representative' },
   { value: 'distributor', label: 'distributor' },
 ]
+
+export const generateRouteForId = (requestId: string, id: number) => {
+  let requestLink = ''
+  if (requestId.includes('MC')) {
+    requestLink = `/contract-requests/generate-request/maintenance-contract/${id}`
+  } else if (requestId.includes('SSC')) {
+    requestLink = `/contract-requests/generate-request/software-service-contract/${id}`
+  } else {
+    requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${id}`
+  }
+
+  return requestLink
+}
+
+export const formatApproverName = (approverNames: string) => {
+  const charsToRemove = /\{|\}|"/g
+  const formattedApproversName = approverNames.replace(charsToRemove, '')
+
+  return formattedApproversName
+}

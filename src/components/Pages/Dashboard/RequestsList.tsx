@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from 'react'
-import { calculateSLA, formatDate } from '../../../libs/utils'
+import { calculateSLA, formatApproverName, formatDate, generateRouteForId } from '../../../libs/utils'
 import { IRequestBody } from '../../../types/global/types'
+import Link from 'next/link'
 
 interface IRequestsList {
   requests: IRequestBody[]
@@ -17,6 +18,7 @@ interface IRequest {
   requestId: string
   id: string
   order: string
+  link: string
 }
 
 const RequestsList = ({ requests }: IRequestsList) => {
@@ -33,8 +35,9 @@ const RequestsList = ({ requests }: IRequestsList) => {
           sketch: '#98A4AE',
         }[request.status] || '#ccc'
 
-      const charsToRemove = /\{|\}|"/g
-      const formattedApprovers = request.currentApproverName.replace(charsToRemove, '')
+      const formattedApprovers = request.currentApproverName ? formatApproverName(request.currentApproverName) : ''
+
+      const requestLink = generateRouteForId(request.requestId, request.id)
 
       return {
         type: request.title,
@@ -46,6 +49,7 @@ const RequestsList = ({ requests }: IRequestsList) => {
         SLA: calculateSLA(request.createdAt),
         requestId: request.requestId,
         order: index,
+        link: requestLink,
       }
     })
 
@@ -86,7 +90,12 @@ const RequestsList = ({ requests }: IRequestsList) => {
                     <td className="w-1/7 py-3">{request.SLA}</td>
                     <td className="w-1/7 py-3">{request.requestId}</td>
                     <td className="w-1/7 py-3">
-                      <button className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]">Assess</button>
+                      <Link
+                        href={request.link}
+                        className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]"
+                      >
+                        Assess
+                      </Link>
                     </td>
                   </tr>
                 )

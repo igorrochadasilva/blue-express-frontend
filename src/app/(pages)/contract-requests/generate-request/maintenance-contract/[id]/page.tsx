@@ -62,6 +62,7 @@ export default function MaintenanceContractRequest() {
     }
 
     setIsLoading(true)
+
     const res = await createApproval(data)
     if (res) {
       router.push('/contract-requests')
