@@ -1,12 +1,6 @@
-const StatusInput = () => {
-  const contractTypes = [
-    { value: 'waiting for approval', label: 'waiting for approval' },
-    { value: 'waiting for information', label: 'waiting for information' },
-    { value: 'approved', label: 'approved' },
-    { value: 'disapproved', label: 'disapproved' },
-    { value: 'sketch', label: 'sketch' },
-  ]
+import { contractTypes } from '../../../../libs/options'
 
+const Status = () => {
   const handleSelectChange = (event: any) => {}
 
   return (
@@ -30,4 +24,4 @@ const StatusInput = () => {
   )
 }
 
-export default StatusInput
+export default Status

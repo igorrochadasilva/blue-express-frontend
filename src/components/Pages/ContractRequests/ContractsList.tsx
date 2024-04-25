@@ -3,6 +3,7 @@ import { IRequestBody } from '../../../types/global/types'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import { formatApproverName, generateRouteForId } from '../../../libs/utils'
+import ListRequests from './List'
 
 interface IContractsList {
   requests: IRequestBody[]
@@ -60,45 +61,27 @@ const ContractsList = ({ requests }: IContractsList) => {
   }, [])
 
   return (
-    <div className="flex flex-col text-sm">
-      <div className="flex flex-col justify-normal">
-        <table>
-          <thead className="h-16 bg-[#F8F8F8]">
-            <tr>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Validity</th>
-              <th>Request ID</th>
-              <th>Level</th>
-              <th>Approver</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {listRequests &&
-              listRequests.map((request: IRequest) => {
-                return (
-                  <tr key={request.order} className="text-center">
-                    <td className="w-1/7 py-3 w-48">{request.type}</td>
-                    <td style={{ color: `${request.statusColor}` }} className="w-1/7 py-3">
-                      {request.status}
-                    </td>
-                    <td className="w-1/7 py-3">{request.validity}</td>
-                    <td className="w-1/7 py-3">{request.requestId}</td>
-                    <td className="w-1/7 py-3">{request.level}</td>
-                    <td className="w-1/7 py-3">{request.approver}</td>
-                    <td className="w-1/7 py-3">
-                      <Link href={request.link}>
-                        <ArrowTopRightOnSquareIcon className="h-5" />
-                      </Link>
-                    </td>
-                  </tr>
-                )
-              })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <ListRequests.Root>
+      <ListRequests.Thead />
+      <tbody>
+        {listRequests &&
+          listRequests.map((request: IRequest) => {
+            return (
+              <ListRequests.Content
+                order={request.order}
+                type={request.type}
+                statusColor={request.statusColor}
+                status={request.status}
+                validity={request.validity}
+                requestId={request.requestId}
+                level={request.level}
+                approver={request.approver}
+                link={request.link}
+              />
+            )
+          })}
+      </tbody>
+    </ListRequests.Root>
   )
 }
 export default ContractsList

@@ -1,4 +1,4 @@
-const PeriodStatus = () => {
+const Period = () => {
   const handleSelectPeriod = (event: any) => {}
 
   return (
@@ -11,4 +11,4 @@ const PeriodStatus = () => {
   )
 }
 
-export default PeriodStatus
+export default Period

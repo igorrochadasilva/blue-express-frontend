@@ -73,3 +73,11 @@ export const typeRequestOrderOptions = [
   { value: 'representative', label: 'representative' },
   { value: 'distributor', label: 'distributor' },
 ]
+
+export const contractTypes = [
+  { value: 'waiting for approval', label: 'waiting for approval' },
+  { value: 'waiting for information', label: 'waiting for information' },
+  { value: 'approved', label: 'approved' },
+  { value: 'disapproved', label: 'disapproved' },
+  { value: 'sketch', label: 'sketch' },
+]

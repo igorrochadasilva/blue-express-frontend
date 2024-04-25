@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const CloseExpirationInput = () => {
+const CloseExpiration = () => {
   const [isChecked, setIsChecked] = useState(false)
 
   const handleCheckboxChange = (event: any) => {
@@ -24,4 +24,4 @@ const CloseExpirationInput = () => {
   )
 }
 
-export default CloseExpirationInput
+export default CloseExpiration
