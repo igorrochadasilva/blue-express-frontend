@@ -7,8 +7,9 @@ import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { createSoftwareServiceContractRequest } from '../../../../../actions/software-service-contract'
 import { SubmitHandler } from 'react-hook-form'
-import Form from '../../../../../components/Global/Form/Form'
-import { SSCFormDataInputs } from '../../../../../components/Global/Form/SSCFormDataInputs'
+import Form from '../../../../../components/Pages/Request/Form/Form'
+import { SSCFormDataInputs } from '../../../../../libs/SSCFormDataInputs'
+import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
 
 export default function SoftwareServiceContract() {
   const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +28,7 @@ export default function SoftwareServiceContract() {
   }
   return (
     <Container title="Software Service Contract">
-      <Form user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
+      <RequestForm user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
     </Container>
   )
 }

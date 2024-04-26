@@ -10,10 +10,11 @@ import {
   getDistributorRepresentativesContractRequest,
   updateDistributorRepresentativesContractRequest,
 } from '../../../../../../actions/distributor-representatives-contract'
-import Form from '../../../../../../components/Global/Form/Form'
-import { DRCFormDataInputs } from '../../../../../../components/Global/Form/DRCFormDataInputs'
+import Form from '../../../../../../components/Pages/Request/Form/Form'
+import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../../../../actions/approvals'
+import RequestForm from '../../../../../../components/Global/RequestForm/RequestForm'
 
 export default function DistributorRepresentativeContractRequest() {
   const router = useRouter()
@@ -91,7 +92,7 @@ export default function DistributorRepresentativeContractRequest() {
 
   return (
     <Container title={requestData?.requestId}>
-      <Form
+      <RequestForm
         FormDataInputs={FormDataInputs}
         handleApproverModal={handleApproverModal}
         onSubmitForm={onSubmitForm}

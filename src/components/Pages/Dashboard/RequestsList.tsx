@@ -1,7 +1,7 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { calculateSLA, formatApproverName, formatDate, generateRouteForId } from '../../../libs/utils'
 import { IRequestBody } from '../../../types/global/types'
-import Link from 'next/link'
+import ListRequests from './List'
 
 interface IRequestsList {
   requests: IRequestBody[]
@@ -11,7 +11,7 @@ interface IRequest {
   type: string
   status: string
   statusColor: string
-  requestData: string
+  requestDate: string
   requester: string
   approver: string
   SLA: string
@@ -43,7 +43,7 @@ const RequestsList = ({ requests }: IRequestsList) => {
         type: request.title,
         status: request.status,
         statusColor: statusColor,
-        requestData: formatDate(request.createdAt),
+        requestDate: formatDate(request.createdAt),
         requester: request.requesterName,
         approver: formattedApprovers,
         SLA: calculateSLA(request.createdAt),
@@ -57,53 +57,31 @@ const RequestsList = ({ requests }: IRequestsList) => {
   }, [])
 
   return (
-    <div className="flex flex-col text-sm">
-      <div className="mb-8">
-        <span className="text-sm font-medium">Total status of requests</span>
-      </div>
-      <div className="flex flex-col justify-normal">
-        <table>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Request Date</th>
-              <th>Requester</th>
-              <th>Approver</th>
-              <th>SLA</th>
-              <th>ID Requester</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {listRequests &&
-              listRequests.map((request: IRequest) => {
-                return (
-                  <tr key={request.order} className="text-center">
-                    <td className="w-1/7 py-3 w-48">{request.type}</td>
-                    <td style={{ color: `${request.statusColor}` }} className="w-1/7 py-3">
-                      {request.status}
-                    </td>
-                    <td className="w-1/7 py-3">{request.requestData}</td>
-                    <td className="w-1/7 py-3">{request.requester}</td>
-                    <td className="w-1/7 py-3">{request.approver}</td>
-                    <td className="w-1/7 py-3">{request.SLA}</td>
-                    <td className="w-1/7 py-3">{request.requestId}</td>
-                    <td className="w-1/7 py-3">
-                      <Link
-                        href={request.link}
-                        className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]"
-                      >
-                        Assess
-                      </Link>
-                    </td>
-                  </tr>
-                )
-              })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <ListRequests.Root>
+      <ListRequests.Title text="Total status of requests" />
+      <ListRequests.Table>
+        <ListRequests.Thead />
+        <tbody>
+          {listRequests &&
+            listRequests.map((request: IRequest) => {
+              return (
+                <ListRequests.Content
+                  type={request.type}
+                  status={request.status}
+                  statusColor={request.statusColor}
+                  requestDate={request.requestDate}
+                  order={request.order}
+                  link={request.link}
+                  requestId={request.requestId}
+                  sla={request.SLA}
+                  requester={request.requester}
+                  approver={request.approver}
+                />
+              )
+            })}
+        </tbody>
+      </ListRequests.Table>
+    </ListRequests.Root>
   )
 }
 export default RequestsList

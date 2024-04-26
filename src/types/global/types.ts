@@ -81,3 +81,19 @@ export type TUser =
       image?: string | null | undefined
     }
   | undefined
+
+//Dashboard
+
+export type requestsList = {
+  type: string
+  status: string
+  requester: string
+  id_request: string
+}[]
+
+export type barData = {
+  text: string
+  color: string
+  barSize: number
+  qtd: number
+}

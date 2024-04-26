@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { ChangeEvent, MouseEventHandler } from 'react'
-import { SubmitHandler } from 'react-hook-form'
-import { IRequestBody } from '../../../types/global/types'
+import { ChangeEvent } from 'react'
+
+import ApproverModalComponents from './Components'
 
 interface IApproverModal {
   handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void
@@ -11,7 +11,7 @@ interface IApproverModal {
   justifyApproverModal: string
 }
 
-interface IModalOptions {
+export interface IModalOptions {
   color: string
   showNextLevel: boolean
   text: string
@@ -63,47 +63,19 @@ const ApproverModal = ({
   }
 
   return (
-    <div className="fixed inset-0 overflow-hidden flex justify-center items-center h-screen bg-gray-900 bg-opacity-50 transition-opacity text-be_second_color">
-      <div className="absolute w-full h-full bg-black opacity-90"></div>
-      <div className="z-10 bg-white w-[415px] h-auto p-4 rounded">
-        <div className="flex justify-between mb-4">
-          <span className="text-be_first_color text-md font-semibold">Justify</span>
-          <XMarkIcon onClick={handleApproverModal} className="h-6 w-6 text-slate-800 text-end cursor-pointer" />
-        </div>
-        <div className="mb-3">
-          <textarea
-            onChange={(e) => handleJustifyApproverModal(e)}
-            placeholder="provide a justification"
-            className="border-[1px] rounded w-full h-[100px] p-2"
-            name="justify"
-            id=""
-          ></textarea>
-        </div>
-        {modalOptions.showNextLevel && (
-          <div className="mb-4 flex gap-2 flex-col items-start">
-            <span className="">Follow approval for 3rd level</span>
-            <input className="h-4 w-4" type="checkbox" />
-          </div>
-        )}
-
-        <div className="flex gap-4">
-          <button
-            onClick={handleApproverModal}
-            className="flex-1 rounded h-10 border-[1px] border-be_second_color font-medium"
-          >
-            Cancel
-          </button>
-          <button
-            disabled={disableButton}
-            onClick={() => handleApproverActionOnRequest(modalOptions.text)}
-            style={{ background: modalOptions.color }}
-            className={`flex-1 rounded h-10 text-white font-medium`}
-          >
-            {modalOptions.text}
-          </button>
-        </div>
-      </div>
-    </div>
+    <ApproverModalComponents.Root>
+      <ApproverModalComponents.Content>
+        <ApproverModalComponents.Close handleApproverModal={handleApproverModal} text="Justify" />
+        <ApproverModalComponents.Justify handleJustifyApproverModal={handleJustifyApproverModal} />
+        {modalOptions.showNextLevel && <ApproverModalComponents.NextLevel text="Follow approval for 3rd level" />}
+        <ApproverModalComponents.Buttons
+          disableButton={disableButton}
+          handleApproverActionOnRequest={handleApproverActionOnRequest}
+          handleApproverModal={handleApproverModal}
+          modalOptions={modalOptions}
+        />
+      </ApproverModalComponents.Content>
+    </ApproverModalComponents.Root>
   )
 }
 

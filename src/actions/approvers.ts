@@ -33,7 +33,7 @@ export async function deleteApprover(id: number, token: string | undefined) {
       },
     })
     if (res.data) {
-      notifySuccess('Approver created successfully')
+      notifySuccess('Approver deleted successfully')
       return res.data
     } else {
       return false

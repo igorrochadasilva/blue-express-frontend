@@ -12,8 +12,9 @@ import {
 } from '../../../../../../actions/maintenence-contract'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../../../../actions/approvals'
-import Form from '../../../../../../components/Global/Form/Form'
-import { MCFormDataInputs } from '../../../../../../components/Global/Form/MCFormDataInputs'
+import Form from '../../../../../../components/Pages/Request/Form/Form'
+import { MCFormDataInputs } from '../../../../../../libs/MCFormDataInputs'
+import RequestForm from '../../../../../../components/Global/RequestForm/RequestForm'
 
 export default function MaintenanceContractRequest() {
   const router = useRouter()
@@ -64,6 +65,7 @@ export default function MaintenanceContractRequest() {
     setIsLoading(true)
 
     const res = await createApproval(data)
+
     if (res) {
       router.push('/contract-requests')
     } else {
@@ -92,7 +94,7 @@ export default function MaintenanceContractRequest() {
 
   return (
     <Container title={requestData?.requestId}>
-      <Form
+      <RequestForm
         FormDataInputs={FormDataInputs}
         handleApproverModal={handleApproverModal}
         onSubmitForm={onSubmitForm}
