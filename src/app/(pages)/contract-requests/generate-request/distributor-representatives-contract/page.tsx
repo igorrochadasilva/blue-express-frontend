@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
 import { createDistributorRepresentativesContractsRequest } from '../../../../../actions/distributor-representatives-contract'
-import Form from '../../../../../components/Pages/Request/Form/Form'
 import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs'
 import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
 
