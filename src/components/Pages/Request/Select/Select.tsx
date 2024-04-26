@@ -14,7 +14,6 @@ type TSelect = {
 }
 
 const Select = ({ labelText, inputName, validationSchema, required = false, options, register }: TSelect) => {
-  console.log('🚀 ~ Select ~ options:', options)
   return (
     <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
       {labelText}
