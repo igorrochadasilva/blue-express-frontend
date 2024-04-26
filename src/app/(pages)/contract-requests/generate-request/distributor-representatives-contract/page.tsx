@@ -7,8 +7,9 @@ import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
 import { createDistributorRepresentativesContractsRequest } from '../../../../../actions/distributor-representatives-contract'
-import Form from '../../../../../components/Global/Form/Form'
-import { DRCFormDataInputs } from '../../../../../components/Global/Form/DRCFormDataInputs'
+import Form from '../../../../../components/Pages/Request/Form/Form'
+import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs'
+import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
 
 export default function DistributorRepresentativeContract() {
   const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +28,7 @@ export default function DistributorRepresentativeContract() {
   }
   return (
     <Container title="Distributor Representative Contract">
-      <Form user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
+      <RequestForm user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
     </Container>
   )
 }

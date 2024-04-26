@@ -1,10 +1,4 @@
-import {
-  approverLevelOptions,
-  companyOptions,
-  contractTypeOptions,
-  frequencyOptions,
-  ufOptions,
-} from '../../../libs/utils'
+import { approverLevelOptions, companyOptions, contractTypeOptions, frequencyOptions, ufOptions } from './options'
 
 export const MCFormDataInputs = [
   [

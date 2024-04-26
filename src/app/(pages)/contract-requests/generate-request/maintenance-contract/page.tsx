@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
 import { createMaintenanceContractRequest } from '../../../../../actions/maintenence-contract'
-import Form from '../../../../../components/Global/Form/Form'
-import { MCFormDataInputs } from '../../../../../components/Global/Form/MCFormDataInputs'
+import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
+import { MCFormDataInputs } from '../../../../../libs/MCFormDataInputs'
 
 export default function MaintenanceContract() {
   const [isLoading, setIsLoading] = useState(false)
@@ -25,9 +25,10 @@ export default function MaintenanceContract() {
     }
     setIsLoading(false)
   }
+
   return (
     <Container title="Maintenance Contract">
-      <Form user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
+      <RequestForm user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
     </Container>
   )
 }

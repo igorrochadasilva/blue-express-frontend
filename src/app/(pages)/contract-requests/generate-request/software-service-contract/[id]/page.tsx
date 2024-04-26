@@ -12,8 +12,9 @@ import {
 } from '../../../../../../actions/software-service-contract'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../../../../actions/approvals'
-import Form from '../../../../../../components/Global/Form/Form'
-import { SSCFormDataInputs } from '../../../../../../components/Global/Form/SSCFormDataInputs'
+import Form from '../../../../../../components/Pages/Request/Form/Form'
+import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs'
+import RequestForm from '../../../../../../components/Global/RequestForm/RequestForm'
 
 export default function SoftwareServiceContractRequest() {
   const router = useRouter()
@@ -92,7 +93,7 @@ export default function SoftwareServiceContractRequest() {
 
   return (
     <Container title={requestData?.requestId}>
-      <Form
+      <RequestForm
         FormDataInputs={FormDataInputs}
         handleApproverModal={handleApproverModal}
         onSubmitForm={onSubmitForm}

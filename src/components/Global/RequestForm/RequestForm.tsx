@@ -1,15 +1,12 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { IRequestBody, TUser } from '../../../types/global/types'
-import Content from '../../Global/Content/Content'
-import InputForm from '../../Global/Inputs/InputForm'
-import InputGroup from '../../Global/Inputs/InputGroup'
-import GroupButtons from '../../Global/RequesterButtons/RequesterButtons'
-import ApproverButtons from '../../Global/ApproverButtons/ApproverButtons'
-import SelectForm from '../../Global/Inputs/SelectForm'
 
-interface IForm {
+import Request from '../../Pages/Request'
+import { IRequestBody, TUser } from '../../../types/global/types'
+import Content from '../Content/Content'
+
+interface IRequestForm {
   user: TUser
   isLoading: boolean
   requestData?: IRequestBody
@@ -27,7 +24,7 @@ interface IForm {
   handleModalStatus?: ((status: string) => void) | undefined
 }
 
-const Form = ({
+const RequestForm = ({
   user,
   isLoading,
   requestData,
@@ -35,7 +32,7 @@ const Form = ({
   onSubmitForm,
   handleApproverModal,
   handleModalStatus,
-}: IForm) => {
+}: IRequestForm) => {
   const { register, watch, handleSubmit, setValue } = useForm<IRequestBody>({
     mode: 'all',
     defaultValues: {
@@ -55,15 +52,15 @@ const Form = ({
   setValue('totalValueUSD', inputTotalValueUSD)
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)} action="">
+    <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
       <Content>
         <div className="flex flex-col gap-4">
           {FormDataInputs.map((data, i) => (
-            <InputGroup key={i}>
+            <Request.InputGroup key={i}>
               {data.map((item: any) => {
                 if (item.type === 'input') {
                   return (
-                    <InputForm
+                    <Request.Input
                       key={item.id}
                       labelText={item.labelText}
                       inputName={item.inputName}
@@ -75,7 +72,7 @@ const Form = ({
                   )
                 } else {
                   return (
-                    <SelectForm
+                    <Request.Select
                       key={item.id}
                       inputName={item.inputName}
                       labelText={item.labelText}
@@ -86,17 +83,17 @@ const Form = ({
                   )
                 }
               })}
-            </InputGroup>
+            </Request.InputGroup>
           ))}
         </div>
       </Content>
       {showApproverButtons ? (
-        <ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
+        <Request.ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
       ) : (
-        <GroupButtons isLoading={isLoading} />
+        <Request.GroupButtons isLoading={isLoading} />
       )}
-    </form>
+    </Request.Form>
   )
 }
 
-export default Form
+export default RequestForm

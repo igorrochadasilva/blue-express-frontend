@@ -1,9 +1,9 @@
 'use client'
 
 import { UseFormRegister } from 'react-hook-form'
-import { IRequestBody } from '../../../types/global/types'
+import { IRequestBody } from '../../../../types/global/types'
 
-type TSelectForm = {
+type TSelect = {
   labelText: string
   inputName: any
   validationSchema?: any
@@ -13,7 +13,8 @@ type TSelectForm = {
   register: UseFormRegister<IRequestBody>
 }
 
-const SelectForm = ({ labelText, inputName, validationSchema, required = false, options, register }: TSelectForm) => {
+const Select = ({ labelText, inputName, validationSchema, required = false, options, register }: TSelect) => {
+  console.log('🚀 ~ Select ~ options:', options)
   return (
     <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
       {labelText}
@@ -24,7 +25,7 @@ const SelectForm = ({ labelText, inputName, validationSchema, required = false, 
         required={required}
         className="rounded border-[1px] py-1 px-2 mt-2"
       >
-        {options.map((option: any) => (
+        {options?.map((option: any) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -34,4 +35,4 @@ const SelectForm = ({ labelText, inputName, validationSchema, required = false, 
   )
 }
 
-export default SelectForm
+export default Select

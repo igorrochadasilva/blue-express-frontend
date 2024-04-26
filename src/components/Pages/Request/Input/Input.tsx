@@ -1,9 +1,9 @@
 'use client'
 
 import { UseFormRegister } from 'react-hook-form'
-import { IRequestBody } from '../../../types/global/types'
+import { IRequestBody } from '../../../../types/global/types'
 
-type TInputForm = {
+type TInput = {
   labelText: string
   inputName: any
   inputType: string | undefined
@@ -16,7 +16,7 @@ type TInputForm = {
   register: UseFormRegister<IRequestBody>
 }
 
-const InputForm = ({
+const Input = ({
   inputName,
   inputType,
   validationSchema,
@@ -26,7 +26,7 @@ const InputForm = ({
   placeholder,
   pattern,
   register,
-}: TInputForm) => {
+}: TInput) => {
   return (
     <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
       {labelText}
@@ -44,4 +44,4 @@ const InputForm = ({
   )
 }
 
-export default InputForm
+export default Input

@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import Content from '../Content/Content'
+import Content from '../../../Global/Content/Content'
 
 interface IGroupButtons {
   isLoading: boolean
