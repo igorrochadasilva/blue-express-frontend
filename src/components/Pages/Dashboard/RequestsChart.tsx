@@ -36,7 +36,7 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
     )
 
     setBarsData(chartData)
-  }, [])
+  }, [requests])
 
   return (
     <Chart.Root>
@@ -44,7 +44,7 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
       <Chart.Content>
         {barsData.length > 0 ? (
           barsData?.map((bar: barData, i: number) => (
-            <Chart.Bar barColor={bar.color} barSize={bar.barSize} barText={bar.text} quantity={bar.qtd} />
+            <Chart.Bar key={i} barColor={bar.color} barSize={bar.barSize} barText={bar.text} quantity={bar.qtd} />
           ))
         ) : (
           <Chart.Loading text="loading chart..." />

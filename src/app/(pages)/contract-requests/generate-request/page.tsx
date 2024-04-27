@@ -21,11 +21,11 @@ export default function GenerateContracts(): JSX.Element {
           link={'/contract-requests/generate-request/maintenance-contract'}
         />
         <GenerateRequest.Button
-          text="Maintenance Contract"
+          text="Software Service Contract"
           link={'/contract-requests/generate-request/software-service-contract'}
         />
         <GenerateRequest.Button
-          text="Maintenance Contract"
+          text="Distributor Representative Contract"
           link={'/contract-requests/generate-request/distributor-representatives-contract'}
         />
       </GenerateRequest.Root>

@@ -58,7 +58,7 @@ const ContractsList = ({ requests }: IContractsList) => {
     })
 
     setListRequests(data)
-  }, [])
+  }, [requests])
 
   return (
     <ListRequests.Root>

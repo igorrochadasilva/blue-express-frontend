@@ -1,6 +1,10 @@
 import { contractTypes } from '../../../../libs/options'
 
-const Status = () => {
+interface IFilterStatusProps {
+  handleSelectRequestStatusChange: (e: string) => void
+}
+
+const FilterStatus = ({ handleSelectRequestStatusChange }: IFilterStatusProps) => {
   const handleSelectChange = (event: any) => {}
 
   return (
@@ -12,7 +16,7 @@ const Status = () => {
         className="border-[1px] border-[#e3e3e3] px-1 py-2 rounded-lg"
         id="contractType"
         name="contractType"
-        onChange={handleSelectChange}
+        onChange={(e) => handleSelectRequestStatusChange(e.currentTarget.value)}
       >
         {contractTypes.map((option) => (
           <option key={option.value} value={option.value}>
@@ -24,4 +28,4 @@ const Status = () => {
   )
 }
 
-export default Status
+export default FilterStatus

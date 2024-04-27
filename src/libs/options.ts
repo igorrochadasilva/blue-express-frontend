@@ -1,3 +1,13 @@
+export const periodOptions = [
+  { value: '', label: 'select' },
+  { value: '1', label: '1 days' },
+  { value: '10', label: '10 days' },
+  { value: '30', label: '30 days' },
+  { value: '60', label: '60 days' },
+  { value: '90', label: '90 days' },
+  { value: 'all', label: 'All' },
+]
+
 export const contractTypeOptions = [
   { value: 'new', label: 'new' },
   { value: 'renovation', label: 'renovation' },
@@ -75,6 +85,7 @@ export const typeRequestOrderOptions = [
 ]
 
 export const contractTypes = [
+  { value: '', label: 'select' },
   { value: 'waiting for approval', label: 'waiting for approval' },
   { value: 'waiting for information', label: 'waiting for information' },
   { value: 'approved', label: 'approved' },
