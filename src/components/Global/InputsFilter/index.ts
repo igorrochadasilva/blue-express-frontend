@@ -1,14 +1,14 @@
 import BtnIssueReport from './BtnIssueReport/BtnIssueReport'
 import CloseExpiration from './CloseExpiration/CloseExpiration'
-import Period from './Period/Period'
+import FilterRequestId from './FilterRequestId/FilterRequestId'
 import { Root } from './Root/Root'
-import Status from './Status/Status'
+import FilterStatus from './FilterStatus/FilterStatus'
 
 const InputsFilter = {
   Root,
   BtnIssueReport,
-  Period,
-  Status,
+  FilterRequestId,
+  FilterStatus,
   CloseExpiration,
 }
 

@@ -54,7 +54,7 @@ const RequestsList = ({ requests }: IRequestsList) => {
     })
 
     setListRequests(data)
-  }, [])
+  }, [requests])
 
   return (
     <ListRequests.Root>
@@ -66,6 +66,7 @@ const RequestsList = ({ requests }: IRequestsList) => {
             listRequests.map((request: IRequest) => {
               return (
                 <ListRequests.Content
+                  key={request.order}
                   type={request.type}
                   status={request.status}
                   statusColor={request.statusColor}
