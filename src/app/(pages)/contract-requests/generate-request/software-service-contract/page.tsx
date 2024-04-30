@@ -5,11 +5,10 @@ import Container from '../../../../../components/Global/Container/Container'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
-import { createSoftwareServiceContractRequest } from '../../../../../actions/software-service-contract'
 import { SubmitHandler } from 'react-hook-form'
-import Form from '../../../../../components/Pages/Request/Form/Form'
 import { SSCFormDataInputs } from '../../../../../libs/SSCFormDataInputs'
 import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
+import { createRequest } from '../../../../../actions/requests'
 
 export default function SoftwareServiceContract() {
   const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +19,7 @@ export default function SoftwareServiceContract() {
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await createSoftwareServiceContractRequest(data, user)
+    const res = await createRequest('software-service-contract', data, user)
     if (res) {
       router.push('/contract-requests')
     }

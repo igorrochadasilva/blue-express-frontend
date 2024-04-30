@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { IRequestBody, TUser } from '../types/global/types'
+import { generateFormData } from '../libs/utils'
 
-export async function listMaintenanceContractRequests(email: string | null | undefined, role: number | undefined) {
+export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
   try {
-    const res = await axios.get('http://localhost:3001/request/maintenance-contract', {
+    const res = await axios.get(`http://localhost:3001/request/${requestType}`, {
       params: {
         email,
         role,
@@ -28,23 +29,26 @@ export async function listMaintenanceContractRequests(email: string | null | und
   }
 }
 
-export async function createMaintenanceContractRequest(data: IRequestBody, user: TUser) {
-  const formatData = {
-    ...data,
-    title: 'Maintenance Contract',
-    status: 'waiting for approval',
-    requester: user?.id,
-    contractRenewQtd: Number(data.contractTotalValue),
-    contractTotalValue: Number(data.contractTotalValue),
-    dollarExchangeRate: Number(data.dollarExchangeRate),
-    totalValueUSD: Number(data.totalValueUSD),
-    gm: Number(data.gm),
-    renewIndexPercentage: Number(data.renewIndexPercentage),
-    index: Number(data.index),
-  }
+export async function createRequest(requestType: string, data: IRequestBody, user: TUser) {
+  const { files, ...dataRest } = data
+
+  const formatData = generateFormData(requestType, dataRest, user)
+  formatData.filesName = ''
+
+  const newFormData = new FormData()
+  const arrayFiles = Array.from(files)
+
+  arrayFiles.forEach((file: any) => {
+    newFormData.append(file.name, file)
+    formatData.filesName += file.name + ','
+  })
+
+  formatData.filesName = formatData.filesName.slice(0, -1)
+
+  newFormData.append('data', JSON.stringify(formatData))
 
   try {
-    const res = await axios.post('http://localhost:3001/request/maintenance-contract', formatData)
+    const res = await axios.post(`http://localhost:3001/request/${requestType}`, newFormData)
 
     if (res.data) {
       notifySuccess('Request Created Successfully.')
@@ -69,9 +73,9 @@ export async function createMaintenanceContractRequest(data: IRequestBody, user:
   }
 }
 
-export async function getMaintenanceContractRequest(id: string) {
+export async function getRequest(requestType: string, id: string) {
   try {
-    const res = await axios.get(`http://localhost:3001/request/maintenance-contract/${id}`)
+    const res = await axios.get(`http://localhost:3001/request/${requestType}/${id}`)
 
     if (res.data) {
       return res.data
@@ -95,21 +99,23 @@ export async function getMaintenanceContractRequest(id: string) {
   }
 }
 
-export async function updateMaintenanceContractRequest(data: IRequestBody) {
-  const formatData = {
-    ...data,
-    status: 'waiting for approval',
-    contractRenewQtd: Number(data.contractTotalValue),
-    contractTotalValue: Number(data.contractTotalValue),
-    dollarExchangeRate: Number(data.dollarExchangeRate),
-    totalValueUSD: Number(data.totalValueUSD),
-    gm: Number(data.gm),
-    renewIndexPercentage: Number(data.renewIndexPercentage),
-    index: Number(data.index),
-  }
+export async function updateRequest(requestType: string, data: IRequestBody) {
+  const { files, ...dataRest } = data
+  const newFormData = new FormData()
+  const arrayFiles = Array.from(files)
+
+  const formatData = generateFormData(requestType, dataRest)
+  formatData.filesName = ''
+
+  arrayFiles.forEach((file: any) => {
+    newFormData.append(file.name, file)
+    formatData.filesName += file.name + ','
+  })
+
+  formatData.filesName = formatData.filesName.slice(0, -1)
 
   try {
-    const res = await axios.patch(`http://localhost:3001/request/maintenance-contract/${formatData.id}`, formatData)
+    const res = await axios.patch(`http://localhost:3001/request/${requestType}/${dataRest.id}`, newFormData)
 
     if (res.data) {
       notifySuccess('Updated Request Successfully.')

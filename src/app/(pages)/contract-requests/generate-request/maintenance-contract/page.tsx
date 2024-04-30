@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import { createMaintenanceContractRequest } from '../../../../../actions/maintenence-contract'
+import { createRequest } from '../../../../../actions/requests'
 import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
 import { MCFormDataInputs } from '../../../../../libs/MCFormDataInputs'
 
@@ -19,7 +19,7 @@ export default function MaintenanceContract() {
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await createMaintenanceContractRequest(data, user)
+    const res = await createRequest('maintenance-contract', data, user)
     if (res) {
       router.push('/contract-requests')
     }

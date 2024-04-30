@@ -1,7 +1,7 @@
 'use client'
 
 import { UseFormRegister } from 'react-hook-form'
-import { IRequestBody } from '../../../../types/global/types'
+import { IRequestBody, TFiles } from '../../../../types/global/types'
 
 type TInput = {
   labelText: string
@@ -14,6 +14,7 @@ type TInput = {
   placeholder?: string
   pattern?: string
   register: UseFormRegister<IRequestBody>
+  getValues: (v: string) => TFiles
 }
 
 const Input = ({
@@ -26,7 +27,24 @@ const Input = ({
   placeholder,
   pattern,
   register,
+  getValues,
 }: TInput) => {
+  const files = getValues('files')
+
+  const linkFiles = (files: TFiles) => {
+    if (!files || Object.keys(files).length === 0) {
+      return null
+    }
+
+    const arrayFiles = Array.from(files)
+
+    return arrayFiles.map((file) => (
+      <a key={file.name} href={file.link}>
+        {file.name}
+      </a>
+    ))
+  }
+
   return (
     <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
       {labelText}
@@ -39,7 +57,9 @@ const Input = ({
         required={required}
         placeholder={placeholder}
         pattern={pattern}
+        multiple={inputType === 'file' ? true : undefined}
       />
+      {inputName === 'files' && <div className="flex flex-row gap-2">{linkFiles(files)}</div>}
     </label>
   )
 }

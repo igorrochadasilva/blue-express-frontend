@@ -6,15 +6,11 @@ import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import {
-  getDistributorRepresentativesContractRequest,
-  updateDistributorRepresentativesContractRequest,
-} from '../../../../../../actions/distributor-representatives-contract'
-import Form from '../../../../../../components/Pages/Request/Form/Form'
 import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../../../../actions/approvals'
 import RequestForm from '../../../../../../components/Global/RequestForm/RequestForm'
+import { getRequest, updateRequest } from '../../../../../../actions/requests'
 
 export default function DistributorRepresentativeContractRequest() {
   const router = useRouter()
@@ -36,17 +32,17 @@ export default function DistributorRepresentativeContractRequest() {
   const fetchRequestData = async (id: string) => {
     setIsLoading(true)
 
-    const request = await getDistributorRepresentativesContractRequest(id)
+    const data = await getRequest('distributor-representatives-contract', id)
 
-    if (request) {
-      setRequestData(request)
+    if (data.request) {
+      setRequestData({ ...data.request, files: data.files })
       setIsLoading(false)
     }
   }
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await updateDistributorRepresentativesContractRequest(data)
+    const res = await updateRequest('distributor-representatives-contract', data)
     if (res) {
       router.push('/contract-requests')
     }

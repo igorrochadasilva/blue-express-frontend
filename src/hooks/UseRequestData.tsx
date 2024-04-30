@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
-import { listMaintenanceContractRequests } from '../actions/maintenence-contract'
-import { listSoftwareServiceContractRequests } from '../actions/software-service-contract'
-import { listDistributorRepresentativesContractRequests } from '../actions/distributor-representatives-contract'
+import { listRequests } from '../actions/requests'
 import { useSession } from 'next-auth/react'
 import { TUser } from '../types/global/types'
 
@@ -17,11 +15,12 @@ const useRequestData = () => {
 
       const user: TUser = session?.user
 
-      const maintenanceContracts = await listMaintenanceContractRequests(user?.email, user?.role)
+      const maintenanceContracts = await listRequests('maintenance-contract', user?.email, user?.role)
 
-      const softwareServiceContracts = await listSoftwareServiceContractRequests(user?.email, user?.role)
+      const softwareServiceContracts = await listRequests('software-service-contract', user?.email, user?.role)
 
-      const distributorRepresentativesContracts = await listDistributorRepresentativesContractRequests(
+      const distributorRepresentativesContracts = await listRequests(
+        'distributor-representatives-contract',
         user?.email,
         user?.role
       )

@@ -1,4 +1,4 @@
-import { IApprover, IRequestBody } from '../types/global/types'
+import { IApprover, IRequestBody, TUser } from '../types/global/types'
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString)
@@ -107,4 +107,71 @@ export const generateChartBarData = (
       qtd: statusSketchAmount,
     },
   ]
+}
+
+export const generateDefaultValueUseForm = (requestData: IRequestBody) => {
+  let defaultValue = {}
+  if (requestData.requestId.includes('MC')) {
+    defaultValue = {
+      ...requestData,
+      contractTotalValue: requestData ? requestData?.contractTotalValue : 0,
+      dollarExchangeRate: requestData ? requestData?.dollarExchangeRate : 0,
+      totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
+    }
+  } else if (requestData.requestId.includes('SSC')) {
+    defaultValue = {
+      ...requestData,
+      contractTotalValue: requestData ? requestData?.contractTotalValue : 0,
+      dollarExchangeRate: requestData ? requestData?.dollarExchangeRate : 0,
+      totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
+    }
+  } else {
+    defaultValue = {
+      ...requestData,
+    }
+  }
+
+  return defaultValue
+}
+
+export const generateFormData = (requestType: string, data: IRequestBody, user?: TUser) => {
+  let formatData: IRequestBody = data
+
+  if (requestType === 'maintenance-contract') {
+    formatData = {
+      ...data,
+      title: 'Maintenance Contract',
+      status: 'waiting for approval',
+      requester: user?.id,
+      contractRenewQtd: Number(data.contractTotalValue),
+      contractTotalValue: Number(data.contractTotalValue),
+      dollarExchangeRate: Number(data.dollarExchangeRate),
+      totalValueUSD: Number(data.totalValueUSD),
+      gm: Number(data.gm),
+      renewIndexPercentage: Number(data.renewIndexPercentage),
+      index: Number(data.index),
+    }
+  } else if (requestType === 'software-service-contract') {
+    formatData = {
+      ...data,
+      title: 'Software Service Contract',
+      status: 'waiting for approval',
+      requester: user?.id,
+      contractRenewQtd: Number(data.contractTotalValue),
+      contractTotalValue: Number(data.contractTotalValue),
+      dollarExchangeRate: Number(data.dollarExchangeRate),
+      totalValueUSD: Number(data.totalValueUSD),
+      gm: Number(data.gm),
+    }
+  } else {
+    formatData = {
+      ...data,
+      title: 'Distributor Representative Contract',
+      status: 'waiting for approval',
+      requester: user?.id,
+      commissionPercentage: Number(data.commissionPercentage),
+    }
+  }
+
+  return formatData
 }

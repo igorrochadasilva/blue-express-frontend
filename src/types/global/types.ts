@@ -18,8 +18,8 @@ export interface IRequestBody {
   contractTotalValue: number
   dollarExchangeRate: number
   totalValueUSD: number
-  gm: string
-  renewIndexPercentage: string
+  gm: number
+  renewIndexPercentage: number
   index: number
   paymentCondition: string
   inclusionClauses: string
@@ -46,6 +46,9 @@ export interface IRequestBody {
   requesterName: string
   requesterEmail: string
   currentApproverName: string
+  files?: any
+  filesName?: any
+  requester?: number
 }
 
 export type TApprover = {
@@ -97,3 +100,5 @@ export type barData = {
   barSize: number
   qtd: number
 }
+
+export type TFiles = { name: string; link: string }[]

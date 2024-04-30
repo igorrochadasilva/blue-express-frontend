@@ -286,5 +286,14 @@ export const SSCFormDataInputs = [
       readonly: false,
       options: approverLevelOptions,
     },
+    {
+      id: 30,
+      type: 'input',
+      labelText: 'Upload Files',
+      inputType: 'file',
+      inputName: 'files',
+      required: false,
+      readonly: false,
+    },
   ],
 ]

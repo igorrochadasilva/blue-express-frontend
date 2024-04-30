@@ -205,5 +205,14 @@ export const DRCFormDataInputs = [
       readonly: false,
       options: approverLevelOptions,
     },
+    {
+      id: 21,
+      type: 'input',
+      labelText: 'Upload Files',
+      inputType: 'file',
+      inputName: 'files',
+      required: false,
+      readonly: false,
+    },
   ],
 ]
