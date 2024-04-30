@@ -6,15 +6,11 @@ import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import {
-  getSoftwareServiceContractRequest,
-  updateSoftwareServiceContractRequest,
-} from '../../../../../../actions/software-service-contract'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../../../../actions/approvals'
-import Form from '../../../../../../components/Pages/Request/Form/Form'
 import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs'
 import RequestForm from '../../../../../../components/Global/RequestForm/RequestForm'
+import { getRequest, updateRequest } from '../../../../../../actions/requests'
 
 export default function SoftwareServiceContractRequest() {
   const router = useRouter()
@@ -22,7 +18,6 @@ export default function SoftwareServiceContractRequest() {
   const [isLoading, setIsLoading] = useState(false)
   const [requestData, setRequestData] = useState<IRequestBody>()
   const FormDataInputs = SSCFormDataInputs
-
   //approver modal states
   const [showApproverModal, setShowApproverModal] = useState(false)
   const [modalStatus, setModalStatus] = useState('')
@@ -37,17 +32,17 @@ export default function SoftwareServiceContractRequest() {
   const fetchRequestData = async (id: string) => {
     setIsLoading(true)
 
-    const request = await getSoftwareServiceContractRequest(id)
+    const data = await getRequest('software-service-contract', id)
 
-    if (request) {
-      setRequestData(request)
+    if (data.request) {
+      setRequestData({ ...data.request, files: data.files })
       setIsLoading(false)
     }
   }
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await updateSoftwareServiceContractRequest(data)
+    const res = await updateRequest('software-service-contract', data)
     if (res) {
       router.push('/contract-requests')
     }
@@ -64,6 +59,7 @@ export default function SoftwareServiceContractRequest() {
     }
 
     setIsLoading(true)
+
     const res = await createApproval(data)
     if (res) {
       router.push('/contract-requests')

@@ -6,15 +6,11 @@ import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import {
-  getMaintenanceContractRequest,
-  updateMaintenanceContractRequest,
-} from '../../../../../../actions/maintenence-contract'
 import ApproverModal from '../../../../../../components/Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../../../../actions/approvals'
-import Form from '../../../../../../components/Pages/Request/Form/Form'
 import { MCFormDataInputs } from '../../../../../../libs/MCFormDataInputs'
 import RequestForm from '../../../../../../components/Global/RequestForm/RequestForm'
+import { getRequest, updateRequest } from '../../../../../../actions/requests'
 
 export default function MaintenanceContractRequest() {
   const router = useRouter()
@@ -36,17 +32,17 @@ export default function MaintenanceContractRequest() {
   const fetchRequestData = async (id: string) => {
     setIsLoading(true)
 
-    const request = await getMaintenanceContractRequest(id)
+    const data = await getRequest('maintenance-contract', id)
 
-    if (request) {
-      setRequestData(request)
+    if (data.request) {
+      setRequestData({ ...data.request, files: data.files })
       setIsLoading(false)
     }
   }
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await updateMaintenanceContractRequest(data)
+    const res = await updateRequest('maintenance-contract', data)
     if (res) {
       router.push('/contract-requests')
     }
@@ -65,7 +61,6 @@ export default function MaintenanceContractRequest() {
     setIsLoading(true)
 
     const res = await createApproval(data)
-
     if (res) {
       router.push('/contract-requests')
     } else {

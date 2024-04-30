@@ -6,9 +6,9 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { IRequestBody, TUser } from '../../../../../types/global/types'
 import { SubmitHandler } from 'react-hook-form'
-import { createDistributorRepresentativesContractsRequest } from '../../../../../actions/distributor-representatives-contract'
 import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs'
 import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
+import { createRequest } from '../../../../../actions/requests'
 
 export default function DistributorRepresentativeContract() {
   const [isLoading, setIsLoading] = useState(false)
@@ -19,7 +19,7 @@ export default function DistributorRepresentativeContract() {
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await createDistributorRepresentativesContractsRequest(data, user)
+    const res = await createRequest('distributor-representatives-contract', data, user)
     if (res) {
       router.push('/contract-requests')
     }

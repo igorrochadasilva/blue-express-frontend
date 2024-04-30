@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import Request from '../../Pages/Request'
 import { IRequestBody, TUser } from '../../../types/global/types'
 import Content from '../Content/Content'
+import { generateDefaultValueUseForm } from '../../../libs/utils'
+import { request } from 'https'
 
 interface IRequestForm {
   user: TUser
@@ -33,13 +35,12 @@ const RequestForm = ({
   handleApproverModal,
   handleModalStatus,
 }: IRequestForm) => {
-  const { register, watch, handleSubmit, setValue } = useForm<IRequestBody>({
+  const generatedDefaultValues = requestData ? generateDefaultValueUseForm(requestData) : {}
+
+  const { register, watch, handleSubmit, setValue, getValues } = useForm<IRequestBody>({
     mode: 'all',
     defaultValues: {
-      ...requestData,
-      contractTotalValue: requestData ? requestData?.contractTotalValue : 0,
-      dollarExchangeRate: requestData ? requestData?.dollarExchangeRate : 0,
-      totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
+      ...generatedDefaultValues,
       requesterName: requestData ? requestData?.requesterName : user?.name,
     },
   })
@@ -49,7 +50,10 @@ const RequestForm = ({
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
   const inputTotalValueUSD = inputContractTotalValue / inputDollarExchangeRate
-  setValue('totalValueUSD', inputTotalValueUSD)
+
+  if (!requestData?.requestId.includes('DRC')) {
+    setValue('totalValueUSD', inputTotalValueUSD)
+  }
 
   return (
     <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
@@ -68,6 +72,7 @@ const RequestForm = ({
                       required={item.required}
                       readonly={item.id === 1 ? true : false}
                       register={register}
+                      getValues={getValues}
                     />
                   )
                 } else {
