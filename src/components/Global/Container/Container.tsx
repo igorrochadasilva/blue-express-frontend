@@ -3,6 +3,7 @@ import SideMenu from '../Menu/Menu'
 import Title from '../Title/Title'
 import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/24/solid'
+import Breadcrumb from '../Breadcrumb/Breadcrumb'
 
 interface IContainer {
   children?: React.ReactNode
@@ -38,6 +39,7 @@ const Container = ({
       <ToastContainer />
       {showSideMenu && <SideMenu />}
       <div className={`flex flex-col w-full ${!isLoginPage && 'ml-[228px]'} `}>
+        <Breadcrumb />
         <div className="flex flex-row items-center justify-between mx-10 ">
           <Title title={title} />
           {showBtnNavigate && (
