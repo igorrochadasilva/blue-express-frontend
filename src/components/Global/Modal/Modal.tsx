@@ -14,8 +14,8 @@ const Modal = ({ text, showModal = false, setCloseModal, action }: IModal) => {
   }
   return (
     <div className="text-center absolute top-0 w-full h-full left-0 flex justify-center items-center">
-      <div className="w-full h-full left-0 top-0 bg-black absolute opacity-80 z-10"></div>
-      <div className="w-96 h-40 bg-white relative z-20 rounded">
+      <div className="w-full h-full left-0 top-0 bg-black fixed opacity-80 z-10"></div>
+      <div className="w-96 h-40 bg-white fixed z-20 rounded">
         <div className="w-full flex justify-end">
           <XMarkIcon onClick={setCloseModal} className="h-6 w-6 text-slate-800 text-end cursor-pointer" />
         </div>

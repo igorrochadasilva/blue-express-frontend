@@ -84,11 +84,17 @@ export const typeRequestOrderOptions = [
   { value: 'distributor', label: 'distributor' },
 ]
 
-export const contractTypes = [
+export const contractTypesOptions = [
   { value: '', label: 'select' },
   { value: 'waiting for approval', label: 'waiting for approval' },
   { value: 'waiting for information', label: 'waiting for information' },
   { value: 'approved', label: 'approved' },
   { value: 'disapproved', label: 'disapproved' },
   { value: 'sketch', label: 'sketch' },
+]
+
+export const requestTypesOptions = [
+  { value: 'Maintenance Contract', label: 'Maintenance Contract' },
+  { value: 'Software Service Contract', label: 'Software Service Contract' },
+  { value: 'Distributor Representatives Contract', label: 'Distributor Representatives Contract' },
 ]

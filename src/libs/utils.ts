@@ -56,6 +56,20 @@ export const generateRouteForId = (requestId: string, id: number) => {
   return requestLink
 }
 
+export const generateRequestKey = (requestTitle: string) => {
+  let key = ''
+
+  if (requestTitle === 'Maintenance Contract') {
+    key = 'MC'
+  } else if (requestTitle === 'Software Service Contract') {
+    key = 'SSC'
+  } else {
+    key = 'DRC'
+  }
+
+  return key
+}
+
 export const formatApproverName = (approverNames: string) => {
   const charsToRemove = /\{|\}|"/g
   const formattedApproversName = approverNames.replace(charsToRemove, '')
