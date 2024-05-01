@@ -102,3 +102,24 @@ export type barData = {
 }
 
 export type TFiles = { name: string; link: string }[]
+
+export interface INewApproverData {
+  user: number
+  title: string
+  level: number
+  competence: number
+  company: string
+  key?: string
+}
+
+export interface IApproverData {
+  id: number
+  title: string
+  level: number
+  key: string
+  company: string
+  office: string
+  competence: number
+  approverEmail: string
+  approverName: string
+}

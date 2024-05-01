@@ -58,7 +58,12 @@ export default function Approvers() {
   }
 
   return (
-    <Container title="Approver" btnNavigateLink="/approver/new-approver" btnNavigateText="New Approver" showBtnNavigate>
+    <Container
+      title="Approver"
+      btnNavigateLink="/approvers/new-approver"
+      btnNavigateText="New Approver"
+      showBtnNavigate
+    >
       <Content showStyleContent={false}>
         {isLoading ? (
           <div className="flex items-center justify-center h-[400px]">Loading...</div>

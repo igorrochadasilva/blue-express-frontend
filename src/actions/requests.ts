@@ -105,6 +105,7 @@ export async function updateRequest(requestType: string, data: IRequestBody) {
   const arrayFiles = Array.from(files)
 
   const formatData = generateFormData(requestType, dataRest)
+
   formatData.filesName = ''
 
   arrayFiles.forEach((file: any) => {
@@ -113,6 +114,8 @@ export async function updateRequest(requestType: string, data: IRequestBody) {
   })
 
   formatData.filesName = formatData.filesName.slice(0, -1)
+
+  newFormData.append('data', JSON.stringify(formatData))
 
   try {
     const res = await axios.patch(`http://localhost:3001/request/${requestType}/${dataRest.id}`, newFormData)

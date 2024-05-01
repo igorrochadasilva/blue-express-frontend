@@ -1,4 +1,4 @@
-import { contractTypes } from '../../../../libs/options'
+import { contractTypesOptions } from '../../../../libs/options'
 
 interface IFilterStatusProps {
   handleSelectRequestStatusChange: (e: string) => void
@@ -18,7 +18,7 @@ const FilterStatus = ({ handleSelectRequestStatusChange }: IFilterStatusProps) =
         name="contractType"
         onChange={(e) => handleSelectRequestStatusChange(e.currentTarget.value)}
       >
-        {contractTypes.map((option) => (
+        {contractTypesOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
