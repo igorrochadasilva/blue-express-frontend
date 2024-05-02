@@ -57,7 +57,6 @@ export default function MaintenanceContractRequest() {
       justify: justifyApproverModal,
       url: 'maintenance-contract',
     }
-    console.log('🚀 ~ handleApproverActionOnRequest ~ data.user:', data.user)
 
     setIsLoading(true)
 
