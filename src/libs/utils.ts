@@ -171,7 +171,6 @@ export const generateFormData = (requestType: string, data: IRequestBody, user?:
       title: 'Software Service Contract',
       status: 'waiting for approval',
       requester: user?.id,
-      contractRenewQtd: Number(data.contractTotalValue),
       contractTotalValue: Number(data.contractTotalValue),
       dollarExchangeRate: Number(data.dollarExchangeRate),
       totalValueUSD: Number(data.totalValueUSD),
@@ -180,7 +179,7 @@ export const generateFormData = (requestType: string, data: IRequestBody, user?:
   } else {
     formatData = {
       ...data,
-      title: 'Distributor Representative Contract',
+      title: 'Distributor Representatives Contract',
       status: 'waiting for approval',
       requester: user?.id,
       commissionPercentage: Number(data.commissionPercentage),

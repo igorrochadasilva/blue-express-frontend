@@ -48,7 +48,10 @@ export const createApproval = async ({ user, statusAction, requestData, justify,
   }
 
   try {
-    await axios.patch(`http://localhost:3001/request/${url}/${requestData?.id}`, formatRequestData)
+    await axios.patch(
+      `http://localhost:3001/request/${url}/${requestData?.id}?user=${user?.id}&role=${user?.role}&approver=true`,
+      formatRequestData
+    )
 
     const approval = await axios.post('http://localhost:3001/approvals', formatApprovalData, {
       headers: {

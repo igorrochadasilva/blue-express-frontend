@@ -15,7 +15,7 @@ interface IContentProps {
 
 const Content = ({ order, type, statusColor, status, validity, approver, level, requestId, link }: IContentProps) => {
   return (
-    <tr key={order} className="text-center">
+    <tr key={order} className="text-center whitespace-nowrap border-b-[1px]">
       <td className="w-1/7 py-3 w-48">{type}</td>
       <td style={{ color: statusColor }} className="w-1/7 py-3">
         {status}

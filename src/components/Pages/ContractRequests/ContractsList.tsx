@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { IRequestBody } from '../../../types/global/types'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
 import { formatApproverName, generateRouteForId } from '../../../libs/utils'
 import ListRequests from './List'
+import { v4 as uuid4 } from 'uuid'
 
 interface IContractsList {
   requests: IRequestBody[]
@@ -68,6 +67,7 @@ const ContractsList = ({ requests }: IContractsList) => {
           listRequests.map((request: IRequest) => {
             return (
               <ListRequests.Content
+                key={uuid4()}
                 order={request.order}
                 type={request.type}
                 statusColor={request.statusColor}
