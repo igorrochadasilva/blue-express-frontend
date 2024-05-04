@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { IRequestBody, TUser } from '../types/global/types'
-import { generateFormData } from '../libs/utils'
+import { generateRequestFormData } from '../libs/utils'
 
 export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
   try {
@@ -32,7 +32,7 @@ export async function listRequests(requestType: string, email: string | null | u
 export async function createRequest(requestType: string, data: IRequestBody, user: TUser) {
   const { files, ...dataRest } = data
 
-  const formatData = generateFormData(requestType, dataRest, user)
+  const formatData = generateRequestFormData(requestType, dataRest, user)
   formatData.filesName = ''
 
   const newFormData = new FormData()
@@ -104,7 +104,7 @@ export async function updateRequest(user: TUser, requestType: string, data: IReq
   const newFormData = new FormData()
   const arrayFiles = Array.from(files)
 
-  const formatData = generateFormData(requestType, dataRequestRest)
+  const formatData = generateRequestFormData(requestType, dataRequestRest)
 
   formatData.filesName = ''
 

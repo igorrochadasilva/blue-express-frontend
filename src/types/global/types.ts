@@ -122,4 +122,5 @@ export interface IApproverData {
   competence: number
   approverEmail: string
   approverName: string
+  user: any
 }

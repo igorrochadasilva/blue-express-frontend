@@ -44,6 +44,7 @@ const RequestForm = ({
   })
 
   const showApproverButtons = user?.role !== 1 && requestData?.status === 'waiting for approval'
+  const showSaveButton = user?.email === requestData?.author
 
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
@@ -93,7 +94,7 @@ const RequestForm = ({
       {showApproverButtons ? (
         <Request.ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
       ) : (
-        <Request.GroupButtons isLoading={isLoading} />
+        showSaveButton && <Request.GroupButtons isLoading={isLoading} />
       )}
     </Request.Form>
   )

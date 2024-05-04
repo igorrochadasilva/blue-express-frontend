@@ -107,7 +107,7 @@ export const SSCFormDataInputs = [
       labelText: 'Payment Condition',
       inputName: 'paymentCondition',
       inputType: 'text',
-      required: true,
+      required: false,
       readonly: false,
     },
     {
