@@ -129,6 +129,7 @@ export const MCFormDataInputs = [
       inputType: 'number',
       required: true,
       readonly: false,
+      step: '0.01',
     },
     {
       id: 14,

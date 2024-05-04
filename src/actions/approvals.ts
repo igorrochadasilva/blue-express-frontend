@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { IRequestBody, TUser } from '../types/global/types'
+import { generateApprovalFormData, generateRequestStatus } from '../libs/utils'
 
-interface ICreateApproval {
+export interface ICreateApproval {
   user: TUser
   statusAction: string
   requestData: IRequestBody | undefined
@@ -11,44 +12,19 @@ interface ICreateApproval {
 }
 
 export const createApproval = async ({ user, statusAction, requestData, justify, url }: ICreateApproval) => {
-  let requestStatus = ''
+  const requestStatus = generateRequestStatus(statusAction)
 
-  switch (statusAction) {
-    case 'sketch':
-      requestStatus = 'sketch'
-      break
-    case 'information':
-      requestStatus = 'waiting for information'
-      break
-    case 'disapprove':
-      requestStatus = 'disapproved'
-      break
-    case 'approve':
-      requestStatus = 'approved'
-      break
-    default:
-      requestStatus = 'waiting for approval'
-  }
-
-  const formatApprovalData = {
-    title: `Approval Level ${requestData?.currentLevel}`,
-    level: requestData?.currentLevel,
-    user: user?.id,
-    requestId: requestData?.requestId,
-    status: requestStatus,
-    justify: justify,
-    typeRequest: requestData?.title,
-    author: user?.name,
-    approver: user?.id,
-    maintenanceContract: requestData?.id,
-  }
+  const formatApprovalData = generateApprovalFormData(user, requestStatus, requestData, justify)
 
   const formatRequestData = {
     status: requestStatus,
   }
 
   try {
-    await axios.patch(`http://localhost:3001/request/${url}/${requestData?.id}`, formatRequestData)
+    await axios.patch(
+      `http://localhost:3001/request/${url}/${requestData?.id}?user=${user?.id}&role=${user?.role}&approver=true`,
+      formatRequestData
+    )
 
     const approval = await axios.post('http://localhost:3001/approvals', formatApprovalData, {
       headers: {

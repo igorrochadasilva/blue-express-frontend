@@ -42,7 +42,8 @@ export default function SoftwareServiceContractRequest() {
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await updateRequest('software-service-contract', data)
+    const res = await updateRequest(user, 'software-service-contract', data)
+
     if (res) {
       router.push('/contract-requests')
     }

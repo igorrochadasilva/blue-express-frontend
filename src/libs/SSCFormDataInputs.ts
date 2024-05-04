@@ -107,7 +107,7 @@ export const SSCFormDataInputs = [
       labelText: 'Payment Condition',
       inputName: 'paymentCondition',
       inputType: 'text',
-      required: true,
+      required: false,
       readonly: false,
     },
     {
@@ -129,6 +129,7 @@ export const SSCFormDataInputs = [
       inputType: 'number',
       required: true,
       readonly: false,
+      step: '0.01',
     },
     {
       id: 14,

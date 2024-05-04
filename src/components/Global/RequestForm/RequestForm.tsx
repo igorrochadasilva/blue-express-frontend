@@ -1,13 +1,11 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-
 import Request from '../../Pages/Request'
 import { IRequestBody, TUser } from '../../../types/global/types'
 import Content from '../Content/Content'
 import { generateDefaultValueUseForm } from '../../../libs/utils'
-import { request } from 'https'
-
+import { v4 as uuid4 } from 'uuid'
 interface IRequestForm {
   user: TUser
   isLoading: boolean
@@ -46,6 +44,7 @@ const RequestForm = ({
   })
 
   const showApproverButtons = user?.role !== 1 && requestData?.status === 'waiting for approval'
+  const showSaveButton = user?.email === requestData?.author
 
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
@@ -60,12 +59,12 @@ const RequestForm = ({
       <Content>
         <div className="flex flex-col gap-4">
           {FormDataInputs.map((data, i) => (
-            <Request.InputGroup key={i}>
+            <Request.InputGroup key={uuid4()}>
               {data.map((item: any) => {
                 if (item.type === 'input') {
                   return (
                     <Request.Input
-                      key={item.id}
+                      key={uuid4()}
                       labelText={item.labelText}
                       inputName={item.inputName}
                       inputType={item.inputType}
@@ -95,7 +94,7 @@ const RequestForm = ({
       {showApproverButtons ? (
         <Request.ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
       ) : (
-        <Request.GroupButtons isLoading={isLoading} />
+        showSaveButton && <Request.GroupButtons isLoading={isLoading} />
       )}
     </Request.Form>
   )

@@ -25,7 +25,9 @@ const RequestsList = ({ requests }: IRequestsList) => {
   const [listRequests, setListRequests] = useState<any>()
 
   useEffect(() => {
-    const data = requests.map((request, index) => {
+    const filteredRequests = requests.filter((request) => request.status === 'waiting for approval')
+
+    const data = filteredRequests.map((request, index) => {
       const statusColor =
         {
           approved: '#00D134',

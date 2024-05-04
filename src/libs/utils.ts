@@ -1,4 +1,5 @@
-import { IApprover, IRequestBody, TUser } from '../types/global/types'
+import { ICreateApproval } from '../actions/approvals'
+import { IApprover, IApproverData, IRequestBody, TUser } from '../types/global/types'
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString)
@@ -148,7 +149,7 @@ export const generateDefaultValueUseForm = (requestData: IRequestBody) => {
   return defaultValue
 }
 
-export const generateFormData = (requestType: string, data: IRequestBody, user?: TUser) => {
+export const generateRequestFormData = (requestType: string, data: IRequestBody, user?: TUser) => {
   let formatData: IRequestBody = data
 
   if (requestType === 'maintenance-contract') {
@@ -171,7 +172,6 @@ export const generateFormData = (requestType: string, data: IRequestBody, user?:
       title: 'Software Service Contract',
       status: 'waiting for approval',
       requester: user?.id,
-      contractRenewQtd: Number(data.contractTotalValue),
       contractTotalValue: Number(data.contractTotalValue),
       dollarExchangeRate: Number(data.dollarExchangeRate),
       totalValueUSD: Number(data.totalValueUSD),
@@ -180,7 +180,7 @@ export const generateFormData = (requestType: string, data: IRequestBody, user?:
   } else {
     formatData = {
       ...data,
-      title: 'Distributor Representative Contract',
+      title: 'Distributor Representatives Contract',
       status: 'waiting for approval',
       requester: user?.id,
       commissionPercentage: Number(data.commissionPercentage),
@@ -188,4 +188,75 @@ export const generateFormData = (requestType: string, data: IRequestBody, user?:
   }
 
   return formatData
+}
+
+export const generateRequestStatus = (statusAction: string) => {
+  switch (statusAction) {
+    case 'sketch':
+      return 'sketch'
+
+    case 'information':
+      return 'waiting for information'
+
+    case 'disapprove':
+      return 'disapproved'
+
+    case 'approve':
+      return 'approved'
+
+    default:
+      return 'waiting for approval'
+  }
+}
+
+export const generateApprovalFormData = (
+  user: TUser,
+  requestStatus: string,
+  requestData: IRequestBody | undefined,
+  justify: string
+) => {
+  let formatApprovalData = {}
+
+  if (requestData?.requestId.includes('MC')) {
+    formatApprovalData = {
+      title: `Approval Level ${requestData?.currentLevel}`,
+      level: requestData?.currentLevel,
+      user: user?.id,
+      requestId: requestData?.requestId,
+      status: requestStatus,
+      justify: justify,
+      typeRequest: 'Maintenance Contract',
+      author: user?.name,
+      approver: user?.id,
+      maintenanceContract: requestData?.id,
+    }
+  } else if (requestData?.requestId.includes('SSC')) {
+    formatApprovalData = {
+      title: `Approval Level ${requestData?.currentLevel}`,
+      level: requestData?.currentLevel,
+      user: user?.id,
+      requestId: requestData?.requestId,
+      status: requestStatus,
+      justify: justify,
+      typeRequest: 'Software Service Contract',
+      author: user?.name,
+      approver: user?.id,
+      softwareServiceContract: requestData?.id,
+    }
+  } else {
+    formatApprovalData = {
+      title: `Approval Level ${requestData?.currentLevel}`,
+      level: requestData?.currentLevel,
+      user: user?.id,
+      requestId: requestData?.requestId,
+      status: requestStatus,
+      justify: justify,
+      typeRequest: 'Distributor Representatives Contract',
+      author: user?.name,
+      approver: user?.id,
+      distributorRepresentativesContract: requestData?.id,
+    }
+  }
+
+  return formatApprovalData
 }

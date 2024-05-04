@@ -13,6 +13,7 @@ type TInput = {
   required?: boolean
   placeholder?: string
   pattern?: string
+  step?: string | number | undefined
   register: UseFormRegister<IRequestBody>
   getValues: (v: string) => TFiles
 }
@@ -26,6 +27,7 @@ const Input = ({
   required = false,
   placeholder,
   pattern,
+  step = 'any',
   register,
   getValues,
 }: TInput) => {
@@ -58,6 +60,7 @@ const Input = ({
         placeholder={placeholder}
         pattern={pattern}
         multiple={inputType === 'file' ? true : undefined}
+        step={step}
       />
       {inputName === 'files' && <div className="flex flex-row gap-2">{linkFiles(files)}</div>}
     </label>

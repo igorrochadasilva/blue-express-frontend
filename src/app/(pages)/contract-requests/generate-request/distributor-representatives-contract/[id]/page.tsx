@@ -42,7 +42,7 @@ export default function DistributorRepresentativeContractRequest() {
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await updateRequest('distributor-representatives-contract', data)
+    const res = await updateRequest(user, 'distributor-representatives-contract', data)
     if (res) {
       router.push('/contract-requests')
     }

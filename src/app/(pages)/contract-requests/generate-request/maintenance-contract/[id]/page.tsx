@@ -42,7 +42,7 @@ export default function MaintenanceContractRequest() {
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
-    const res = await updateRequest('maintenance-contract', data)
+    const res = await updateRequest(user, 'maintenance-contract', data)
     if (res) {
       router.push('/contract-requests')
     }

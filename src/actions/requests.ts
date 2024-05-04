@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
 import { IRequestBody, TUser } from '../types/global/types'
-import { generateFormData } from '../libs/utils'
+import { generateRequestFormData } from '../libs/utils'
 
 export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
   try {
@@ -32,7 +32,7 @@ export async function listRequests(requestType: string, email: string | null | u
 export async function createRequest(requestType: string, data: IRequestBody, user: TUser) {
   const { files, ...dataRest } = data
 
-  const formatData = generateFormData(requestType, dataRest, user)
+  const formatData = generateRequestFormData(requestType, dataRest, user)
   formatData.filesName = ''
 
   const newFormData = new FormData()
@@ -99,12 +99,12 @@ export async function getRequest(requestType: string, id: string) {
   }
 }
 
-export async function updateRequest(requestType: string, data: IRequestBody) {
-  const { files, ...dataRest } = data
+export async function updateRequest(user: TUser, requestType: string, data: IRequestBody) {
+  const { files, ...dataRequestRest } = data
   const newFormData = new FormData()
   const arrayFiles = Array.from(files)
 
-  const formatData = generateFormData(requestType, dataRest)
+  const formatData = generateRequestFormData(requestType, dataRequestRest)
 
   formatData.filesName = ''
 
@@ -118,7 +118,10 @@ export async function updateRequest(requestType: string, data: IRequestBody) {
   newFormData.append('data', JSON.stringify(formatData))
 
   try {
-    const res = await axios.patch(`http://localhost:3001/request/${requestType}/${dataRest.id}`, newFormData)
+    const res = await axios.patch(
+      `http://localhost:3001/request/${requestType}/${dataRequestRest.id}?user=${user?.id}`,
+      newFormData
+    )
 
     if (res.data) {
       notifySuccess('Updated Request Successfully.')
