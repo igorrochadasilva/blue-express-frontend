@@ -1,4 +1,4 @@
-import Content from '../../../Global/Content/Content'
+import Content from '../../../../Global/Content/Content'
 
 interface IGroupButtons {
   isLoading: boolean

@@ -86,14 +86,14 @@ export async function getRequest(requestType: string, id: string) {
     const error: any = e
     if (error.response?.data.message) {
       if (Array.isArray(error.response?.data.message)) {
-        notifyError(error.response.data.message[0])
+        // notifyError(error.response.data.message[0])
       } else {
-        notifyError(error.response.data.message)
+        // notifyError(error.response.data.message)
       }
 
       return false
     } else {
-      notifyDefaultError()
+      // notifyDefaultError()
       return false
     }
   }

@@ -1,5 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react'
-import { periodOptions } from '../../../libs/options'
+import { periodOptions } from '../../../../libs/options'
 
 interface IPeriodFilterProps {
   handleSelectPeriodChange: (e: string) => void

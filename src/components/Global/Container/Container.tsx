@@ -1,14 +1,11 @@
+'use server'
+
 import { ToastContainer } from 'react-toastify'
-import SideMenu from '../Menu/Menu'
-import Title from '../Title/Title'
-import Link from 'next/link'
-import { PlusIcon } from '@heroicons/react/24/solid'
-import Breadcrumb from '../Breadcrumb/Breadcrumb'
+import { ContainerContent } from '.'
 
 interface IContainer {
   children?: React.ReactNode
   bgColor?: string
-  showSideMenu?: boolean
   title?: string
   showBtnNavigate?: boolean
   btnNavigateText?: string
@@ -20,10 +17,9 @@ interface IContainer {
   isLoginPage?: boolean
 }
 
-const Container = ({
+const Container = async ({
   children,
   bgColor = 'bg-[#e5e5e5]',
-  showSideMenu = true,
   title,
   showBtnNavigate = false,
   btnNavigateText = 'btn text',
@@ -35,27 +31,26 @@ const Container = ({
   isLoginPage = false,
 }: IContainer) => {
   return (
-    <main className={`flex w-full min-h-screen ${bgColor}`}>
+    <ContainerContent.Root bgColor={bgColor}>
       <ToastContainer />
-      {showSideMenu && <SideMenu />}
       <div className={`flex flex-col w-full ${!isLoginPage && 'ml-[228px]'} `}>
-        <Breadcrumb />
+        <ContainerContent.Breadcrumb />
         <div className="flex flex-row items-center justify-between mx-10 ">
-          <Title title={title} />
+          <ContainerContent.Title title={title} />
           {showBtnNavigate && (
-            <Link
-              className={`flex justify-center items-center h-5 ${btnBgColor} ${btnTextColor} py-4 px-5 rounded font-semibold ${btnBorderColor} border-[1px] text-sm hover:${btnBgHover}`}
-              href={btnNavigateLink}
-            >
-              {btnNavigateText}
-              <PlusIcon className={`ml-2 w-5 ${btnTextColor}  `} />
-            </Link>
+            <ContainerContent.NavigateButton
+              btnNavigateLink={btnNavigateLink}
+              btnBgColor={btnBgColor}
+              btnBgHover={btnBgHover}
+              btnBorderColor={btnBorderColor}
+              btnNavigateText={btnNavigateText}
+              btnTextColor={btnTextColor}
+            />
           )}
         </div>
-
         {children}
       </div>
-    </main>
+    </ContainerContent.Root>
   )
 }
 

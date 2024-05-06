@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 export interface IRequestBody {
   id: number
   title: string
@@ -123,4 +125,16 @@ export interface IApproverData {
   approverEmail: string
   approverName: string
   user: any
+}
+
+export interface IMenuItems {
+  title: string
+  path?: string
+  icon?: ReactElement<any, any>
+  subItems?: ISubMenuItem[]
+}
+
+export interface ISubMenuItem {
+  title: string
+  path: string
 }

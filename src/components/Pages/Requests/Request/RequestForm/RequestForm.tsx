@@ -1,10 +1,10 @@
 'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
-import Request from '../../Pages/Request'
-import { IRequestBody, TUser } from '../../../types/global/types'
-import Content from '../Content/Content'
-import { generateDefaultValueUseForm } from '../../../libs/utils'
+import Request from '..'
+import { IRequestBody, TUser } from '../../../../../types/global/types'
+import Content from '../../../../Global/Content/Content'
+import { generateDefaultValueUseForm } from '../../../../../libs/utils'
 import { v4 as uuid4 } from 'uuid'
 interface IRequestForm {
   user: TUser
@@ -44,7 +44,7 @@ const RequestForm = ({
   })
 
   const showApproverButtons = user?.role !== 1 && requestData?.status === 'waiting for approval'
-  const showSaveButton = user?.email === requestData?.author
+  //const showSaveButton = user?.email === requestData?.author && requestData?.status !== 'waiting for approval'
 
   const inputContractTotalValue = watch('contractTotalValue')
   const inputDollarExchangeRate = watch('dollarExchangeRate')
@@ -94,7 +94,7 @@ const RequestForm = ({
       {showApproverButtons ? (
         <Request.ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
       ) : (
-        showSaveButton && <Request.GroupButtons isLoading={isLoading} />
+        <Request.GroupButtons isLoading={isLoading} />
       )}
     </Request.Form>
   )

@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { ReactNode } from 'react'
 import { nextAuthOptions } from '../api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
+import SideMenu from '../../components/Global/SideMenu/SideMenu'
 
 interface PrivateLayoutProps {
   children: ReactNode
@@ -14,5 +15,10 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
     redirect('/')
   }
 
-  return <>{children}</>
+  return (
+    <>
+      <SideMenu />
+      {children}
+    </>
+  )
 }

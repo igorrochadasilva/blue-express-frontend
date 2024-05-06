@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { barData, IRequestBody } from '../../../types/global/types'
-import { filterRequestsByStatus, generateChartBarData } from '../../../libs/utils'
+import { barData, IRequestBody } from '../../../../types/global/types'
+import { filterRequestsByStatus, generateChartBarData } from '../../../../libs/utils'
 import { Chart } from './Chart'
 
 interface IRequestsChart {
