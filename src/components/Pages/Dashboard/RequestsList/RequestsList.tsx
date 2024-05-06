@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { calculateSLA, formatApproverName, formatDate, generateRouteForId } from '../../../libs/utils'
-import { IRequestBody } from '../../../types/global/types'
+import { calculateSLA, formatApproverName, formatDate, generateRouteForId } from '../../../../libs/utils'
+import { IRequestBody } from '../../../../types/global/types'
 import ListRequests from './List'
 
 interface IRequestsList {

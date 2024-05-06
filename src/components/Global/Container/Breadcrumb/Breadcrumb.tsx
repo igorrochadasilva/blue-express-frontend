@@ -1,3 +1,5 @@
+'use client'
+
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

@@ -1,9 +1,7 @@
-'use client'
-
 import Container from '../../../../components/Global/Container/Container'
 import GenerateRequest from '../../../../components/Pages/GenerateRequest'
 
-export default function GenerateContracts(): JSX.Element {
+export default async function GenerateContracts() {
   return (
     <Container
       title="Contract Requests"

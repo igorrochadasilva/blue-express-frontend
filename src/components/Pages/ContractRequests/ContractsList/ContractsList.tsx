@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { IRequestBody } from '../../../types/global/types'
-import { formatApproverName, generateRouteForId } from '../../../libs/utils'
-import ListRequests from './List'
+import { IRequestBody } from '../../../../types/global/types'
+import { formatApproverName, generateRouteForId } from '../../../../libs/utils'
 import { v4 as uuid4 } from 'uuid'
+import ListRequests from './List'
 
 interface IContractsList {
   requests: IRequestBody[]

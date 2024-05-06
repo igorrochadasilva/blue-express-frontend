@@ -1,34 +1,14 @@
-'use client'
-
-import { useState } from 'react'
 import Container from '../../../../../components/Global/Container/Container'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { IRequestBody, TUser } from '../../../../../types/global/types'
-import { SubmitHandler } from 'react-hook-form'
-import { createRequest } from '../../../../../actions/requests'
-import RequestForm from '../../../../../components/Global/RequestForm/RequestForm'
 import { MCFormDataInputs } from '../../../../../libs/MCFormDataInputs'
+import RequestContent from '../../../../../components/Pages/Requests/RequestContent'
+import { getUserSession } from '../../../../../actions/auth'
 
-export default function MaintenanceContract() {
-  const [isLoading, setIsLoading] = useState(false)
-  const { data: session, status } = useSession()
-  const router = useRouter()
-  const user: TUser = session?.user
-  const FormDataInputs = MCFormDataInputs
-
-  const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
-    setIsLoading(true)
-    const res = await createRequest('maintenance-contract', data, user)
-    if (res) {
-      router.push('/contract-requests')
-    }
-    setIsLoading(false)
-  }
+export default async function MaintenanceContract() {
+  const user = await getUserSession()
 
   return (
     <Container title="Maintenance Contract">
-      <RequestForm user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />
+      <RequestContent user={user} FormDataInputs={MCFormDataInputs} createRequestRouter="maintenance-contract" />
     </Container>
   )
 }

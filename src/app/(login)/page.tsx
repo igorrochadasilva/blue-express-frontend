@@ -1,12 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { handleForgetPassword } from '../../actions/auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { ArrowPathIcon, XMarkIcon } from '@heroicons/react/24/solid'
-import Container from '../../components/Global/Container/Container'
 import { signIn } from 'next-auth/react'
 import { notifyDefaultError, notifyError } from '../../toast/notifications'
 import Loading from '../../components/Global/Loading/loading'
@@ -24,7 +21,7 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    formState: { errors, submitCount },
+    formState: { errors },
   } = useForm<LoginInputs>()
 
   const handleShowForgetPassword = () => {
@@ -59,42 +56,38 @@ export default function Home() {
     }
   }
 
-  return (
-    <Container isLoginPage bgColor="bg-gray-400" showSideMenu={false}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Login.Root>
-          <Login.IconClose handleShowForgetPassword={handleShowForgetPassword} showForgetPassword />
-          <Login.Form onSubmitLogin={handleSubmit(onSubmitLogin)}>
-            <Login.LogoImg />
-            <Login.Content>
-              {showForgetPassword && <Login.ForgetPasswordMsg />}
-              <Login.Input
-                inputName="email"
-                inputType="email"
-                labelText="E-mail"
-                message="Entered value does not match email format"
-                patternValue={/\S+@\S+\.\S+/}
-                errors={errors}
-                register={register}
-              />
-              {!showForgetPassword && (
-                <Login.Input
-                  inputName="password"
-                  inputType="password"
-                  labelText="Password"
-                  message="Entered value does not match password format"
-                  errors={errors}
-                  register={register}
-                />
-              )}
-              <Login.Button showForgetPassword={showForgetPassword} />
-              {!showForgetPassword && <Login.ForgetButton handleShowForgetPassword={handleShowForgetPassword} />}
-            </Login.Content>
-          </Login.Form>
-        </Login.Root>
-      )}
-    </Container>
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <Login.Root>
+      <Login.IconClose handleShowForgetPassword={handleShowForgetPassword} showForgetPassword />
+      <Login.Form onSubmitLogin={handleSubmit(onSubmitLogin)}>
+        <Login.LogoImg />
+        <Login.Content>
+          {showForgetPassword && <Login.ForgetPasswordMsg />}
+          <Login.Input
+            inputName="email"
+            inputType="email"
+            labelText="E-mail"
+            message="Entered value does not match email format"
+            patternValue={/\S+@\S+\.\S+/}
+            errors={errors}
+            register={register}
+          />
+          {!showForgetPassword && (
+            <Login.Input
+              inputName="password"
+              inputType="password"
+              labelText="Password"
+              message="Entered value does not match password format"
+              errors={errors}
+              register={register}
+            />
+          )}
+          <Login.Button showForgetPassword={showForgetPassword} />
+          {!showForgetPassword && <Login.ForgetButton handleShowForgetPassword={handleShowForgetPassword} />}
+        </Login.Content>
+      </Login.Form>
+    </Login.Root>
   )
 }
