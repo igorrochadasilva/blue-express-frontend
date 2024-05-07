@@ -1,9 +1,9 @@
 import Container from '../../../components/Global/Container/Container'
 import ContractRequestContent from '../../../components/Pages/ContractRequests/ContractRequestContent'
-import { getRequests } from '../../../actions/auth'
+import { getRequests } from '../../../hooks/GetRequests'
 
 export default async function ContractRequests() {
-  const requests = await getRequests()
+  const requestsData = await getRequests()
 
   return (
     <Container
@@ -16,7 +16,7 @@ export default async function ContractRequests() {
       btnBorderColor="border-be_first_color"
       btnBgHover="bg-slate-300"
     >
-      <ContractRequestContent requests={requests} />
+      <ContractRequestContent requestsData={requestsData} />
     </Container>
   )
 }

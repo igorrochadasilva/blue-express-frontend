@@ -1,6 +1,5 @@
 'use server'
 
-import { ToastContainer } from 'react-toastify'
 import { ContainerContent } from '.'
 
 interface IContainer {
@@ -32,7 +31,6 @@ const Container = async ({
 }: IContainer) => {
   return (
     <ContainerContent.Root bgColor={bgColor}>
-      <ToastContainer />
       <div className={`flex flex-col w-full ${!isLoginPage && 'ml-[228px]'} `}>
         <ContainerContent.Breadcrumb />
         <div className="flex flex-row items-center justify-between mx-10 ">

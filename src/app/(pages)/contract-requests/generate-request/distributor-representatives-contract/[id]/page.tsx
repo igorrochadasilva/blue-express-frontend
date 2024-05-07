@@ -3,6 +3,7 @@ import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs'
 import { getRequest } from '../../../../../../actions/requests'
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent'
 import { getUserSession } from '../../../../../../actions/auth'
+import ErrorComponent from '../../../../../../components/Global/Error/Error'
 
 interface IDistributorRepresentativeContractRequest {
   params: { id: string }
@@ -15,12 +16,18 @@ export default async function DistributorRepresentativeContractRequest({
   const { id } = params
   const requestData = await getRequest('distributor-representatives-contract', id)
 
+  const { status, data, message } = requestData
+
+  if (status !== 200) {
+    return <ErrorComponent message={message} />
+  }
+
   return (
-    <Container title={requestData?.requestId}>
-      {requestData ? (
+    <Container title={data?.requestId}>
+      {data ? (
         <DynamicRequestContent
           user={user}
-          requestData={{ ...requestData.request, files: requestData.files }}
+          requestData={{ ...data.request, files: data.files }}
           FormDataInputs={DRCFormDataInputs}
           requestRouteType={'distributor-representatives-contract'}
         />

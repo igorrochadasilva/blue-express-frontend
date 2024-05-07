@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-export const notifyError = (message: string) => {
+export const notifyError = (message: string | null) => {
   toast.error(message, {
     position: 'top-right',
   })

@@ -6,12 +6,17 @@ import PeriodFilter from './PeriodFilter/PeriodFilter'
 import Content from '../../Global/Content/Content'
 import RequestsChart from './RequestsChart/RequestsChart'
 import RequestsList from './RequestsList/RequestsList'
+import { notifyError } from '../../../toast/notifications'
 
 interface IDashBoardContent {
-  requests: IRequestBody[]
+  requestsData: {
+    requests: IRequestBody[]
+    message: string
+  }
 }
 
-const DashBoardContent = ({ requests }: IDashBoardContent) => {
+const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
+  const { requests, message } = requestsData
   const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([])
   const [selectPeriodValue, setSelectPeriodValue] = useState<string>('')
 
@@ -36,7 +41,11 @@ const DashBoardContent = ({ requests }: IDashBoardContent) => {
   }
 
   useEffect(() => {
-    selectPeriodValue ? filterRequestByPeriod() : setFilteredRequests(requests)
+    if (requests.length > 0) {
+      selectPeriodValue ? filterRequestByPeriod() : setFilteredRequests(requests)
+    } else {
+      notifyError(message)
+    }
   }, [requests, selectPeriodValue])
 
   return (
