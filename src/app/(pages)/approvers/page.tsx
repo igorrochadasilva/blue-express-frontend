@@ -7,13 +7,15 @@ import { formatToUSD } from '../../../libs/utils'
 import { getUserSession } from '../../../actions/auth'
 import ApproverContent from '../../../components/Pages/Approvers/ApproverContent'
 import Content from '../../../components/Global/Content/Content'
+import ErrorComponent from '../../../components/Global/Error/Error'
 
 export default async function Approvers() {
   const user: TUser = await getUserSession()
 
   const allApprovers = await listApprovers(user?.accessToken)
+  const { status, data, message } = allApprovers
 
-  const approversData = allApprovers.map((approver: TApprover) => {
+  const approversData = data?.map((approver: TApprover) => {
     return {
       type: approver.title,
       competence: formatToUSD(Number(approver.competence)),
@@ -23,6 +25,10 @@ export default async function Approvers() {
       id: approver.id,
     }
   })
+
+  if (status !== 200) {
+    return <ErrorComponent message={message} />
+  }
 
   return (
     <Container

@@ -2,13 +2,19 @@
 
 import { SessionProvider } from 'next-auth/react'
 import { ReactNode } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 interface TNextAuthSessionProvider {
   children: ReactNode
 }
 
 function NextAuthSessionProvider({ children }: TNextAuthSessionProvider) {
-  return <SessionProvider>{children}</SessionProvider>
+  return (
+    <SessionProvider>
+      <ToastContainer />
+      {children}
+    </SessionProvider>
+  )
 }
 
 export default NextAuthSessionProvider

@@ -10,19 +10,14 @@ export async function listApprovers(token: string | undefined) {
         Authorization: `Bearer ${token}`,
       },
     })
-    if (res.data) {
-      return res.data
-    } else {
-      return false
-    }
+
+    return { status: 200, data: res.data, message: 'successful' }
   } catch (e) {
     const error: any = e
     if (error.response?.data.message) {
-      notifyError(error.response.data.message)
-      return false
+      return { status: 400, data: null, message: error.response?.data.message }
     } else {
-      notifyDefaultError()
-      return false
+      return { status: 500, data: null, message: 'An error occurred. Please try again later.' }
     }
   }
 }

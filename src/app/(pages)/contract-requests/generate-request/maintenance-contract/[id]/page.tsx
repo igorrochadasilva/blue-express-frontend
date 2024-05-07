@@ -3,6 +3,7 @@ import { MCFormDataInputs } from '../../../../../../libs/MCFormDataInputs'
 import { getRequest } from '../../../../../../actions/requests'
 import { getUserSession } from '../../../../../../actions/auth'
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent'
+import ErrorComponent from '../../../../../../components/Global/Error/Error'
 
 interface IMaintenanceContractRequest {
   params: { id: string }
@@ -12,13 +13,17 @@ export default async function MaintenanceContractRequest({ params }: IMaintenanc
   const user = await getUserSession()
   const { id } = params
   const requestData = await getRequest('maintenance-contract', id)
+  const { status, data, message } = requestData
 
+  if (status !== 200) {
+    return <ErrorComponent message={message} />
+  }
   return (
-    <Container title={requestData?.requestId}>
-      {requestData ? (
+    <Container title={data?.requestId}>
+      {data ? (
         <DynamicRequestContent
           user={user}
-          requestData={{ ...requestData.request, files: requestData.files }}
+          requestData={{ ...data.request, files: data.files }}
           FormDataInputs={MCFormDataInputs}
           requestRouteType={'maintenance-contract'}
         />
