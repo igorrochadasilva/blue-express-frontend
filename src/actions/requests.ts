@@ -4,6 +4,7 @@ import { IRequestBody, TUser } from '../types/global/types'
 import { generateRequestFormData } from '../libs/utils'
 
 export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
+  'use server'
   try {
     const res = await axios.get(`http://localhost:3001/request/${requestType}`, {
       params: {
@@ -12,19 +13,13 @@ export async function listRequests(requestType: string, email: string | null | u
       },
     })
 
-    if (res.data) {
-      return res.data
-    } else {
-      return false
-    }
+    return { status: 200, data: res.data, message: 'successful' }
   } catch (e) {
     const error: any = e
     if (error.response?.data.message) {
-      notifyError(error.response.data.message)
-      return false
+      return { status: 400, data: null, message: error.response?.data.message }
     } else {
-      notifyDefaultError()
-      return false
+      return { status: 500, data: null, message: 'An error occurred. Please try again later.' }
     }
   }
 }
