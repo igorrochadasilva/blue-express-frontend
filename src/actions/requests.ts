@@ -5,7 +5,7 @@ import { generateRequestFormData } from '../libs/utils'
 
 export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
   try {
-    const res = await axios.get(`http://localhost:3001/request/${requestType}`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`, {
       params: {
         email,
         role,
@@ -42,7 +42,7 @@ export async function createRequest(requestType: string, data: IRequestBody, use
   newFormData.append('data', JSON.stringify(formatData))
 
   try {
-    const res = await axios.post(`http://localhost:3001/request/${requestType}`, newFormData)
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`, newFormData)
 
     if (res.data) {
       notifySuccess('Request Created Successfully.')
@@ -69,7 +69,7 @@ export async function createRequest(requestType: string, data: IRequestBody, use
 
 export async function getRequest(requestType: string, id: string) {
   try {
-    const res = await axios.get(`http://localhost:3001/request/${requestType}/${id}`)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${id}`)
 
     return { status: 200, data: res.data, message: 'successful' }
   } catch (e) {
@@ -106,8 +106,8 @@ export async function updateRequest(user: TUser, requestType: string, data: IReq
   newFormData.append('data', JSON.stringify(formatData))
 
   try {
-    const res = await axios.patch(
-      `http://localhost:3001/request/${requestType}/${dataRequestRest.id}?user=${user?.id}`,
+    const res = await axios.put(
+      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${dataRequestRest.id}?user=${user?.id}`,
       newFormData
     )
 

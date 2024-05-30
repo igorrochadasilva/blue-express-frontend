@@ -10,7 +10,7 @@ interface IResetPassword {
 
 export async function handleForgetPassword(email: string) {
   try {
-    const response = await axios.post('http://localhost:3001/auth/forget', {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/forget`, {
       email,
     })
 
@@ -39,7 +39,7 @@ export async function handleResetPassword({ password, token }: IResetPassword) {
   }
 
   try {
-    const response = await axios.post('http://localhost:3001/auth/reset', {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/reset`, {
       password,
       token,
     })

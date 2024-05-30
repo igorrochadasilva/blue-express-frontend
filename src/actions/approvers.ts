@@ -5,7 +5,7 @@ import { generateRequestKey } from '../libs/utils'
 
 export async function listApprovers(token: string | undefined) {
   try {
-    const res = await axios.get('http://localhost:3001/approvers', {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,7 +24,7 @@ export async function listApprovers(token: string | undefined) {
 
 export async function deleteApprover(id: number, token: string | undefined) {
   try {
-    const res = await axios.delete(`http://localhost:3001/approvers/${id}`, {
+    const res = await axios.delete(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -57,7 +57,7 @@ export async function createApprover(data: INewApproverData, token: string | und
   }
 
   try {
-    const res = await axios.post('http://localhost:3001/approvers', formatData, {
+    const res = await axios.post('${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers', formatData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

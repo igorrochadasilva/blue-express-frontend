@@ -35,8 +35,9 @@ export async function getRequests() {
     errorMessage = 'An unexpected error occurred while fetching data.'
   }
 
-  return {
-    requests: allRequests,
-    message: errorMessage,
+  if (errorMessage) {
+    throw new Error(errorMessage)
   }
+
+  return allRequests
 }
