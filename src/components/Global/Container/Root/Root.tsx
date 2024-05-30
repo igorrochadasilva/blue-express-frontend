@@ -4,10 +4,9 @@ import { ReactNode } from 'react'
 
 interface IRoot {
   children: ReactNode
-  bgColor: string
 }
 
-const Root = async ({ children, bgColor }: IRoot) => {
-  return <main className={`flex w-full min-h-screen ${bgColor}`}>{children}</main>
+const Root = async ({ children }: IRoot) => {
+  return <div className="flex flex-col w-full">{children}</div>
 }
 export default Root

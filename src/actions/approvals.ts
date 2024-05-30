@@ -10,6 +10,7 @@ export interface ICreateApproval {
   justify: string
   url: string
 }
+console.log('🚀 ~ createApproval ~ env.NEXT_PUBLIC_BLUE_EXPRESS_API:', process.env.NEXT_PUBLIC_BLUE_EXPRESS_API)
 
 export const createApproval = async ({ user, statusAction, requestData, justify, url }: ICreateApproval) => {
   const requestStatus = generateRequestStatus(statusAction)
@@ -21,12 +22,12 @@ export const createApproval = async ({ user, statusAction, requestData, justify,
   }
 
   try {
-    await axios.patch(
-      `http://localhost:3001/request/${url}/${requestData?.id}?user=${user?.id}&role=${user?.role}&approver=true`,
+    await axios.put(
+      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${url}/${requestData?.id}?user=${user?.id}&role=${user?.role}&approver=true`,
       formatRequestData
     )
 
-    const approval = await axios.post('http://localhost:3001/approvals', formatApprovalData, {
+    const approval = await axios.post('${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvals', formatApprovalData, {
       headers: {
         Authorization: `Bearer ${user?.accessToken}`,
       },

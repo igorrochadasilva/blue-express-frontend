@@ -10,7 +10,7 @@ const Breadcrumb = () => {
   const pathArray: string[] = pathName.split('/').filter((path) => path.length > 0)
 
   return (
-    <div className="mt-2 mx-10 flex gap-2">
+    <div className="flex gap-2">
       {pathArray.map((path, i) => {
         const slicedPath = pathArray.slice(0, i + 1)
         const link = slicedPath.join('/')

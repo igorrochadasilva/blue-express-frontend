@@ -7,16 +7,13 @@ import Content from '../../Global/Content/Content'
 import RequestsChart from './RequestsChart/RequestsChart'
 import RequestsList from './RequestsList/RequestsList'
 import { notifyError } from '../../../toast/notifications'
+import NoRequestsBox from '../../Global/NoRequestsBox/NoRequestsBox'
 
 interface IDashBoardContent {
-  requestsData: {
-    requests: IRequestBody[]
-    message: string
-  }
+  requestsData: IRequestBody[]
 }
 
 const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
-  const { requests, message } = requestsData
   const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([])
   const [selectPeriodValue, setSelectPeriodValue] = useState<string>('')
 
@@ -25,33 +22,29 @@ const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
       const days = Number(selectPeriodValue)
       const thresholdDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000)
 
-      const filterRequests = requests.filter((request: IRequestBody) => {
+      const filterRequests = requestsData.filter((request: IRequestBody) => {
         const requestDate = new Date(request.createdAt)
         return requestDate >= thresholdDate
       })
 
       setFilteredRequests(filterRequests)
     } else {
-      setFilteredRequests(requests)
+      setFilteredRequests(requestsData)
     }
   }
 
-  const handleSelectPeriodChange = (value: string) => {
-    setSelectPeriodValue(value)
-  }
+  const handleSelectPeriodChange = (value: string) => setSelectPeriodValue(value)
 
   useEffect(() => {
-    if (requests.length > 0) {
-      selectPeriodValue ? filterRequestByPeriod() : setFilteredRequests(requests)
-    } else {
-      notifyError(message)
+    if (requestsData.length > 0) {
+      selectPeriodValue ? filterRequestByPeriod() : setFilteredRequests(requestsData)
     }
-  }, [requests, selectPeriodValue])
+  }, [requestsData, selectPeriodValue])
 
   return (
     <>
       <PeriodFilter handleSelectPeriodChange={handleSelectPeriodChange} />
-      {filteredRequests.length > 0 && (
+      {filteredRequests.length > 0 ? (
         <>
           <Content>
             <RequestsChart requests={filteredRequests} />
@@ -60,6 +53,8 @@ const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
             <RequestsList requests={filteredRequests} />
           </Content>
         </>
+      ) : (
+        <NoRequestsBox />
       )}
     </>
   )

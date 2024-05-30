@@ -3,7 +3,7 @@ import { notifyDefaultError, notifyError } from '../toast/notifications'
 
 export async function listUsers(token: string | undefined) {
   try {
-    const res = await axios.get('http://localhost:3001/users', {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,7 +24,7 @@ export async function getUser(id: number | undefined, token: string | undefined,
   let queryApprovers = approvers && '?approvers=true'
 
   try {
-    const res = await axios.get(`http://localhost:3001/users/${id}${queryApprovers}`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/users/${id}${queryApprovers}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

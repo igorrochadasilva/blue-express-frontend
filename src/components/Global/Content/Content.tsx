@@ -4,7 +4,7 @@ interface IContent {
 }
 
 const Content = ({ children, showStyleContent = true }: IContent) => {
-  return <div className={`mx-10 ${showStyleContent && ' my-4 p-4'} bg-white rounded`}>{children}</div>
+  return <div className={`${showStyleContent && 'p-4'} bg-white rounded`}>{children}</div>
 }
 
 export default Content

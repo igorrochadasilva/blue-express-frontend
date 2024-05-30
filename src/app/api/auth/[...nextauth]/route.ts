@@ -34,7 +34,7 @@ const nextAuthOptions: NextAuthOptions = {
         }
 
         try {
-          const res = await axios.post('http://localhost:3001/auth/login', {
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/login`, {
             email,
             password,
           })
