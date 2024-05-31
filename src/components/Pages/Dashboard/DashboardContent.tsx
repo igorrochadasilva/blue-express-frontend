@@ -7,7 +7,7 @@ import Content from '../../Global/Content/Content'
 import RequestsChart from './RequestsChart/RequestsChart'
 import RequestsList from './RequestsList/RequestsList'
 import { notifyError } from '../../../toast/notifications'
-import NoRequestsBox from '../../Global/NoRequestsBox/NoRequestsBox'
+import NoDataBox from '../../Global/NoDataBox/NoDataBox'
 
 interface IDashBoardContent {
   requestsData: IRequestBody[]
@@ -44,18 +44,12 @@ const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
   return (
     <>
       <PeriodFilter handleSelectPeriodChange={handleSelectPeriodChange} />
-      {filteredRequests.length > 0 ? (
-        <>
-          <Content>
-            <RequestsChart requests={filteredRequests} />
-          </Content>
-          <Content>
-            <RequestsList requests={filteredRequests} />
-          </Content>
-        </>
-      ) : (
-        <NoRequestsBox />
-      )}
+      <Content>
+        <RequestsChart requests={filteredRequests} />
+      </Content>
+      <Content>
+        <RequestsList requests={filteredRequests} />
+      </Content>
     </>
   )
 }

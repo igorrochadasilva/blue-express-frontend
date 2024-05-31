@@ -7,6 +7,6 @@ interface IRoot {
 }
 
 const Root = async ({ children }: IRoot) => {
-  return <div className="flex flex-col w-full">{children}</div>
+  return <div className="flex flex-col w-full ">{children}</div>
 }
 export default Root

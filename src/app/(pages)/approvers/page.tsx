@@ -1,5 +1,3 @@
-'use server'
-
 import Container from '../../../components/Global/Container/Container'
 import { TApprover, TUser } from '../../../types/global/types'
 import { listApprovers } from '../../../actions/approvers'
@@ -7,13 +5,18 @@ import { formatToUSD } from '../../../libs/utils'
 import { getUserSession } from '../../../actions/auth'
 import ApproverContent from '../../../components/Pages/Approvers/ApproverContent'
 import Content from '../../../components/Global/Content/Content'
-import ErrorComponent from '../../../components/Global/Error/Error'
+import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox'
 
 export default async function Approvers() {
   const user: TUser = await getUserSession()
 
   const allApprovers = await listApprovers(user?.accessToken)
+
   const { status, data, message } = allApprovers
+
+  if (status !== 200) {
+    throw message
+  }
 
   const approversData = data?.map((approver: TApprover) => {
     return {
@@ -26,10 +29,6 @@ export default async function Approvers() {
     }
   })
 
-  if (status !== 200) {
-    return <ErrorComponent message={message} />
-  }
-
   return (
     <Container
       title="Approver"
@@ -37,9 +36,13 @@ export default async function Approvers() {
       btnNavigateText="New Approver"
       showBtnNavigate
     >
-      <Content>
-        <ApproverContent approversData={approversData} user={user} />
-      </Content>
+      {approversData.length > 0 ? (
+        <Content>
+          <ApproverContent approversData={approversData} user={user} />
+        </Content>
+      ) : (
+        <NoDataBox text="There are no approvers to show..." />
+      )}
     </Container>
   )
 }

@@ -1,5 +1,5 @@
 import Container from '../../../components/Global/Container/Container'
-import NoRequestsBox from '../../../components/Global/NoRequestsBox/NoRequestsBox'
+import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox'
 import DashBoardContent from '../../../components/Pages/Dashboard/DashboardContent'
 import { getRequests } from '../../../hooks/GetRequests'
 
@@ -8,7 +8,11 @@ export default async function Dashboard() {
 
   return (
     <Container title="Dashboard">
-      {requestsData.length > 0 ? <DashBoardContent requestsData={requestsData} /> : <NoRequestsBox />}
+      {requestsData.length > 0 ? (
+        <DashBoardContent requestsData={requestsData} />
+      ) : (
+        <NoDataBox text="There are no requests to show..." />
+      )}
     </Container>
   )
 }

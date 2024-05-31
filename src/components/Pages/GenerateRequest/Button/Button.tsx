@@ -7,7 +7,7 @@ interface IButtonProps {
 }
 
 const Button = async ({ text, link }: IButtonProps) => (
-  <Link href={link} className="bg-white p-5 flex justify-center rounded shadow-sm font-medium">
+  <Link href={link} className="bg-white p-5 flex justify-center rounded shadow-sm font-medium grow">
     {text} <ChevronRightIcon className="w-6 ml-3 text-be_first_color" />
   </Link>
 )

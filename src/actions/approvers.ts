@@ -57,7 +57,7 @@ export async function createApprover(data: INewApproverData, token: string | und
   }
 
   try {
-    const res = await axios.post('${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers', formatData, {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers`, formatData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

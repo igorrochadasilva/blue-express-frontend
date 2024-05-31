@@ -1,4 +1,4 @@
-import Container from '../Container/Container'
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import Content from '../Content/Content'
 
 interface IError {
@@ -6,14 +6,12 @@ interface IError {
 }
 const ErrorComponent = ({ message }: IError) => {
   return (
-    <Container title="Error">
-      <Content>
-        <div className="flex flex-col text-red-700 font-semibold">
-          <h1>Message:</h1>
-          <p>{message}</p>
-        </div>
-      </Content>
-    </Container>
+    <Content>
+      <div className="flex items-center gap-2">
+        <ExclamationCircleIcon className="w-8 text-red-600" />
+        <h2>{message}</h2>
+      </div>
+    </Content>
   )
 }
 export default ErrorComponent
