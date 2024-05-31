@@ -1,4 +1,5 @@
 import Container from '../../../components/Global/Container/Container'
+import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox'
 import ContractRequestContent from '../../../components/Pages/ContractRequests/ContractRequestContent'
 import { getRequests } from '../../../hooks/GetRequests'
 
@@ -16,7 +17,11 @@ export default async function ContractRequests() {
       btnBorderColor="border-be_first_color"
       btnBgHover="bg-slate-300"
     >
-      <ContractRequestContent requestsData={requestsData} />
+      {requestsData.length > 0 ? (
+        <ContractRequestContent requestsData={requestsData} />
+      ) : (
+        <NoDataBox text="There are no requests to show..." />
+      )}
     </Container>
   )
 }

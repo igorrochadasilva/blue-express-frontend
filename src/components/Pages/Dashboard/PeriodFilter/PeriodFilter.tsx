@@ -6,7 +6,7 @@ interface IPeriodFilterProps {
 
 const PeriodFilter = ({ handleSelectPeriodChange }: IPeriodFilterProps) => {
   return (
-    <div className="flex flex-col w-28">
+    <div className="flex flex-col w-28 mb-5">
       <label htmlFor="period" className="text-sm font-semibold">
         Period
       </label>

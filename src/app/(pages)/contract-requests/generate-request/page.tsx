@@ -3,16 +3,7 @@ import GenerateRequest from '../../../../components/Pages/GenerateRequest'
 
 export default async function GenerateContracts() {
   return (
-    <Container
-      title="Contract Requests"
-      showBtnNavigate
-      btnNavigateLink="/generate-request"
-      btnNavigateText="Generate Contracts"
-      btnBgColor="bg-white"
-      btnTextColor="text-be_first_color"
-      btnBorderColor="border-be_first_color"
-      btnBgHover="bg-slate-300"
-    >
+    <Container title="Generate Contracts">
       <GenerateRequest.Root>
         <GenerateRequest.Button
           text="Maintenance Contract"

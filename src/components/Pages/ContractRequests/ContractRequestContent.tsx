@@ -8,20 +8,16 @@ import ContractsList from './ContractsList/ContractsList'
 import { notifyError } from '../../../toast/notifications'
 
 interface IContractRequestContent {
-  requestsData: {
-    requests: IRequestBody[]
-    message: string
-  }
+  requestsData: IRequestBody[]
 }
 
 const ContractRequestContent = ({ requestsData }: IContractRequestContent) => {
-  const { requests, message } = requestsData
   const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([])
   const [selectRequestIdValue, setSelectRequestIdValue] = useState<string>('')
   const [selectRequestStatusValue, setSelectRequestStatusValue] = useState<string>('')
 
   const filterRequests = () => {
-    let filteredRequests: IRequestBody[] = requests
+    let filteredRequests: IRequestBody[] = requestsData
 
     if (selectRequestIdValue) {
       filteredRequests = filteredRequests.filter((request: IRequestBody) =>
@@ -36,25 +32,17 @@ const ContractRequestContent = ({ requestsData }: IContractRequestContent) => {
     setFilteredRequests(filteredRequests)
   }
 
-  const handleSelectRequestIdChange = (value: string) => {
-    setSelectRequestIdValue(value)
-  }
+  const handleSelectRequestIdChange = (value: string) => setSelectRequestIdValue(value)
 
-  const handleSelectRequestStatusChange = (value: string) => {
-    setSelectRequestStatusValue(value)
-  }
+  const handleSelectRequestStatusChange = (value: string) => setSelectRequestStatusValue(value)
 
   useEffect(() => {
-    if (requests.length > 0) {
-      if (!selectRequestIdValue && !selectRequestStatusValue) {
-        setFilteredRequests(requests)
-      } else {
-        filterRequests()
-      }
+    if (!selectRequestIdValue && !selectRequestStatusValue) {
+      setFilteredRequests(requestsData)
     } else {
-      notifyError(message)
+      filterRequests()
     }
-  }, [requests, selectRequestIdValue, selectRequestStatusValue])
+  }, [requestsData, selectRequestIdValue, selectRequestStatusValue])
 
   return (
     <Content>

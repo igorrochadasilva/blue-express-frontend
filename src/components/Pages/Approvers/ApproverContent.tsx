@@ -14,7 +14,7 @@ interface IApproverContent {
 const ApproverContent = ({ approversData, user }: IApproverContent) => {
   const [approvers, setApproves] = useState(approversData)
   const [showTrashModal, setShowTrashModal] = useState<boolean>(false)
-  const [selectedApproverId, setSelectedApproverId] = useState<number>()
+  const [selectedApproverId, setSelectedApproverId] = useState<number>(0)
 
   const handleTrashClick = (id: number) => {
     setShowTrashModal(true)
@@ -22,25 +22,19 @@ const ApproverContent = ({ approversData, user }: IApproverContent) => {
   }
 
   const handleDeleteApprover = () => {
-    if (selectedApproverId) {
-      const approversDataFiltered = approvers.filter((approver: IApprover) => approver.id !== selectedApproverId)
-      setApproves(approversDataFiltered)
-      deleteApprover(selectedApproverId, user?.accessToken)
-      setShowTrashModal(false)
-    }
+    const approversDataFiltered = approvers.filter((approver: IApprover) => approver.id !== selectedApproverId)
+    setApproves(approversDataFiltered)
+    deleteApprover(selectedApproverId, user?.accessToken)
+    setShowTrashModal(false)
   }
 
   return (
     <>
       <ApproversList.Root>
-        {approvers.length > 0 ? (
-          <table>
-            <ApproversList.Head />
-            <ApproversList.Content approversData={approvers} handleTrashClick={handleTrashClick} />
-          </table>
-        ) : (
-          <ApproversList.Message text="No approvers registered..." />
-        )}
+        <table>
+          <ApproversList.Head />
+          <ApproversList.Content approversData={approvers} handleTrashClick={handleTrashClick} />
+        </table>
       </ApproversList.Root>
       <Modal
         text="Are you sure you want to delete this approver?"
