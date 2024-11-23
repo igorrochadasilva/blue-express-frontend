@@ -32,11 +32,7 @@ export async function getRequests() {
     }
   } catch (error) {
     console.error('An unexpected error occurred:', error)
-    errorMessage = 'An unexpected error occurred while fetching data.'
-  }
-
-  if (errorMessage) {
-    throw new Error(errorMessage)
+    throw error
   }
 
   return allRequests

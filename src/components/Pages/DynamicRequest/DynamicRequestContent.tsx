@@ -8,6 +8,7 @@ import RequestForm from '../Requests/Request/RequestForm/RequestForm'
 import ApproverModal from '../../Global/ApproverModal/ApproverModal'
 import { createApproval } from '../../../actions/approvals'
 import { updateRequest } from '../../../actions/requests'
+import { notifyDefaultError, notifyError, notifySuccess } from '../../../toast/notifications'
 
 interface IDynamicRequestContent {
   user: TUser
@@ -27,6 +28,7 @@ const DynamicRequestContent = ({ user, requestData, FormDataInputs, requestRoute
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
     const res = await updateRequest(user, requestRouteType, data)
+    console.log('🚀 ~ constonSubmitForm:SubmitHandler<IRequestBody>= ~ res:', res)
     if (res) {
       router.push('/contract-requests')
     }
@@ -45,9 +47,12 @@ const DynamicRequestContent = ({ user, requestData, FormDataInputs, requestRoute
     setIsLoading(true)
 
     const res = await createApproval(data)
-    if (res) {
+    console.log('🚀 ~ handleApproverActionOnRequest ~ res:', res)
+    if (res.ok) {
+      notifySuccess(res)
       router.push('/contract-requests')
     } else {
+      res ? notifyError(res.message) : notifyDefaultError()
       setJustifyApproverModal('')
       setIsLoading(false)
       setShowApproverModal(!showApproverModal)

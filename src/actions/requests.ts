@@ -1,25 +1,26 @@
-import axios from 'axios'
-import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
+'use server'
+
 import { IRequestBody, TUser } from '../types/global/types'
 import { generateRequestFormData } from '../libs/utils'
+import { revalidateTag } from 'next/cache'
+import { fetchData } from '../libs/FetchData'
 
 export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
-  try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`, {
-      params: {
-        email,
-        role,
-      },
-    })
+  const res = await fetchData({
+    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`,
+    method: 'GET',
+    params: {
+      email,
+      role,
+    },
+    tag: ['requests-tag'],
+  })
 
-    return { status: 200, data: res.data, message: 'successful' }
-  } catch (e) {
-    const error: any = e
-    if (error.response?.data.message) {
-      return { status: 400, data: null, message: error.response?.data.message }
-    } else {
-      return { status: 500, data: null, message: 'An error occurred. Please try again later.' }
-    }
+  if (res.ok) {
+    const data = await res.json()
+    return { status: 200, data: data, message: 'successful' }
+  } else {
+    throw res
   }
 }
 
@@ -41,58 +42,43 @@ export async function createRequest(requestType: string, data: IRequestBody, use
 
   newFormData.append('data', JSON.stringify(formatData))
 
-  try {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`, newFormData)
+  const res = await fetchData({
+    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`,
+    method: 'POST',
+    body: newFormData,
+    token: user?.accessToken,
+  })
+  console.log('create new request', res)
+  if (res.ok) {
+    revalidateTag('requests-tag')
 
-    if (res.data) {
-      notifySuccess('Request Created Successfully.')
-      return res.data
-    } else {
-      return false
-    }
-  } catch (e) {
-    const error: any = e
-    if (error.response?.data.message) {
-      if (Array.isArray(error.response?.data.message)) {
-        notifyError(error.response.data.message[0])
-      } else {
-        notifyError(error.response.data.message)
-      }
-
-      return false
-    } else {
-      notifyDefaultError()
-      return false
-    }
+    return res
+  } else {
+    throw res
   }
 }
 
 export async function getRequest(requestType: string, id: string) {
-  try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${id}`)
+  const res = await fetchData({
+    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${id}`,
+    method: 'GET',
+    tag: [`request-${id}-tag`],
+  })
 
-    return { status: 200, data: res.data, message: 'successful' }
-  } catch (e) {
-    const error: any = e
-
-    if (error.response?.data.message) {
-      if (Array.isArray(error.response?.data.message)) {
-        return { status: 400, data: null, message: error.response?.data.message }
-      } else {
-        return { status: 400, data: null, message: error.response.data.message }
-      }
-    } else {
-      return { status: 500, data: null, message: 'An error occurred. Please try again later.' }
-    }
+  if (res.ok) {
+    const data = await res?.json()
+    return { data: data }
+  } else {
+    throw res
   }
 }
 
 export async function updateRequest(user: TUser, requestType: string, data: IRequestBody) {
-  const { files, ...dataRequestRest } = data
+  const { files, ...requestData } = data
   const newFormData = new FormData()
   const arrayFiles = Array.from(files)
 
-  const formatData = generateRequestFormData(requestType, dataRequestRest)
+  const formatData = generateRequestFormData(requestType, requestData)
 
   formatData.filesName = ''
 
@@ -105,31 +91,22 @@ export async function updateRequest(user: TUser, requestType: string, data: IReq
 
   newFormData.append('data', JSON.stringify(formatData))
 
-  try {
-    const res = await axios.put(
-      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${dataRequestRest.id}?user=${user?.id}`,
-      newFormData
-    )
-
-    if (res.data) {
-      notifySuccess('Updated Request Successfully.')
-      return res.data
-    } else {
-      return false
-    }
-  } catch (e) {
-    const error: any = e
-    if (error.response?.data.message) {
-      if (Array.isArray(error.response?.data.message)) {
-        notifyError(error.response.data.message[0])
-      } else {
-        notifyError(error.response.data.message)
-      }
-
-      return false
-    } else {
-      notifyDefaultError()
-      return false
-    }
+  const res = await fetchData({
+    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${requestData.id}`,
+    method: 'PUT',
+    params: {
+      user: user?.id,
+    },
+    body: newFormData,
+    tag: [`request-${requestData.id}-tag`],
+  })
+  const responseData = await res.json()
+  console.log('🚀 ~ updateRequest ~ res:', responseData)
+  if (res.ok) {
+    revalidateTag(`request-${requestData.id}-tag`)
+    revalidateTag('requests-tag')
+    return res.ok
+  } else {
+    throw responseData
   }
 }

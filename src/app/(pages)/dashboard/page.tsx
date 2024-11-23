@@ -1,3 +1,5 @@
+'use server'
+
 import Container from '../../../components/Global/Container/Container'
 import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox'
 import DashBoardContent from '../../../components/Pages/Dashboard/DashboardContent'
