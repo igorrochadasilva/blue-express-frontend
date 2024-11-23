@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const CloseExpiration = () => {
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = (event: any) => {
-    setIsChecked(event.target.checked)
-  }
+    setIsChecked(event.target.checked);
+  };
 
   return (
     <div className="flex flex-col w-[260px] gap-2 text-be_second_color">
@@ -21,7 +21,7 @@ const CloseExpiration = () => {
         onChange={handleCheckboxChange}
       />
     </div>
-  )
-}
+  );
+};
 
-export default CloseExpiration
+export default CloseExpiration;

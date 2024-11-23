@@ -1,17 +1,16 @@
-import Link from 'next/link'
-import { StartupSnapshot } from 'v8'
+import Link from 'next/link';
 
 interface IContentProps {
-  order: string
-  type: string
-  statusColor: string
-  status: string
-  requestDate: string
-  requester: string
-  approver: string
-  sla: string
-  requestId: string
-  link: string
+  order: string;
+  type: string;
+  statusColor: string;
+  status: string;
+  requestDate: string;
+  requester: string;
+  approver: string;
+  sla: string;
+  requestId: string;
+  link: string;
 }
 
 const Content = ({
@@ -38,12 +37,15 @@ const Content = ({
       <td className="w-1/7 py-3">{sla}</td>
       <td className="w-1/7 py-3">{requestId}</td>
       <td className="w-1/7 py-3">
-        <Link href={link} className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]">
+        <Link
+          href={link}
+          className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]"
+        >
           Evaluate
         </Link>
       </td>
     </tr>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;

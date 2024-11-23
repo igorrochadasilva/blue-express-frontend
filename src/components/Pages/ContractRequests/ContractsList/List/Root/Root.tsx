@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 interface IRootProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Root = ({ children }: IRootProps) => {
@@ -9,7 +9,7 @@ const Root = ({ children }: IRootProps) => {
     <div className="flex flex-col justify-normal  text-sm">
       <table>{children}</table>
     </div>
-  )
-}
+  );
+};
 
-export default Root
+export default Root;

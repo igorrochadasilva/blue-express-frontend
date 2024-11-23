@@ -1,24 +1,30 @@
-'use server'
+'use server';
 
-import { IRequestBody, TUser } from '../types/global/types'
-import { generateApprovalFormData, generateRequestStatus } from '../libs/utils'
-import { revalidateTag } from 'next/cache'
-import { fetchData } from '../libs/FetchData'
+import { IRequestBody, TUser } from '../types/global/types';
+import { generateApprovalFormData, generateRequestStatus } from '../libs/utils';
+import { revalidateTag } from 'next/cache';
+import { fetchData } from '../libs/FetchData';
 
 export interface ICreateApproval {
-  user: TUser
-  statusAction: string
-  requestData: IRequestBody | undefined
-  justify: string
-  url: string
+  user: TUser;
+  statusAction: string;
+  requestData: IRequestBody | undefined;
+  justify: string;
+  url: string;
 }
 
-export const createApproval = async ({ user, statusAction, requestData, justify, url }: ICreateApproval) => {
-  const requestStatus = generateRequestStatus(statusAction)
+export const createApproval = async ({
+  user,
+  statusAction,
+  requestData,
+  justify,
+  url,
+}: ICreateApproval) => {
+  const requestStatus = generateRequestStatus(statusAction);
 
   const formatRequestData = {
     status: requestStatus,
-  }
+  };
 
   const requestResponse = await fetchData({
     router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${url}/${requestData?.id}`,
@@ -30,28 +36,42 @@ export const createApproval = async ({ user, statusAction, requestData, justify,
     },
     body: formatRequestData,
     tag: [`request-${requestData?.id}-tag`],
-  })
+  });
 
   if (requestResponse?.ok) {
-    revalidateTag(`request-${requestData?.id}-tag`)
+    revalidateTag(`request-${requestData?.id}-tag`);
 
-    revalidateTag('requests-tag')
+    revalidateTag('requests-tag');
 
-    const formatApprovalData = generateApprovalFormData(user, requestStatus, requestData, justify)
-    console.log('🚀 ~ createApproval ~ user:', user)
-    console.log('🚀 ~ createApproval ~ formatApprovalData:', formatApprovalData)
-    const approvalResponse = await fetch(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvals`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${user?.accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formatApprovalData),
-    })
+    const formatApprovalData = generateApprovalFormData(
+      user,
+      requestStatus,
+      requestData,
+      justify
+    );
+    console.log('🚀 ~ createApproval ~ user:', user);
+    console.log(
+      '🚀 ~ createApproval ~ formatApprovalData:',
+      formatApprovalData
+    );
+    const approvalResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvals`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${user?.accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formatApprovalData),
+      }
+    );
 
-    const approvalDataResponse = await approvalResponse.json()
-    console.log('🚀 ~ createApproval ~ approvalDataResponse:', approvalDataResponse)
+    const approvalDataResponse = await approvalResponse.json();
+    console.log(
+      '🚀 ~ createApproval ~ approvalDataResponse:',
+      approvalDataResponse
+    );
 
-    return approvalDataResponse
+    return approvalDataResponse;
   }
-}
+};

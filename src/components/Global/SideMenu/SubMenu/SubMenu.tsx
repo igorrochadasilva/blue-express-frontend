@@ -1,14 +1,17 @@
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
+import { ChevronUpIcon } from '@heroicons/react/24/outline';
 
 interface ISubMenu {
-  handleSubMenuToggle: (item: any) => void
-  item: any
-  activeSubMenu: string | null
+  handleSubMenuToggle: (item: any) => void;
+  item: any;
+  activeSubMenu: string | null;
 }
 
 const SubMenu = ({ handleSubMenuToggle, item, activeSubMenu }: ISubMenu) => {
   return (
-    <span className="flex items-center gap-2" onClick={() => handleSubMenuToggle(item)}>
+    <span
+      className="flex items-center gap-2"
+      onClick={() => handleSubMenuToggle(item)}
+    >
       {item.icon}
       {item.title}
       {item.subItems && (
@@ -19,6 +22,6 @@ const SubMenu = ({ handleSubMenuToggle, item, activeSubMenu }: ISubMenu) => {
         />
       )}
     </span>
-  )
-}
-export default SubMenu
+  );
+};
+export default SubMenu;

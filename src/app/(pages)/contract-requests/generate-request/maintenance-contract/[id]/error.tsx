@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import ErrorComponent from '../../../../../../components/Global/Error/Error'
+import ErrorComponent from '../../../../../../components/Global/Error/Error';
 
 interface IError {
-  error: Error & { digest?: string }
+  error: Error & { digest?: string };
 }
 
 export default function Error({ error }: IError) {
-  return <ErrorComponent message={error.message} />
+  return <ErrorComponent message={error.message} />;
 }

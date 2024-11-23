@@ -1,7 +1,7 @@
-import Content from '../../../../Global/Content/Content'
+import Content from '../../../../Global/Content/Content';
 
 interface IGroupButtons {
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 const GroupButtons = ({ isLoading }: IGroupButtons) => {
@@ -28,7 +28,7 @@ const GroupButtons = ({ isLoading }: IGroupButtons) => {
         </button>
       </div>
     </Content>
-  )
-}
+  );
+};
 
-export default GroupButtons
+export default GroupButtons;

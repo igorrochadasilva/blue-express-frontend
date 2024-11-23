@@ -1,19 +1,29 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 interface IContentProps {
-  order: number
-  type: string
-  statusColor: string
-  status: string
-  validity: string
-  approver: string
-  level: number
-  requestId: string
-  link: string
+  order: number;
+  type: string;
+  statusColor: string;
+  status: string;
+  validity: string;
+  approver: string;
+  level: number;
+  requestId: string;
+  link: string;
 }
 
-const Content = ({ order, type, statusColor, status, validity, approver, level, requestId, link }: IContentProps) => {
+const Content = ({
+  order,
+  type,
+  statusColor,
+  status,
+  validity,
+  approver,
+  level,
+  requestId,
+  link,
+}: IContentProps) => {
   return (
     <tr key={order} className="text-center whitespace-nowrap border-b-[1px]">
       <td className="w-1/7 py-3 w-48">{type}</td>
@@ -30,7 +40,7 @@ const Content = ({ order, type, statusColor, status, validity, approver, level, 
         </Link>
       </td>
     </tr>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;

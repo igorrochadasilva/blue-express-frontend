@@ -1,25 +1,28 @@
-import Container from '../../../../../../components/Global/Container/Container'
-import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs'
-import { getRequest } from '../../../../../../actions/requests'
-import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent'
-import { getUserSession } from '../../../../../../actions/auth'
-import ErrorComponent from '../../../../../../components/Global/Error/Error'
+import Container from '../../../../../../components/Global/Container/Container';
+import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs';
+import { getRequest } from '../../../../../../actions/requests';
+import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
+import { getUserSession } from '../../../../../../actions/auth';
+import ErrorComponent from '../../../../../../components/Global/Error/Error';
 
 interface IDistributorRepresentativeContractRequest {
-  params: { id: string }
+  params: { id: string };
 }
 
 export default async function DistributorRepresentativeContractRequest({
   params,
 }: IDistributorRepresentativeContractRequest) {
-  const user = await getUserSession()
-  const { id } = params
-  const requestData = await getRequest('distributor-representatives-contract', id)
+  const user = await getUserSession();
+  const { id } = params;
+  const requestData = await getRequest(
+    'distributor-representatives-contract',
+    id
+  );
 
-  const { status, data, message } = requestData
+  const { status, data, message } = requestData;
 
   if (status !== 200) {
-    return <ErrorComponent message={message} />
+    return <ErrorComponent message={message} />;
   }
 
   return (
@@ -33,5 +36,5 @@ export default async function DistributorRepresentativeContractRequest({
         />
       ) : null}
     </Container>
-  )
+  );
 }

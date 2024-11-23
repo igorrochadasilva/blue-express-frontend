@@ -1,11 +1,13 @@
-import { contractTypesOptions } from '../../../../libs/options'
+import { contractTypesOptions } from '../../../../libs/options';
 
 interface IFilterStatusProps {
-  handleSelectRequestStatusChange: (e: string) => void
+  handleSelectRequestStatusChange: (e: string) => void;
 }
 
-const FilterStatus = ({ handleSelectRequestStatusChange }: IFilterStatusProps) => {
-  const handleSelectChange = (event: any) => {}
+const FilterStatus = ({
+  handleSelectRequestStatusChange,
+}: IFilterStatusProps) => {
+  const handleSelectChange = (event: any) => {};
 
   return (
     <div className="flex flex-col w-[200px] gap-2 text-be_second_color">
@@ -25,7 +27,7 @@ const FilterStatus = ({ handleSelectRequestStatusChange }: IFilterStatusProps) =
         ))}
       </select>
     </div>
-  )
-}
+  );
+};
 
-export default FilterStatus
+export default FilterStatus;

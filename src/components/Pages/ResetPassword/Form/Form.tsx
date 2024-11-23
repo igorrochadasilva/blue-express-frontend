@@ -1,8 +1,8 @@
-import { FormEventHandler, ReactNode } from 'react'
+import { FormEventHandler, ReactNode } from 'react';
 
 interface IFormProps {
-  onSubmitLogin: FormEventHandler<HTMLFormElement>
-  children: ReactNode
+  onSubmitLogin: FormEventHandler<HTMLFormElement>;
+  children: ReactNode;
 }
 
 export function Form({ onSubmitLogin, children }: IFormProps) {
@@ -10,5 +10,5 @@ export function Form({ onSubmitLogin, children }: IFormProps) {
     <form onSubmit={onSubmitLogin} className="px-12 py-6" action="">
       {children}
     </form>
-  )
+  );
 }

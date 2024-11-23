@@ -1,10 +1,10 @@
-import { getUserSession } from '../../../../../actions/auth'
-import Container from '../../../../../components/Global/Container/Container'
-import RequestContent from '../../../../../components/Pages/Requests/RequestContent'
-import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs'
+import { getUserSession } from '../../../../../actions/auth';
+import Container from '../../../../../components/Global/Container/Container';
+import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
+import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs';
 
 export default async function DistributorRepresentativeContract() {
-  const user = await getUserSession()
+  const user = await getUserSession();
 
   return (
     <Container title="Distributor Representative Contract">
@@ -14,5 +14,5 @@ export default async function DistributorRepresentativeContract() {
         createRequestRouter="distributor-representatives-contract"
       />
     </Container>
-  )
+  );
 }

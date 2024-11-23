@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import { UseFormRegister } from 'react-hook-form'
-import { INewApproverData } from '../../../../types/global/types'
+import { UseFormRegister } from 'react-hook-form';
+import { INewApproverData } from '../../../../types/global/types';
 
 type TInput = {
-  labelText: string
-  inputName: any
-  inputType: string | undefined
-  inputValue?: string | number
-  validationSchema?: any
-  readonly: boolean | undefined
-  required?: boolean
-  placeholder?: string
-  pattern?: string
-  register: UseFormRegister<INewApproverData>
-}
+  labelText: string;
+  inputName: any;
+  inputType: string | undefined;
+  inputValue?: string | number;
+  validationSchema?: any;
+  readonly: boolean | undefined;
+  required?: boolean;
+  placeholder?: string;
+  pattern?: string;
+  register: UseFormRegister<INewApproverData>;
+};
 
 const Input = ({
   inputName,
@@ -42,7 +42,7 @@ const Input = ({
         multiple={inputType === 'file' ? true : undefined}
       />
     </label>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

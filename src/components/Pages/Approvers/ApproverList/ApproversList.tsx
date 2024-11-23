@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react'
-import { formatToUSD } from '../../../../libs/utils'
-import { TrashIcon } from '@heroicons/react/24/solid'
-import Modal from '../../../Global/Modal/Modal'
-import { deleteApprover } from '../../../../actions/approvers'
-import { IApprover, TApprover } from '../../../../types/global/types'
+import { useEffect, useState } from 'react';
+import { formatToUSD } from '../../../../libs/utils';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import Modal from '../../../Global/Modal/Modal';
+import { deleteApprover } from '../../../../actions/approvers';
+import { IApprover, TApprover } from '../../../../types/global/types';
 
 interface IApproversList {
-  approvers: TApprover[]
-  token: string | undefined
+  approvers: TApprover[];
+  token: string | undefined;
 }
 
 const ApproversList = ({ approvers, token }: IApproversList) => {
-  const [listApprover, setListApprover] = useState<any>([])
-  const [showTrashModal, setShowTrashModal] = useState<boolean>(false)
-  const [selectedApproverId, setSelectedApproverId] = useState<number>()
+  const [listApprover, setListApprover] = useState<any>([]);
+  const [showTrashModal, setShowTrashModal] = useState<boolean>(false);
+  const [selectedApproverId, setSelectedApproverId] = useState<number>();
 
   useEffect(() => {
     const data = approvers.map((approver: TApprover) => {
@@ -24,25 +24,27 @@ const ApproversList = ({ approvers, token }: IApproversList) => {
         level: approver.level,
         companyType: approver.company,
         id: approver.id,
-      }
-    }, [])
+      };
+    }, []);
 
-    setListApprover(data)
-  }, [])
+    setListApprover(data);
+  }, []);
 
   const handleTrashClick = (id: number) => {
-    setShowTrashModal(true)
-    setSelectedApproverId(id)
-  }
+    setShowTrashModal(true);
+    setSelectedApproverId(id);
+  };
 
   const handleDeleteApprover = () => {
     if (selectedApproverId) {
-      const data = listApprover.filter((approver: IApprover) => approver.id !== selectedApproverId)
-      setListApprover(data)
-      deleteApprover(selectedApproverId, token)
-      setShowTrashModal(false)
+      const data = listApprover.filter(
+        (approver: IApprover) => approver.id !== selectedApproverId
+      );
+      setListApprover(data);
+      deleteApprover(selectedApproverId, token);
+      setShowTrashModal(false);
     }
-  }
+  };
 
   return (
     <>
@@ -75,7 +77,7 @@ const ApproversList = ({ approvers, token }: IApproversList) => {
                       />
                     </td>
                   </tr>
-                )
+                );
               })}
             </tbody>
           </table>
@@ -92,6 +94,6 @@ const ApproversList = ({ approvers, token }: IApproversList) => {
         action={handleDeleteApprover}
       />
     </>
-  )
-}
-export default ApproversList
+  );
+};
+export default ApproversList;

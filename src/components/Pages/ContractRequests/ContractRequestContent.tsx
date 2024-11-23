@@ -1,59 +1,69 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { IRequestBody } from '../../../types/global/types'
-import Content from '../../Global/Content/Content'
-import InputsFilter from '../../Global/InputsFilter'
-import ContractsList from './ContractsList/ContractsList'
-import { notifyError } from '../../../toast/notifications'
+import { useEffect, useState } from 'react';
+import { IRequestBody } from '../../../types/global/types';
+import Content from '../../Global/Content/Content';
+import InputsFilter from '../../Global/InputsFilter';
+import ContractsList from './ContractsList/ContractsList';
 
 interface IContractRequestContent {
-  requestsData: IRequestBody[]
+  requestsData: IRequestBody[];
 }
 
 const ContractRequestContent = ({ requestsData }: IContractRequestContent) => {
-  const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([])
-  const [selectRequestIdValue, setSelectRequestIdValue] = useState<string>('')
-  const [selectRequestStatusValue, setSelectRequestStatusValue] = useState<string>('')
+  const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([]);
+  const [selectRequestIdValue, setSelectRequestIdValue] = useState<string>('');
+  const [selectRequestStatusValue, setSelectRequestStatusValue] =
+    useState<string>('');
 
   const filterRequests = () => {
-    let filteredRequests: IRequestBody[] = requestsData
+    let filteredRequests: IRequestBody[] = requestsData;
 
     if (selectRequestIdValue) {
       filteredRequests = filteredRequests.filter((request: IRequestBody) =>
-        request.requestId.toLowerCase().includes(selectRequestIdValue.toLowerCase())
-      )
+        request.requestId
+          .toLowerCase()
+          .includes(selectRequestIdValue.toLowerCase())
+      );
     }
 
     if (selectRequestStatusValue) {
-      filteredRequests = filteredRequests.filter((request: IRequestBody) => request.status === selectRequestStatusValue)
+      filteredRequests = filteredRequests.filter(
+        (request: IRequestBody) => request.status === selectRequestStatusValue
+      );
     }
 
-    setFilteredRequests(filteredRequests)
-  }
+    setFilteredRequests(filteredRequests);
+  };
 
-  const handleSelectRequestIdChange = (value: string) => setSelectRequestIdValue(value)
+  const handleSelectRequestIdChange = (value: string) =>
+    setSelectRequestIdValue(value);
 
-  const handleSelectRequestStatusChange = (value: string) => setSelectRequestStatusValue(value)
+  const handleSelectRequestStatusChange = (value: string) =>
+    setSelectRequestStatusValue(value);
 
   useEffect(() => {
     if (!selectRequestIdValue && !selectRequestStatusValue) {
-      setFilteredRequests(requestsData)
+      setFilteredRequests(requestsData);
     } else {
-      filterRequests()
+      filterRequests();
     }
-  }, [requestsData, selectRequestIdValue, selectRequestStatusValue])
+  }, [requestsData, selectRequestIdValue, selectRequestStatusValue]);
 
   return (
     <Content>
       <InputsFilter.Root>
-        <InputsFilter.FilterRequestId handleSelectRequestIdChange={handleSelectRequestIdChange} />
-        <InputsFilter.FilterStatus handleSelectRequestStatusChange={handleSelectRequestStatusChange} />
+        <InputsFilter.FilterRequestId
+          handleSelectRequestIdChange={handleSelectRequestIdChange}
+        />
+        <InputsFilter.FilterStatus
+          handleSelectRequestStatusChange={handleSelectRequestStatusChange}
+        />
         <InputsFilter.CloseExpiration />
         <InputsFilter.BtnIssueReport />
       </InputsFilter.Root>
       <ContractsList requests={filteredRequests} />
     </Content>
-  )
-}
-export default ContractRequestContent
+  );
+};
+export default ContractRequestContent;

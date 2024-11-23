@@ -1,12 +1,15 @@
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import { MouseEventHandler } from 'react'
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import { MouseEventHandler } from 'react';
 
 interface ICloseProps {
-  showForgetPassword: boolean
-  handleShowForgetPassword: MouseEventHandler<SVGSVGElement>
+  showForgetPassword: boolean;
+  handleShowForgetPassword: MouseEventHandler<SVGSVGElement>;
 }
 
-export function IconClose({ showForgetPassword, handleShowForgetPassword }: ICloseProps) {
+export function IconClose({
+  showForgetPassword,
+  handleShowForgetPassword,
+}: ICloseProps) {
   return (
     <div className="flex justify-end">
       <XMarkIcon
@@ -14,5 +17,5 @@ export function IconClose({ showForgetPassword, handleShowForgetPassword }: IClo
         className={`h-6 w-6 text-slate-800 text-end cursor-pointer ${showForgetPassword ? 'block' : 'hidden'}`}
       />
     </div>
-  )
+  );
 }

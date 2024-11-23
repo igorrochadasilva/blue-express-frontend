@@ -1,7 +1,7 @@
-import { MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react';
 
 interface IForgetButtonProps {
-  handleShowForgetPassword: MouseEventHandler<HTMLSpanElement>
+  handleShowForgetPassword: MouseEventHandler<HTMLSpanElement>;
 }
 
 export function ForgetButton({ handleShowForgetPassword }: IForgetButtonProps) {
@@ -9,5 +9,5 @@ export function ForgetButton({ handleShowForgetPassword }: IForgetButtonProps) {
     <span className="m-auto cursor-pointer" onClick={handleShowForgetPassword}>
       Forgot <a href="#">password?</a>
     </span>
-  )
+  );
 }

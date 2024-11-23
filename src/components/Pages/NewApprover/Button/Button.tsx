@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 interface IButtonProps {}
 
 const Button = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="flex justify-end gap-4">
@@ -23,7 +23,7 @@ const Button = () => {
         Save
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

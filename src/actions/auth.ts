@@ -1,69 +1,81 @@
-import axios from 'axios'
-import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
-import { getServerSession } from 'next-auth'
-import { nextAuthOptions } from '../app/api/auth/[...nextauth]/route'
+import axios from 'axios';
+import {
+  notifyDefaultError,
+  notifyError,
+  notifySuccess,
+} from '../toast/notifications';
+import { getServerSession } from 'next-auth';
+import { nextAuthOptions } from '../app/api/auth/[...nextauth]/route';
 
 interface IResetPassword {
-  password: string
-  token: string | null
+  password: string;
+  token: string | null;
 }
 
 export async function handleForgetPassword(email: string) {
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/forget`, {
-      email,
-    })
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/forget`,
+      {
+        email,
+      }
+    );
 
     if (response?.data?.message) {
-      notifySuccess(response.data.message)
-      return true
+      notifySuccess(response.data.message);
+      return true;
     } else {
-      notifyDefaultError()
-      return false
+      notifyDefaultError();
+      return false;
     }
   } catch (e) {
-    const error: any = e
+    const error: any = e;
     if (error.response?.data.message) {
-      notifyError(error.response.data.message)
-      return false
+      notifyError(error.response.data.message);
+      return false;
     } else {
-      notifyDefaultError()
-      return false
+      notifyDefaultError();
+      return false;
     }
   }
 }
 
 export async function handleResetPassword({ password, token }: IResetPassword) {
   if (!token) {
-    notifyError("You don't have access to reset password, please check your e-mail.")
+    notifyError(
+      "You don't have access to reset password, please check your e-mail."
+    );
   }
 
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/reset`, {
-      password,
-      token,
-    })
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/reset`,
+      {
+        password,
+        token,
+      }
+    );
 
     if (response.data.message) {
-      notifySuccess(response.data.message)
-      return true
+      notifySuccess(response.data.message);
+      return true;
     } else {
-      notifyDefaultError()
-      return false
+      notifyDefaultError();
+      return false;
     }
   } catch (e) {
-    const error: any = e
+    const error: any = e;
     if (error.response?.data.message) {
-      notifyError(error.response.data.message)
-      return false
+      notifyError(error.response.data.message);
+      return false;
     } else {
-      notifyDefaultError()
-      return false
+      notifyDefaultError();
+      return false;
     }
   }
 }
 
 export async function getUserSession() {
-  const session = await getServerSession(nextAuthOptions)
-  return session?.user
+  const session = await getServerSession(nextAuthOptions);
+  return session?.user;
 }

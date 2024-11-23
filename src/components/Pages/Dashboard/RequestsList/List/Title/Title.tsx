@@ -1,5 +1,5 @@
 interface ITitleProps {
-  text: string
+  text: string;
 }
 
 const Title = ({ text }: ITitleProps) => {
@@ -7,7 +7,7 @@ const Title = ({ text }: ITitleProps) => {
     <div className="mb-8">
       <span className="text-sm font-medium">{text}</span>
     </div>
-  )
-}
+  );
+};
 
-export default Title
+export default Title;

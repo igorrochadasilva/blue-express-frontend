@@ -1,29 +1,29 @@
-'use client'
+'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form'
-import Container from '../../components/Global/Container/Container'
-import { useSearchParams } from 'next/navigation'
-import { handleResetPassword } from '../../actions/auth'
-import { ResetPassword } from '../../components/Pages/ResetPassword'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Container from '../../components/Global/Container/Container';
+import { useSearchParams } from 'next/navigation';
+import { handleResetPassword } from '../../actions/auth';
+import { ResetPassword } from '../../components/Pages/ResetPassword';
 
 type ResetInput = {
-  password: string
-}
+  password: string;
+};
 
 export default function PageResetPassword() {
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token')
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResetInput>()
+  } = useForm<ResetInput>();
 
   const onSubmitLogin: SubmitHandler<ResetInput> = async (data) => {
-    const { password } = data
-    const response = await handleResetPassword({ password, token })
-  }
+    const { password } = data;
+    const response = await handleResetPassword({ password, token });
+  };
 
   return (
     <Container bgColor="bg-gray-400" showSideMenu={false} isLoginPage={true}>
@@ -47,5 +47,5 @@ export default function PageResetPassword() {
         </ResetPassword.Form>
       </ResetPassword.Root>
     </Container>
-  )
+  );
 }

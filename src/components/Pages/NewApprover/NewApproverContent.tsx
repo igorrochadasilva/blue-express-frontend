@@ -1,46 +1,57 @@
-'use client'
+'use client';
 
-import { IApproverData, INewApproverData, TUser } from '../../../types/global/types'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { createApprover } from '../../../actions/approvers'
-import FormNewApprover from '.'
-import Content from '../../Global/Content/Content'
-import { NAFormDataInputs } from '../../../libs/NAFormDataInputs'
-import { useEffect, useState } from 'react'
-import { v4 as uuid4 } from 'uuid'
-import { getUser } from '../../../actions/user'
+import {
+  IApproverData,
+  INewApproverData,
+  TUser,
+} from '../../../types/global/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { createApprover } from '../../../actions/approvers';
+import FormNewApprover from '.';
+import Content from '../../Global/Content/Content';
+import { NAFormDataInputs } from '../../../libs/NAFormDataInputs';
+import { useEffect, useState } from 'react';
+import { v4 as uuid4 } from 'uuid';
+import { getUser } from '../../../actions/user';
 
 interface INewApproverContent {
-  user: TUser
-  usersName: string[]
+  user: TUser;
+  usersName: string[];
 }
 
 const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
-  const [userApproversList, setUserApproversList] = useState<IApproverData[]>([])
+  const [userApproversList, setUserApproversList] = useState<IApproverData[]>(
+    []
+  );
 
   const { register, handleSubmit, watch } = useForm<INewApproverData>({
     mode: 'all',
-  })
+  });
 
-  const onSubmitNewApproverForm: SubmitHandler<INewApproverData> = async (data) => {
-    const addedApprover: IApproverData = await createApprover(data, user?.accessToken)
-    setUserApproversList([addedApprover, ...userApproversList])
-  }
+  const onSubmitNewApproverForm: SubmitHandler<INewApproverData> = async (
+    data
+  ) => {
+    const addedApprover: IApproverData = await createApprover(
+      data,
+      user?.accessToken
+    );
+    setUserApproversList([addedApprover, ...userApproversList]);
+  };
 
   const handleChangeApproverSelect = async (userId: number) => {
-    const data = await getUser(userId, user?.accessToken, true)
+    const data = await getUser(userId, user?.accessToken, true);
 
-    const { approvers } = data
+    const { approvers } = data;
 
     if (approvers) {
-      setUserApproversList(approvers)
+      setUserApproversList(approvers);
     }
-  }
+  };
 
   useEffect(() => {
-    const userSelected = watch('user')
-    userSelected && handleChangeApproverSelect(userSelected)
-  }, [watch('user')])
+    const userSelected = watch('user');
+    userSelected && handleChangeApproverSelect(userSelected);
+  }, [watch('user')]);
 
   return (
     <FormNewApprover.Form onSubmitForm={handleSubmit(onSubmitNewApproverForm)}>
@@ -60,18 +71,20 @@ const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
                       readonly={item.id === 1 ? true : false}
                       register={register}
                     />
-                  )
+                  );
                 } else {
                   return (
                     <FormNewApprover.Select
                       key={uuid4()}
                       inputName={item.inputName}
                       labelText={item.labelText}
-                      options={item.inputName === 'user' ? usersName : item.options}
+                      options={
+                        item.inputName === 'user' ? usersName : item.options
+                      }
                       register={register}
                       required={item.required}
                     />
-                  )
+                  );
                 }
               })}
             </FormNewApprover.InputGroup>
@@ -88,7 +101,7 @@ const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
         <FormNewApprover.Button />
       </Content>
     </FormNewApprover.Form>
-  )
-}
+  );
+};
 
-export default NewApproverContent
+export default NewApproverContent;

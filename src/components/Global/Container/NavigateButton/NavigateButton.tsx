@@ -1,15 +1,15 @@
-'use server'
+'use server';
 
-import { PlusIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
+import { PlusIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 interface INavigateButton {
-  btnNavigateLink: string
-  btnNavigateText?: string
-  btnTextColor?: string
-  btnBgColor?: string
-  btnBorderColor?: string
-  btnBgHover?: string
+  btnNavigateLink: string;
+  btnNavigateText?: string;
+  btnTextColor?: string;
+  btnBgColor?: string;
+  btnBorderColor?: string;
+  btnBgHover?: string;
 }
 
 const NavigateButton = async ({
@@ -28,7 +28,7 @@ const NavigateButton = async ({
       {btnNavigateText}
       <PlusIcon className={`ml-2 w-5 ${btnTextColor}  `} />
     </Link>
-  )
-}
+  );
+};
 
-export default NavigateButton
+export default NavigateButton;

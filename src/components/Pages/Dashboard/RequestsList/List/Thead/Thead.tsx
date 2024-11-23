@@ -12,7 +12,7 @@ const Thead = () => {
         <th></th>
       </tr>
     </thead>
-  )
-}
+  );
+};
 
-export default Thead
+export default Thead;

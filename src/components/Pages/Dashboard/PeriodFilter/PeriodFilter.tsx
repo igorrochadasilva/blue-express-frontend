@@ -1,7 +1,7 @@
-import { periodOptions } from '../../../../libs/options'
+import { periodOptions } from '../../../../libs/options';
 
 interface IPeriodFilterProps {
-  handleSelectPeriodChange: (e: string) => void
+  handleSelectPeriodChange: (e: string) => void;
 }
 
 const PeriodFilter = ({ handleSelectPeriodChange }: IPeriodFilterProps) => {
@@ -22,6 +22,6 @@ const PeriodFilter = ({ handleSelectPeriodChange }: IPeriodFilterProps) => {
         ))}
       </select>
     </div>
-  )
-}
-export default PeriodFilter
+  );
+};
+export default PeriodFilter;

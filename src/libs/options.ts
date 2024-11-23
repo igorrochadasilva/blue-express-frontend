@@ -6,14 +6,14 @@ export const periodOptions = [
   { value: '60', label: '60 days' },
   { value: '90', label: '90 days' },
   { value: 'all', label: 'All' },
-]
+];
 
 export const contractTypeOptions = [
   { value: 'new', label: 'new' },
   { value: 'renovation', label: 'renovation' },
   { value: 'readjustment', label: 'readjustment' },
   { value: 'others', label: 'others' },
-]
+];
 
 export const companyOptions = [
   { value: 'PD', label: 'PD' },
@@ -21,7 +21,7 @@ export const companyOptions = [
   { value: 'CH', label: 'CH' },
   { value: 'CPDI', label: 'CPDI' },
   { value: 'ALL', label: 'ALL' },
-]
+];
 
 export const frequencyOptions = [
   { value: 'monthly', label: 'monthly' },
@@ -30,12 +30,12 @@ export const frequencyOptions = [
   { value: 'semi-annual', label: 'semi-annual' },
   { value: 'Yearly', label: 'Yearly' },
   { value: 'mixed/diverse', label: 'mixed/diverse' },
-]
+];
 
 export const companyTypeOptions = [
   { value: 'private', label: 'private' },
   { value: 'public', label: 'public' },
-]
+];
 
 export const approverLevelOptions = [
   { value: 'controller', label: 'controller' },
@@ -47,7 +47,7 @@ export const approverLevelOptions = [
   { value: 'group', label: 'group' },
   { value: 'sector', label: 'sector' },
   { value: 'ceo', label: 'ceo' },
-]
+];
 
 export const ufOptions = [
   { value: 'AC', label: 'Acre' },
@@ -77,12 +77,12 @@ export const ufOptions = [
   { value: 'SE', label: 'Sergipe' },
   { value: 'SP', label: 'São Paulo' },
   { value: 'TO', label: 'Tocantins' },
-]
+];
 
 export const typeRequestOrderOptions = [
   { value: 'representative', label: 'representative' },
   { value: 'distributor', label: 'distributor' },
-]
+];
 
 export const contractTypesOptions = [
   { value: '', label: 'select' },
@@ -91,10 +91,13 @@ export const contractTypesOptions = [
   { value: 'approved', label: 'approved' },
   { value: 'disapproved', label: 'disapproved' },
   { value: 'sketch', label: 'sketch' },
-]
+];
 
 export const requestTypesOptions = [
   { value: 'Maintenance Contract', label: 'Maintenance Contract' },
   { value: 'Software Service Contract', label: 'Software Service Contract' },
-  { value: 'Distributor Representatives Contract', label: 'Distributor Representatives Contract' },
-]
+  {
+    value: 'Distributor Representatives Contract',
+    label: 'Distributor Representatives Contract',
+  },
+];

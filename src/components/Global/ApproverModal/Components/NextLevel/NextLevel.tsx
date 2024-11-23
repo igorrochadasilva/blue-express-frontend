@@ -1,5 +1,5 @@
 interface INextLevelProps {
-  text: string
+  text: string;
 }
 
 const NextLevel = ({ text }: INextLevelProps) => {
@@ -8,7 +8,7 @@ const NextLevel = ({ text }: INextLevelProps) => {
       <span className="">{text}</span>
       <input className="h-4 w-4" type="checkbox" />
     </div>
-  )
-}
+  );
+};
 
-export default NextLevel
+export default NextLevel;

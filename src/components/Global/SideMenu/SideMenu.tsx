@@ -1,20 +1,23 @@
-'use client'
+'use client';
 
-import { ArrowLeftStartOnRectangleIcon, ChevronUpIcon, UserGroupIcon } from '@heroicons/react/24/solid'
-import { ListBulletIcon } from '@heroicons/react/24/solid'
-import { HomeIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
-import { useState } from 'react'
-import { signOut, useSession } from 'next-auth/react'
-import { IMenuItems, TUser } from '../../../types/global/types'
-import SideMenuContent from '.'
+import {
+  ArrowLeftStartOnRectangleIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/solid';
+import { ListBulletIcon } from '@heroicons/react/24/solid';
+import { HomeIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
+import { useState } from 'react';
+import { signOut, useSession } from 'next-auth/react';
+import { IMenuItems, TUser } from '../../../types/global/types';
+import SideMenuContent from '.';
 
 const SideMenu: React.FC = () => {
-  const [activeSubMenu, setActiveSubMenu] = useState(null)
-  const { data: session, status } = useSession()
-  const user: TUser = session?.user
+  const [activeSubMenu, setActiveSubMenu] = useState(null);
+  const { data: session, status } = useSession();
+  const user: TUser = session?.user;
 
-  let menuItems: IMenuItems[] = [
+  const menuItems: IMenuItems[] = [
     {
       title: 'Dashboard',
       path: '/dashboard',
@@ -40,21 +43,21 @@ const SideMenu: React.FC = () => {
       icon: <ArrowLeftStartOnRectangleIcon className="h-5" />,
       path: 'logout',
     },
-  ]
+  ];
 
   const handleSubMenuToggle = (item: any) => {
     if (item.subItems) {
-      setActiveSubMenu(item.title === activeSubMenu ? null : item.title)
+      setActiveSubMenu(item.title === activeSubMenu ? null : item.title);
     }
-  }
+  };
 
   const handleLogout = async () => {
     try {
-      await signOut()
+      await signOut();
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('Error signing out:', error);
     }
-  }
+  };
 
   return (
     <div className="h-screen left-0 w-[228px] bg-white fixed">
@@ -66,14 +69,20 @@ const SideMenu: React.FC = () => {
               <li
                 key={item.title}
                 className={`px-4 py-2 my-8 rounded-md text-base font-medium hover:bg-[#E6EFF8] cursor-pointer ${
-                  activeSubMenu === item.title ? 'bg-[#E6EFF8] text-be_first_color' : ''
+                  activeSubMenu === item.title
+                    ? 'bg-[#E6EFF8] text-be_first_color'
+                    : ''
                 }`}
               >
                 {item.path ? (
                   <Link
                     href={item.path === 'logout' ? '' : item.path}
                     className="flex items-center gap-2"
-                    onClick={item.path === 'logout' ? () => handleLogout() : () => handleSubMenuToggle(item)}
+                    onClick={
+                      item.path === 'logout'
+                        ? () => handleLogout()
+                        : () => handleSubMenuToggle(item)
+                    }
                   >
                     {item.icon}
                     {item.title}
@@ -98,7 +107,7 @@ const SideMenu: React.FC = () => {
         )}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default SideMenu
+export default SideMenu;

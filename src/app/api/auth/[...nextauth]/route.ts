@@ -1,17 +1,16 @@
-import axios from 'axios'
-import NextAuth, { NextAuthOptions, User } from 'next-auth'
-import { AdapterUser } from 'next-auth/adapters'
-import CredentialsProvider from 'next-auth/providers/credentials'
+import axios from 'axios';
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 type TUser = {
-  id: number
-  name: string
-  email: string
-  department: string
-  position: string
-  role: number
-  accessToken: string
-}
+  id: number;
+  name: string;
+  email: string;
+  department: string;
+  position: string;
+  role: number;
+  accessToken: string;
+};
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -29,15 +28,18 @@ const nextAuthOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const { email, password } = credentials as {
-          email: string
-          password: string
-        }
+          email: string;
+          password: string;
+        };
 
         try {
-          const res = await axios.post(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/login`, {
-            email,
-            password,
-          })
+          const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/login`,
+            {
+              email,
+              password,
+            }
+          );
 
           const user = {
             id: res.data.user.id,
@@ -47,15 +49,15 @@ const nextAuthOptions: NextAuthOptions = {
             position: res.data.user.position,
             role: res.data.user.role,
             accessToken: res.data.token.accessToken,
-          }
+          };
 
-          return user
+          return user;
         } catch (error: any) {
           if (error?.response?.status === 401) {
-            const { data } = error.response
-            throw new Error(data.message)
+            const { data } = error.response;
+            throw new Error(data.message);
           } else {
-            throw new Error('An error occurred. Please try again later.')
+            throw new Error('An error occurred. Please try again later.');
           }
         }
       },
@@ -70,19 +72,19 @@ const nextAuthOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      const userData: TUser | any = user
+      const userData: TUser | any = user;
 
       if (user) {
-        token.id = userData.id
-        token.name = userData.name
-        token.email = userData.email
-        token.department = userData.department
-        token.position = userData.position
-        token.role = userData.role
-        token.accessToken = userData.accessToken
+        token.id = userData.id;
+        token.name = userData.name;
+        token.email = userData.email;
+        token.department = userData.department;
+        token.position = userData.position;
+        token.role = userData.role;
+        token.accessToken = userData.accessToken;
       }
 
-      return token
+      return token;
     },
     async session({ session, token }) {
       session.user = {
@@ -93,12 +95,12 @@ const nextAuthOptions: NextAuthOptions = {
         position: token.position,
         role: token.role,
         accessToken: token.accessToken,
-      } as any
-      return session
+      } as any;
+      return session;
     },
   },
-}
+};
 
-const handler = NextAuth(nextAuthOptions)
+const handler = NextAuth(nextAuthOptions);
 
-export { handler as GET, handler as POST, nextAuthOptions }
+export { handler as GET, handler as POST, nextAuthOptions };

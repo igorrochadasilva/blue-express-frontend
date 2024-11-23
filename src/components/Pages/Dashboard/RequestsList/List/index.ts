@@ -1,9 +1,9 @@
-import Content from './Content/Content'
+import Content from './Content/Content';
 
-import Root from './Root/Root'
-import Table from './Table/Table'
-import Thead from './Thead/Thead'
-import Title from './Title/Title'
+import Root from './Root/Root';
+import Table from './Table/Table';
+import Thead from './Thead/Thead';
+import Title from './Title/Title';
 
 const ListRequests = {
   Table,
@@ -11,6 +11,6 @@ const ListRequests = {
   Content,
   Title,
   Root,
-}
+};
 
-export default ListRequests
+export default ListRequests;

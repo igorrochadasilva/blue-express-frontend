@@ -1,85 +1,94 @@
-import { IApprover, IRequestBody, TUser } from '../types/global/types'
+import { IApprover, IRequestBody, TUser } from '../types/global/types';
 
 export const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const year = date.getFullYear()
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
 
-  return `${day}-${month}-${year}`
-}
+  return `${day}-${month}-${year}`;
+};
 
 export const calculateSLA = (date: string) => {
-  const requestDate = new Date(date)
-  const currentDate = new Date()
-  const timeDiffMs = currentDate.getTime() - requestDate.getTime()
-  const daysSinceCreation = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24))
+  const requestDate = new Date(date);
+  const currentDate = new Date();
+  const timeDiffMs = currentDate.getTime() - requestDate.getTime();
+  const daysSinceCreation = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24));
 
-  return daysSinceCreation
-}
+  return daysSinceCreation;
+};
 
 export const sortRequestType = (a: IApprover, b: IApprover) => {
-  const typeOrder = ['Maintenance Contract', 'Software Service Contract', 'Distributor Representatives Contract'] // Desired order
-  const aIndex = typeOrder.indexOf(a.type)
-  const bIndex = typeOrder.indexOf(b.type)
-  return aIndex - bIndex
-}
+  const typeOrder = [
+    'Maintenance Contract',
+    'Software Service Contract',
+    'Distributor Representatives Contract',
+  ]; // Desired order
+  const aIndex = typeOrder.indexOf(a.type);
+  const bIndex = typeOrder.indexOf(b.type);
+  return aIndex - bIndex;
+};
 
 export const sortNumber = (a: string, b: string) => {
   // Extract the numerical value from the dollar-formatted string:
-  const competenceA = parseFloat(a.replace(/\$/g, ''))
-  const competenceB = parseFloat(b.replace(/\$/g, ''))
+  const competenceA = parseFloat(a.replace(/\$/g, ''));
+  const competenceB = parseFloat(b.replace(/\$/g, ''));
 
   // Perform numerical comparison:
-  return competenceA - competenceB
-}
+  return competenceA - competenceB;
+};
 
 export const sortAlphabetically = (a: string, b: string) => {
-  return a.localeCompare(b) // Alphabetical sorting
-}
+  return a.localeCompare(b); // Alphabetical sorting
+};
 
 export const formatToUSD = (value: number) => {
-  const formattedValue = value.toFixed(2)
-  return `$${formattedValue}`
-}
+  const formattedValue = value.toFixed(2);
+  return `$${formattedValue}`;
+};
 
 export const generateRouteForId = (requestId: string, id: number) => {
-  let requestLink = ''
+  let requestLink = '';
   if (requestId.includes('MC')) {
-    requestLink = `/contract-requests/generate-request/maintenance-contract/${id}`
+    requestLink = `/contract-requests/generate-request/maintenance-contract/${id}`;
   } else if (requestId.includes('SSC')) {
-    requestLink = `/contract-requests/generate-request/software-service-contract/${id}`
+    requestLink = `/contract-requests/generate-request/software-service-contract/${id}`;
   } else {
-    requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${id}`
+    requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${id}`;
   }
 
-  return requestLink
-}
+  return requestLink;
+};
 
 export const generateRequestKey = (requestTitle: string) => {
-  let key = ''
+  let key = '';
 
   if (requestTitle === 'Maintenance Contract') {
-    key = 'MC'
+    key = 'MC';
   } else if (requestTitle === 'Software Service Contract') {
-    key = 'SSC'
+    key = 'SSC';
   } else {
-    key = 'DRC'
+    key = 'DRC';
   }
 
-  return key
-}
+  return key;
+};
 
 export const formatApproverName = (approverNames: string) => {
-  const charsToRemove = /\{|\}|"/g
-  const formattedApproversName = approverNames.replace(charsToRemove, '')
+  const charsToRemove = /\{|\}|"/g;
+  const formattedApproversName = approverNames.replace(charsToRemove, '');
 
-  return formattedApproversName
-}
+  return formattedApproversName;
+};
 
-export const filterRequestsByStatus = (requests: IRequestBody[], statusRequest: string) => {
-  return requests.filter((request: IRequestBody) => request.status === statusRequest)
-}
+export const filterRequestsByStatus = (
+  requests: IRequestBody[],
+  statusRequest: string
+) => {
+  return requests.filter(
+    (request: IRequestBody) => request.status === statusRequest
+  );
+};
 
 export const generateChartBarData = (
   statusWaitingApprovalAmount: number,
@@ -120,36 +129,40 @@ export const generateChartBarData = (
       barSize: (statusSketchAmount * 240) / biggerAmount,
       qtd: statusSketchAmount,
     },
-  ]
-}
+  ];
+};
 
 export const generateDefaultValueUseForm = (requestData: IRequestBody) => {
-  let defaultValue = {}
+  let defaultValue = {};
   if (requestData.requestId.includes('MC')) {
     defaultValue = {
       ...requestData,
       contractTotalValue: requestData ? requestData?.contractTotalValue : 0,
       dollarExchangeRate: requestData ? requestData?.dollarExchangeRate : 0,
       totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
-    }
+    };
   } else if (requestData.requestId.includes('SSC')) {
     defaultValue = {
       ...requestData,
       contractTotalValue: requestData ? requestData?.contractTotalValue : 0,
       dollarExchangeRate: requestData ? requestData?.dollarExchangeRate : 0,
       totalValueUSD: requestData ? requestData?.totalValueUSD : 0,
-    }
+    };
   } else {
     defaultValue = {
       ...requestData,
-    }
+    };
   }
 
-  return defaultValue
-}
+  return defaultValue;
+};
 
-export const generateRequestFormData = (requestType: string, data: IRequestBody, user?: TUser) => {
-  let formatData: IRequestBody = data
+export const generateRequestFormData = (
+  requestType: string,
+  data: IRequestBody,
+  user?: TUser
+) => {
+  let formatData: IRequestBody = data;
 
   if (requestType === 'maintenance-contract') {
     formatData = {
@@ -164,7 +177,7 @@ export const generateRequestFormData = (requestType: string, data: IRequestBody,
       gm: Number(data.gm),
       renewIndexPercentage: Number(data.renewIndexPercentage),
       index: Number(data.index),
-    }
+    };
   } else if (requestType === 'software-service-contract') {
     formatData = {
       ...data,
@@ -175,7 +188,7 @@ export const generateRequestFormData = (requestType: string, data: IRequestBody,
       dollarExchangeRate: Number(data.dollarExchangeRate),
       totalValueUSD: Number(data.totalValueUSD),
       gm: Number(data.gm),
-    }
+    };
   } else {
     formatData = {
       ...data,
@@ -183,30 +196,30 @@ export const generateRequestFormData = (requestType: string, data: IRequestBody,
       status: 'waiting for approval',
       requester: user?.id,
       commissionPercentage: Number(data.commissionPercentage),
-    }
+    };
   }
 
-  return formatData
-}
+  return formatData;
+};
 
 export const generateRequestStatus = (statusAction: string) => {
   switch (statusAction) {
     case 'sketch':
-      return 'sketch'
+      return 'sketch';
 
     case 'information':
-      return 'waiting for information'
+      return 'waiting for information';
 
     case 'disapprove':
-      return 'disapproved'
+      return 'disapproved';
 
     case 'approve':
-      return 'approved'
+      return 'approved';
 
     default:
-      return 'waiting for approval'
+      return 'waiting for approval';
   }
-}
+};
 
 export const generateApprovalFormData = (
   user: TUser,
@@ -214,7 +227,7 @@ export const generateApprovalFormData = (
   requestData: IRequestBody | undefined,
   justify: string
 ) => {
-  let formatApprovalData = {}
+  let formatApprovalData = {};
 
   if (requestData?.requestId.includes('MC')) {
     formatApprovalData = {
@@ -228,7 +241,7 @@ export const generateApprovalFormData = (
       author: user?.name,
       approver: user?.id,
       maintenanceContract: requestData?.id,
-    }
+    };
   } else if (requestData?.requestId.includes('SSC')) {
     formatApprovalData = {
       title: `Approval Level ${requestData?.currentLevel}`,
@@ -241,7 +254,7 @@ export const generateApprovalFormData = (
       author: user?.name,
       approver: user?.id,
       softwareServiceContract: requestData?.id,
-    }
+    };
   } else {
     formatApprovalData = {
       title: `Approval Level ${requestData?.currentLevel}`,
@@ -254,8 +267,8 @@ export const generateApprovalFormData = (
       author: user?.name,
       approver: user?.id,
       distributorRepresentativesContract: requestData?.id,
-    }
+    };
   }
 
-  return formatApprovalData
-}
+  return formatApprovalData;
+};

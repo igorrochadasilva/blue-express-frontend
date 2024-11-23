@@ -1,8 +1,8 @@
-import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
-import Content from '../Content/Content'
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import Content from '../Content/Content';
 
 interface IError {
-  message: string
+  message: string;
 }
 const ErrorComponent = ({ message }: IError) => {
   return (
@@ -12,6 +12,6 @@ const ErrorComponent = ({ message }: IError) => {
         <h2>{message}</h2>
       </div>
     </Content>
-  )
-}
-export default ErrorComponent
+  );
+};
+export default ErrorComponent;

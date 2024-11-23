@@ -10,7 +10,7 @@ const Head = () => {
         <th></th>
       </tr>
     </thead>
-  )
-}
+  );
+};
 
-export default Head
+export default Head;

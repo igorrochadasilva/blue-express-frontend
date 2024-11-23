@@ -1,45 +1,46 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { IRequestBody } from '../../../types/global/types'
-import PeriodFilter from './PeriodFilter/PeriodFilter'
-import Content from '../../Global/Content/Content'
-import RequestsChart from './RequestsChart/RequestsChart'
-import RequestsList from './RequestsList/RequestsList'
-import { notifyError } from '../../../toast/notifications'
-import NoDataBox from '../../Global/NoDataBox/NoDataBox'
+import { useEffect, useState } from 'react';
+import { IRequestBody } from '../../../types/global/types';
+import PeriodFilter from './PeriodFilter/PeriodFilter';
+import Content from '../../Global/Content/Content';
+import RequestsChart from './RequestsChart/RequestsChart';
+import RequestsList from './RequestsList/RequestsList';
 
 interface IDashBoardContent {
-  requestsData: IRequestBody[]
+  requestsData: IRequestBody[];
 }
 
 const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
-  const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([])
-  const [selectPeriodValue, setSelectPeriodValue] = useState<string>('')
+  const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([]);
+  const [selectPeriodValue, setSelectPeriodValue] = useState<string>('');
 
   const filterRequestByPeriod = () => {
     if (selectPeriodValue !== 'all') {
-      const days = Number(selectPeriodValue)
-      const thresholdDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000)
+      const days = Number(selectPeriodValue);
+      const thresholdDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
       const filterRequests = requestsData.filter((request: IRequestBody) => {
-        const requestDate = new Date(request.createdAt)
-        return requestDate >= thresholdDate
-      })
+        const requestDate = new Date(request.createdAt);
+        return requestDate >= thresholdDate;
+      });
 
-      setFilteredRequests(filterRequests)
+      setFilteredRequests(filterRequests);
     } else {
-      setFilteredRequests(requestsData)
+      setFilteredRequests(requestsData);
     }
-  }
+  };
 
-  const handleSelectPeriodChange = (value: string) => setSelectPeriodValue(value)
+  const handleSelectPeriodChange = (value: string) =>
+    setSelectPeriodValue(value);
 
   useEffect(() => {
     if (requestsData.length > 0) {
-      selectPeriodValue ? filterRequestByPeriod() : setFilteredRequests(requestsData)
+      selectPeriodValue
+        ? filterRequestByPeriod()
+        : setFilteredRequests(requestsData);
     }
-  }, [requestsData, selectPeriodValue])
+  }, [requestsData, selectPeriodValue]);
 
   return (
     <>
@@ -51,6 +52,6 @@ const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
         <RequestsList requests={filteredRequests} />
       </Content>
     </>
-  )
-}
-export default DashBoardContent
+  );
+};
+export default DashBoardContent;

@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { FormEventHandler, ReactNode } from 'react'
+import { FormEventHandler, ReactNode } from 'react';
 
 interface IFormProps {
-  onSubmitForm: FormEventHandler<HTMLFormElement>
-  children: ReactNode
+  onSubmitForm: FormEventHandler<HTMLFormElement>;
+  children: ReactNode;
 }
 
 const Form = ({ onSubmitForm, children }: IFormProps) => {
@@ -12,7 +12,7 @@ const Form = ({ onSubmitForm, children }: IFormProps) => {
     <form onSubmit={onSubmitForm} action="">
       {children}
     </form>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;

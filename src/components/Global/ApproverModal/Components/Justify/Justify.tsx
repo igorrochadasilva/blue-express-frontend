@@ -1,7 +1,7 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react';
 
 interface IJustifyProps {
-  handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const Justify = ({ handleJustifyApproverModal }: IJustifyProps) => {
@@ -15,7 +15,7 @@ const Justify = ({ handleJustifyApproverModal }: IJustifyProps) => {
         id=""
       ></textarea>
     </div>
-  )
-}
+  );
+};
 
-export default Justify
+export default Justify;

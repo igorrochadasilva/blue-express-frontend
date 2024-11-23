@@ -1,18 +1,18 @@
-'use server'
+'use server';
 
-import { ContainerContent } from '.'
+import { ContainerContent } from '.';
 
 interface IContainer {
-  children?: React.ReactNode
-  bgColor?: string
-  title?: string
-  showBtnNavigate?: boolean
-  btnNavigateText?: string
-  btnNavigateLink?: string
-  btnBgColor?: string
-  btnTextColor?: string
-  btnBorderColor?: string
-  btnBgHover?: string
+  children?: React.ReactNode;
+  bgColor?: string;
+  title?: string;
+  showBtnNavigate?: boolean;
+  btnNavigateText?: string;
+  btnNavigateLink?: string;
+  btnBgColor?: string;
+  btnTextColor?: string;
+  btnBorderColor?: string;
+  btnBgHover?: string;
 }
 
 const Container = async ({
@@ -44,7 +44,7 @@ const Container = async ({
       </div>
       {children}
     </ContainerContent.Root>
-  )
-}
+  );
+};
 
-export default Container
+export default Container;
