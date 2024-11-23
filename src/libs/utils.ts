@@ -1,5 +1,4 @@
-import { ICreateApproval } from '../actions/approvals'
-import { IApprover, IApproverData, IRequestBody, TUser } from '../types/global/types'
+import { IApprover, IRequestBody, TUser } from '../types/global/types'
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString)

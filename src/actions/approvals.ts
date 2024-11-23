@@ -1,7 +1,9 @@
-import axios from 'axios'
-import { notifyDefaultError, notifyError, notifySuccess } from '../toast/notifications'
+'use server'
+
 import { IRequestBody, TUser } from '../types/global/types'
 import { generateApprovalFormData, generateRequestStatus } from '../libs/utils'
+import { revalidateTag } from 'next/cache'
+import { fetchData } from '../libs/FetchData'
 
 export interface ICreateApproval {
   user: TUser
@@ -10,39 +12,46 @@ export interface ICreateApproval {
   justify: string
   url: string
 }
-console.log('🚀 ~ createApproval ~ env.NEXT_PUBLIC_BLUE_EXPRESS_API:', process.env.NEXT_PUBLIC_BLUE_EXPRESS_API)
 
 export const createApproval = async ({ user, statusAction, requestData, justify, url }: ICreateApproval) => {
   const requestStatus = generateRequestStatus(statusAction)
-
-  const formatApprovalData = generateApprovalFormData(user, requestStatus, requestData, justify)
 
   const formatRequestData = {
     status: requestStatus,
   }
 
-  try {
-    await axios.put(
-      `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${url}/${requestData?.id}?user=${user?.id}&role=${user?.role}&approver=true`,
-      formatRequestData
-    )
+  const requestResponse = await fetchData({
+    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${url}/${requestData?.id}`,
+    method: 'PUT',
+    params: {
+      user: user?.id,
+      role: user?.role,
+      approver: true,
+    },
+    body: formatRequestData,
+    tag: [`request-${requestData?.id}-tag`],
+  })
 
-    const approval = await axios.post('${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvals', formatApprovalData, {
+  if (requestResponse?.ok) {
+    revalidateTag(`request-${requestData?.id}-tag`)
+
+    revalidateTag('requests-tag')
+
+    const formatApprovalData = generateApprovalFormData(user, requestStatus, requestData, justify)
+    console.log('🚀 ~ createApproval ~ user:', user)
+    console.log('🚀 ~ createApproval ~ formatApprovalData:', formatApprovalData)
+    const approvalResponse = await fetch(`${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvals`, {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${user?.accessToken}`,
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify(formatApprovalData),
     })
 
-    notifySuccess(approval.data.message)
-    return true
-  } catch (e) {
-    const error: any = e
-    if (error.response?.data.message) {
-      notifyError(error.response.data.message)
-      return false
-    } else {
-      notifyDefaultError()
-      return false
-    }
+    const approvalDataResponse = await approvalResponse.json()
+    console.log('🚀 ~ createApproval ~ approvalDataResponse:', approvalDataResponse)
+
+    return approvalDataResponse
   }
 }

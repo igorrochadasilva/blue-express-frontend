@@ -5,6 +5,7 @@ import { SubmitHandler } from 'react-hook-form'
 import { IRequestBody, TUser } from '../../../types/global/types'
 import { createRequest } from '../../../actions/requests'
 import RequestForm from './Request/RequestForm/RequestForm'
+import { notifyError, notifySuccess } from '../../../toast/notifications'
 
 interface IRequestContent {
   user: TUser
@@ -18,10 +19,17 @@ const RequestContent = ({ user, FormDataInputs, createRequestRouter }: IRequestC
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true)
+
     const res = await createRequest(createRequestRouter, data, user)
-    if (res) {
+    console.log('🚀 ~ constonSubmitForm:SubmitHandler<IRequestBody>= ~ res:', res)
+
+    if (res.ok) {
       router.push('/contract-requests')
+      notifySuccess('Request Created Successfully.')
+    } else {
+      notifyError('Error to create a new request.')
     }
+
     setIsLoading(false)
   }
   return <RequestForm user={user} isLoading={isLoading} FormDataInputs={FormDataInputs} onSubmitForm={onSubmitForm} />

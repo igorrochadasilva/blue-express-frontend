@@ -13,11 +13,8 @@ export default async function MaintenanceContractRequest({ params }: IMaintenanc
   const user = await getUserSession()
   const { id } = params
   const requestData = await getRequest('maintenance-contract', id)
-  const { status, data, message } = requestData
+  const { data } = requestData
 
-  if (status !== 200) {
-    return <ErrorComponent message={message} />
-  }
   return (
     <Container title={data?.requestId}>
       {data ? (
