@@ -1,11 +1,13 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 interface IContentProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Content = ({ children }: IContentProps) => {
-  return <div className="z-10 bg-white w-[415px] h-auto p-4 rounded">{children}</div>
-}
+  return (
+    <div className="z-10 bg-white w-[415px] h-auto p-4 rounded">{children}</div>
+  );
+};
 
-export default Content
+export default Content;

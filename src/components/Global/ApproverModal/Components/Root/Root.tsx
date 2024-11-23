@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 interface IRootProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Root = ({ children }: IRootProps) => {
@@ -10,7 +10,7 @@ const Root = ({ children }: IRootProps) => {
       <div className="absolute w-full h-full bg-black opacity-90"></div>
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default Root
+export default Root;

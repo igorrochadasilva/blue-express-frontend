@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
-import { IApproverData } from '../../../../types/global/types'
-import { v4 as uuid4 } from 'uuid'
+import { IApproverData } from '../../../../types/global/types';
+import { v4 as uuid4 } from 'uuid';
 interface IListContentProps {
-  listApprovers: IApproverData[]
+  listApprovers: IApproverData[];
 }
 
 const ListContent = ({ listApprovers }: IListContentProps) => {
@@ -19,7 +18,7 @@ const ListContent = ({ listApprovers }: IListContentProps) => {
         </tr>
       ))}
     </tbody>
-  )
-}
+  );
+};
 
-export default ListContent
+export default ListContent;

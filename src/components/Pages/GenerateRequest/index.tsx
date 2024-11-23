@@ -1,6 +1,6 @@
-import Button from './Button/Button'
-import Root from './Root/Root'
+import Button from './Button/Button';
+import Root from './Root/Root';
 
-const GenerateRequest = { Root, Button }
+const GenerateRequest = { Root, Button };
 
-export default GenerateRequest
+export default GenerateRequest;

@@ -1,7 +1,7 @@
-import Content from './Content/Content'
-import Head from './Head/Head'
-import Root from './Root/Root'
+import Content from './Content/Content';
+import Head from './Head/Head';
+import Root from './Root/Root';
 
-const ApproversList = { Root, Head, Content }
+const ApproversList = { Root, Head, Content };
 
-export default ApproversList
+export default ApproversList;

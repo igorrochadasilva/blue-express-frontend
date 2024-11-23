@@ -1,11 +1,10 @@
-import { MouseEventHandler } from 'react'
-import { IModalOptions } from '../../ApproverModal'
+import { IModalOptions } from '../../ApproverModal';
 
 interface IButtonsProps {
-  handleApproverModal: () => void
-  handleApproverActionOnRequest: (statusAction: string) => Promise<void>
-  disableButton: boolean
-  modalOptions: IModalOptions
+  handleApproverModal: () => void;
+  handleApproverActionOnRequest: (statusAction: string) => Promise<void>;
+  disableButton: boolean;
+  modalOptions: IModalOptions;
 }
 
 const Buttons = ({
@@ -31,7 +30,7 @@ const Buttons = ({
         {modalOptions.text}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Buttons
+export default Buttons;

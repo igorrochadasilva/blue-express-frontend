@@ -1,39 +1,51 @@
-'use client'
+'use client';
 
-import { SubmitHandler } from 'react-hook-form'
-import { IRequestBody, TUser } from '../../../types/global/types'
-import { ChangeEvent, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import RequestForm from '../Requests/Request/RequestForm/RequestForm'
-import ApproverModal from '../../Global/ApproverModal/ApproverModal'
-import { createApproval } from '../../../actions/approvals'
-import { updateRequest } from '../../../actions/requests'
-import { notifyDefaultError, notifyError, notifySuccess } from '../../../toast/notifications'
+import { SubmitHandler } from 'react-hook-form';
+import { IRequestBody, TUser } from '../../../types/global/types';
+import { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import RequestForm from '../Requests/Request/RequestForm/RequestForm';
+import ApproverModal from '../../Global/ApproverModal/ApproverModal';
+import { createApproval } from '../../../actions/approvals';
+import { updateRequest } from '../../../actions/requests';
+import {
+  notifyDefaultError,
+  notifyError,
+  notifySuccess,
+} from '../../../toast/notifications';
 
 interface IDynamicRequestContent {
-  user: TUser
-  requestData: IRequestBody
-  FormDataInputs: any[]
-  requestRouteType: string
+  user: TUser;
+  requestData: IRequestBody;
+  FormDataInputs: any[];
+  requestRouteType: string;
 }
 
-const DynamicRequestContent = ({ user, requestData, FormDataInputs, requestRouteType }: IDynamicRequestContent) => {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+const DynamicRequestContent = ({
+  user,
+  requestData,
+  FormDataInputs,
+  requestRouteType,
+}: IDynamicRequestContent) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   //approver modal states
-  const [showApproverModal, setShowApproverModal] = useState(false)
-  const [modalStatus, setModalStatus] = useState('')
-  const [justifyApproverModal, setJustifyApproverModal] = useState('')
+  const [showApproverModal, setShowApproverModal] = useState(false);
+  const [modalStatus, setModalStatus] = useState('');
+  const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
-    setIsLoading(true)
-    const res = await updateRequest(user, requestRouteType, data)
-    console.log('🚀 ~ constonSubmitForm:SubmitHandler<IRequestBody>= ~ res:', res)
+    setIsLoading(true);
+    const res = await updateRequest(user, requestRouteType, data);
+    console.log(
+      '🚀 ~ constonSubmitForm:SubmitHandler<IRequestBody>= ~ res:',
+      res
+    );
     if (res) {
-      router.push('/contract-requests')
+      router.push('/contract-requests');
     }
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const handleApproverActionOnRequest = async (statusAction: string) => {
     const data = {
@@ -42,31 +54,32 @@ const DynamicRequestContent = ({ user, requestData, FormDataInputs, requestRoute
       requestData: requestData,
       justify: justifyApproverModal,
       url: requestRouteType,
-    }
+    };
 
-    setIsLoading(true)
+    setIsLoading(true);
 
-    const res = await createApproval(data)
-    console.log('🚀 ~ handleApproverActionOnRequest ~ res:', res)
+    const res = await createApproval(data);
+    console.log('🚀 ~ handleApproverActionOnRequest ~ res:', res);
     if (res.ok) {
-      notifySuccess(res)
-      router.push('/contract-requests')
+      notifySuccess(res);
+      router.push('/contract-requests');
     } else {
-      res ? notifyError(res.message) : notifyDefaultError()
-      setJustifyApproverModal('')
-      setIsLoading(false)
-      setShowApproverModal(!showApproverModal)
+      res ? notifyError(res.message) : notifyDefaultError();
+      setJustifyApproverModal('');
+      setIsLoading(false);
+      setShowApproverModal(!showApproverModal);
     }
-  }
+  };
 
   const handleApproverModal = () => {
-    setShowApproverModal(!showApproverModal), setJustifyApproverModal('')
-  }
+    setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
+  };
 
-  const handleModalStatus = (status: string) => setModalStatus(status)
+  const handleModalStatus = (status: string) => setModalStatus(status);
 
-  const handleJustifyApproverModal = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setJustifyApproverModal(event.target.value)
+  const handleJustifyApproverModal = (
+    event: ChangeEvent<HTMLTextAreaElement>
+  ) => setJustifyApproverModal(event.target.value);
 
   return (
     <>
@@ -89,7 +102,7 @@ const DynamicRequestContent = ({ user, requestData, FormDataInputs, requestRoute
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default DynamicRequestContent
+export default DynamicRequestContent;

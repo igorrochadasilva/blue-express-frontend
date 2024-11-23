@@ -1,11 +1,15 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 interface IContentProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Content = ({ children }: IContentProps) => {
-  return <div className="flex flex-row align-self justify-around h-[288px]  text-center">{children}</div>
-}
+  return (
+    <div className="flex flex-row align-self justify-around h-[288px]  text-center">
+      {children}
+    </div>
+  );
+};
 
-export default Content
+export default Content;

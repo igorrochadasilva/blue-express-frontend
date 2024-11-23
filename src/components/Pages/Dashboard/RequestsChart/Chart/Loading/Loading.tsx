@@ -1,9 +1,9 @@
 interface ILoadingProps {
-  text: string
+  text: string;
 }
 
 const Loading = ({ text }: ILoadingProps) => {
-  return <span className="flex items-center text-lg font-medium">{text}</span>
-}
+  return <span className="flex items-center text-lg font-medium">{text}</span>;
+};
 
-export default Loading
+export default Loading;

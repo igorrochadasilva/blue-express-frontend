@@ -1,27 +1,27 @@
-'use client'
+'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form'
-import Request from '..'
-import { IRequestBody, TUser } from '../../../../../types/global/types'
-import Content from '../../../../Global/Content/Content'
-import { generateDefaultValueUseForm } from '../../../../../libs/utils'
-import { v4 as uuid4 } from 'uuid'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Request from '..';
+import { IRequestBody, TUser } from '../../../../../types/global/types';
+import Content from '../../../../Global/Content/Content';
+import { generateDefaultValueUseForm } from '../../../../../libs/utils';
+import { v4 as uuid4 } from 'uuid';
 interface IRequestForm {
-  user: TUser
-  isLoading: boolean
-  requestData?: IRequestBody
+  user: TUser;
+  isLoading: boolean;
+  requestData?: IRequestBody;
   FormDataInputs: {
-    id: number
-    type: string
-    labelText: string
-    inputName: string
-    inputType: string
-    required: boolean
-    options?: any[] | undefined
-  }[][]
-  onSubmitForm: SubmitHandler<IRequestBody>
-  handleApproverModal?: (() => void) | undefined
-  handleModalStatus?: ((status: string) => void) | undefined
+    id: number;
+    type: string;
+    labelText: string;
+    inputName: string;
+    inputType: string;
+    required: boolean;
+    options?: any[] | undefined;
+  }[][];
+  onSubmitForm: SubmitHandler<IRequestBody>;
+  handleApproverModal?: (() => void) | undefined;
+  handleModalStatus?: ((status: string) => void) | undefined;
 }
 
 const RequestForm = ({
@@ -33,25 +33,29 @@ const RequestForm = ({
   handleApproverModal,
   handleModalStatus,
 }: IRequestForm) => {
-  const generatedDefaultValues = requestData ? generateDefaultValueUseForm(requestData) : {}
+  const generatedDefaultValues = requestData
+    ? generateDefaultValueUseForm(requestData)
+    : {};
 
-  const { register, watch, handleSubmit, setValue, getValues } = useForm<IRequestBody>({
-    mode: 'all',
-    defaultValues: {
-      ...generatedDefaultValues,
-      requesterName: requestData ? requestData?.requesterName : user?.name,
-    },
-  })
+  const { register, watch, handleSubmit, setValue, getValues } =
+    useForm<IRequestBody>({
+      mode: 'all',
+      defaultValues: {
+        ...generatedDefaultValues,
+        requesterName: requestData ? requestData?.requesterName : user?.name,
+      },
+    });
 
-  const showApproverButtons = user?.role !== 1 && requestData?.status === 'waiting for approval'
+  const showApproverButtons =
+    user?.role !== 1 && requestData?.status === 'waiting for approval';
   //const showSaveButton = user?.email === requestData?.author && requestData?.status !== 'waiting for approval'
 
-  const inputContractTotalValue = watch('contractTotalValue')
-  const inputDollarExchangeRate = watch('dollarExchangeRate')
-  const inputTotalValueUSD = inputContractTotalValue / inputDollarExchangeRate
+  const inputContractTotalValue = watch('contractTotalValue');
+  const inputDollarExchangeRate = watch('dollarExchangeRate');
+  const inputTotalValueUSD = inputContractTotalValue / inputDollarExchangeRate;
 
   if (!requestData?.requestId.includes('DRC')) {
-    setValue('totalValueUSD', inputTotalValueUSD)
+    setValue('totalValueUSD', inputTotalValueUSD);
   }
 
   return (
@@ -73,7 +77,7 @@ const RequestForm = ({
                       register={register}
                       getValues={getValues}
                     />
-                  )
+                  );
                 } else {
                   return (
                     <Request.Select
@@ -84,7 +88,7 @@ const RequestForm = ({
                       register={register}
                       required={item.required}
                     />
-                  )
+                  );
                 }
               })}
             </Request.InputGroup>
@@ -92,12 +96,15 @@ const RequestForm = ({
         </div>
       </Content>
       {showApproverButtons ? (
-        <Request.ApproverButtons handleApproverModal={handleApproverModal} handleModalStatus={handleModalStatus} />
+        <Request.ApproverButtons
+          handleApproverModal={handleApproverModal}
+          handleModalStatus={handleModalStatus}
+        />
       ) : (
         <Request.GroupButtons isLoading={isLoading} />
       )}
     </Request.Form>
-  )
-}
+  );
+};
 
-export default RequestForm
+export default RequestForm;

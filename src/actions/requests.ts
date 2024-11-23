@@ -1,11 +1,15 @@
-'use server'
+'use server';
 
-import { IRequestBody, TUser } from '../types/global/types'
-import { generateRequestFormData } from '../libs/utils'
-import { revalidateTag } from 'next/cache'
-import { fetchData } from '../libs/FetchData'
+import { IRequestBody, TUser } from '../types/global/types';
+import { generateRequestFormData } from '../libs/utils';
+import { revalidateTag } from 'next/cache';
+import { fetchData } from '../libs/FetchData';
 
-export async function listRequests(requestType: string, email: string | null | undefined, role: number | undefined) {
+export async function listRequests(
+  requestType: string,
+  email: string | null | undefined,
+  role: number | undefined
+) {
   const res = await fetchData({
     router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`,
     method: 'GET',
@@ -14,47 +18,51 @@ export async function listRequests(requestType: string, email: string | null | u
       role,
     },
     tag: ['requests-tag'],
-  })
+  });
 
   if (res.ok) {
-    const data = await res.json()
-    return { status: 200, data: data, message: 'successful' }
+    const data = await res.json();
+    return { status: 200, data: data, message: 'successful' };
   } else {
-    throw res
+    throw res;
   }
 }
 
-export async function createRequest(requestType: string, data: IRequestBody, user: TUser) {
-  const { files, ...dataRest } = data
+export async function createRequest(
+  requestType: string,
+  data: IRequestBody,
+  user: TUser
+) {
+  const { files, ...dataRest } = data;
 
-  const formatData = generateRequestFormData(requestType, dataRest, user)
-  formatData.filesName = ''
+  const formatData = generateRequestFormData(requestType, dataRest, user);
+  formatData.filesName = '';
 
-  const newFormData = new FormData()
-  const arrayFiles = Array.from(files)
+  const newFormData = new FormData();
+  const arrayFiles = Array.from(files);
 
   arrayFiles.forEach((file: any) => {
-    newFormData.append(file.name, file)
-    formatData.filesName += file.name + ','
-  })
+    newFormData.append(file.name, file);
+    formatData.filesName += file.name + ',';
+  });
 
-  formatData.filesName = formatData.filesName.slice(0, -1)
+  formatData.filesName = formatData.filesName.slice(0, -1);
 
-  newFormData.append('data', JSON.stringify(formatData))
+  newFormData.append('data', JSON.stringify(formatData));
 
   const res = await fetchData({
     router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`,
     method: 'POST',
     body: newFormData,
     token: user?.accessToken,
-  })
-  console.log('create new request', res)
+  });
+  console.log('create new request', res);
   if (res.ok) {
-    revalidateTag('requests-tag')
+    revalidateTag('requests-tag');
 
-    return res
+    return res;
   } else {
-    throw res
+    throw res;
   }
 }
 
@@ -63,33 +71,37 @@ export async function getRequest(requestType: string, id: string) {
     router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${id}`,
     method: 'GET',
     tag: [`request-${id}-tag`],
-  })
+  });
 
   if (res.ok) {
-    const data = await res?.json()
-    return { data: data }
+    const data = await res?.json();
+    return { data: data };
   } else {
-    throw res
+    throw res;
   }
 }
 
-export async function updateRequest(user: TUser, requestType: string, data: IRequestBody) {
-  const { files, ...requestData } = data
-  const newFormData = new FormData()
-  const arrayFiles = Array.from(files)
+export async function updateRequest(
+  user: TUser,
+  requestType: string,
+  data: IRequestBody
+) {
+  const { files, ...requestData } = data;
+  const newFormData = new FormData();
+  const arrayFiles = Array.from(files);
 
-  const formatData = generateRequestFormData(requestType, requestData)
+  const formatData = generateRequestFormData(requestType, requestData);
 
-  formatData.filesName = ''
+  formatData.filesName = '';
 
   arrayFiles.forEach((file: any) => {
-    newFormData.append(file.name, file)
-    formatData.filesName += file.name + ','
-  })
+    newFormData.append(file.name, file);
+    formatData.filesName += file.name + ',';
+  });
 
-  formatData.filesName = formatData.filesName.slice(0, -1)
+  formatData.filesName = formatData.filesName.slice(0, -1);
 
-  newFormData.append('data', JSON.stringify(formatData))
+  newFormData.append('data', JSON.stringify(formatData));
 
   const res = await fetchData({
     router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}/${requestData.id}`,
@@ -99,14 +111,14 @@ export async function updateRequest(user: TUser, requestType: string, data: IReq
     },
     body: newFormData,
     tag: [`request-${requestData.id}-tag`],
-  })
-  const responseData = await res.json()
-  console.log('🚀 ~ updateRequest ~ res:', responseData)
+  });
+  const responseData = await res.json();
+  console.log('🚀 ~ updateRequest ~ res:', responseData);
   if (res.ok) {
-    revalidateTag(`request-${requestData.id}-tag`)
-    revalidateTag('requests-tag')
-    return res.ok
+    revalidateTag(`request-${requestData.id}-tag`);
+    revalidateTag('requests-tag');
+    return res.ok;
   } else {
-    throw responseData
+    throw responseData;
   }
 }

@@ -1,4 +1,10 @@
-import { approverLevelOptions, companyOptions, contractTypeOptions, frequencyOptions, ufOptions } from './options'
+import {
+  approverLevelOptions,
+  companyOptions,
+  contractTypeOptions,
+  frequencyOptions,
+  ufOptions,
+} from './options';
 
 export const MCFormDataInputs = [
   [
@@ -326,4 +332,4 @@ export const MCFormDataInputs = [
       readonly: false,
     },
   ],
-]
+];

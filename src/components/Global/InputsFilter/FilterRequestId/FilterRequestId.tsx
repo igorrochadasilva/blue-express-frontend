@@ -1,8 +1,10 @@
 interface IFilterRequestIdProps {
-  handleSelectRequestIdChange: (e: string) => void
+  handleSelectRequestIdChange: (e: string) => void;
 }
 
-const FilterRequestId = ({ handleSelectRequestIdChange }: IFilterRequestIdProps) => {
+const FilterRequestId = ({
+  handleSelectRequestIdChange,
+}: IFilterRequestIdProps) => {
   return (
     <div className="flex flex-col w-[200px] gap-2 text-be_second_color">
       <label htmlFor="Status" className="font-semibold">
@@ -14,7 +16,7 @@ const FilterRequestId = ({ handleSelectRequestIdChange }: IFilterRequestIdProps)
         onChange={(e) => handleSelectRequestIdChange(e.currentTarget.value)}
       />
     </div>
-  )
-}
+  );
+};
 
-export default FilterRequestId
+export default FilterRequestId;

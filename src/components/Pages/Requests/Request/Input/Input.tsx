@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
-import { UseFormRegister } from 'react-hook-form'
-import { IRequestBody, TFiles } from '../../../../types/global/types'
+import { UseFormRegister } from 'react-hook-form';
+import { IRequestBody, TFiles } from '../../../../types/global/types';
 
 type TInput = {
-  labelText: string
-  inputName: any
-  inputType: string | undefined
-  inputValue?: string | number
-  validationSchema?: any
-  readonly: boolean | undefined
-  required?: boolean
-  placeholder?: string
-  pattern?: string
-  step?: string | number | undefined
-  register: UseFormRegister<IRequestBody>
-  getValues: (v: string) => TFiles
-}
+  labelText: string;
+  inputName: any;
+  inputType: string | undefined;
+  inputValue?: string | number;
+  validationSchema?: any;
+  readonly: boolean | undefined;
+  required?: boolean;
+  placeholder?: string;
+  pattern?: string;
+  step?: string | number | undefined;
+  register: UseFormRegister<IRequestBody>;
+  getValues: (v: string) => TFiles;
+};
 
 const Input = ({
   inputName,
@@ -31,21 +31,21 @@ const Input = ({
   register,
   getValues,
 }: TInput) => {
-  const files = getValues('files')
+  const files = getValues('files');
 
   const linkFiles = (files: TFiles) => {
     if (!files || Object.keys(files).length === 0) {
-      return null
+      return null;
     }
 
-    const arrayFiles = Array.from(files)
+    const arrayFiles = Array.from(files);
 
     return arrayFiles.map((file) => (
       <a key={file.name} href={file.link}>
         {file.name}
       </a>
-    ))
-  }
+    ));
+  };
 
   return (
     <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
@@ -62,9 +62,11 @@ const Input = ({
         multiple={inputType === 'file' ? true : undefined}
         step={step}
       />
-      {inputName === 'files' && <div className="flex flex-row gap-2">{linkFiles(files)}</div>}
+      {inputName === 'files' && (
+        <div className="flex flex-row gap-2">{linkFiles(files)}</div>
+      )}
     </label>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

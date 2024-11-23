@@ -1,4 +1,10 @@
-import { approverLevelOptions, companyOptions, companyTypeOptions, contractTypeOptions, ufOptions } from './options'
+import {
+  approverLevelOptions,
+  companyOptions,
+  companyTypeOptions,
+  contractTypeOptions,
+  ufOptions,
+} from './options';
 
 export const SSCFormDataInputs = [
   [
@@ -297,4 +303,4 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
   ],
-]
+];

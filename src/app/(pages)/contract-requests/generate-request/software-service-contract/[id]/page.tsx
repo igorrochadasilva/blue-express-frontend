@@ -1,22 +1,24 @@
-import Container from '../../../../../../components/Global/Container/Container'
-import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs'
-import { getRequest } from '../../../../../../actions/requests'
-import { getUserSession } from '../../../../../../actions/auth'
-import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent'
-import ErrorComponent from '../../../../../../components/Global/Error/Error'
+import Container from '../../../../../../components/Global/Container/Container';
+import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs';
+import { getRequest } from '../../../../../../actions/requests';
+import { getUserSession } from '../../../../../../actions/auth';
+import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
+import ErrorComponent from '../../../../../../components/Global/Error/Error';
 
 interface ISoftwareServiceContractRequest {
-  params: { id: string }
+  params: { id: string };
 }
 
-export default async function SoftwareServiceContractRequest({ params }: ISoftwareServiceContractRequest) {
-  const user = await getUserSession()
-  const { id } = params
-  const requestData = await getRequest('software-service-contract', id)
-  const { status, data, message } = requestData
+export default async function SoftwareServiceContractRequest({
+  params,
+}: ISoftwareServiceContractRequest) {
+  const user = await getUserSession();
+  const { id } = params;
+  const requestData = await getRequest('software-service-contract', id);
+  const { status, data, message } = requestData;
 
   if (status !== 200) {
-    return <ErrorComponent message={message} />
+    return <ErrorComponent message={message} />;
   }
 
   return (
@@ -30,5 +32,5 @@ export default async function SoftwareServiceContractRequest({ params }: ISoftwa
         />
       ) : null}
     </Container>
-  )
+  );
 }

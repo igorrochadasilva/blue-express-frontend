@@ -1,9 +1,9 @@
 interface IListProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const List = ({ children }: IListProps) => {
-  return <table className="w-full text-center text-sm">{children}</table>
-}
+  return <table className="w-full text-center text-sm">{children}</table>;
+};
 
-export default List
+export default List;

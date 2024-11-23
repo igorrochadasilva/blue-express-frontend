@@ -1,20 +1,19 @@
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react';
 
-import ApproverModalComponents from './Components'
+import ApproverModalComponents from './Components';
 
 interface IApproverModal {
-  handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void
-  handleApproverActionOnRequest: (statusAction: string) => Promise<void>
-  handleApproverModal: () => void
-  modalStatus: string
-  justifyApproverModal: string
+  handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleApproverActionOnRequest: (statusAction: string) => Promise<void>;
+  handleApproverModal: () => void;
+  modalStatus: string;
+  justifyApproverModal: string;
 }
 
 export interface IModalOptions {
-  color: string
-  showNextLevel: boolean
-  text: string
+  color: string;
+  showNextLevel: boolean;
+  text: string;
 }
 
 const ApproverModal = ({
@@ -28,9 +27,9 @@ const ApproverModal = ({
     color: '',
     showNextLevel: false,
     text: 'string',
-  }
+  };
 
-  const disableButton = justifyApproverModal.length === 0 ? true : false
+  const disableButton = justifyApproverModal.length === 0 ? true : false;
 
   switch (modalStatus) {
     case 'information':
@@ -38,36 +37,43 @@ const ApproverModal = ({
         color: '#ED8B00',
         showNextLevel: false,
         text: 'information',
-      }
-      break
+      };
+      break;
     case 'disapprove':
       modalOptions = {
         color: '#EB1400',
         showNextLevel: false,
         text: 'disapprove',
-      }
-      break
+      };
+      break;
     case 'forward':
       modalOptions = {
         color: '#005EB8',
         showNextLevel: true,
         text: 'approve',
-      }
-      break
+      };
+      break;
     default:
       modalOptions = {
         color: '#005EB8',
         showNextLevel: false,
         text: 'approve',
-      }
+      };
   }
 
   return (
     <ApproverModalComponents.Root>
       <ApproverModalComponents.Content>
-        <ApproverModalComponents.Close handleApproverModal={handleApproverModal} text="Justify" />
-        <ApproverModalComponents.Justify handleJustifyApproverModal={handleJustifyApproverModal} />
-        {modalOptions.showNextLevel && <ApproverModalComponents.NextLevel text="Follow approval for 3rd level" />}
+        <ApproverModalComponents.Close
+          handleApproverModal={handleApproverModal}
+          text="Justify"
+        />
+        <ApproverModalComponents.Justify
+          handleJustifyApproverModal={handleJustifyApproverModal}
+        />
+        {modalOptions.showNextLevel && (
+          <ApproverModalComponents.NextLevel text="Follow approval for 3rd level" />
+        )}
         <ApproverModalComponents.Buttons
           disableButton={disableButton}
           handleApproverActionOnRequest={handleApproverActionOnRequest}
@@ -76,7 +82,7 @@ const ApproverModal = ({
         />
       </ApproverModalComponents.Content>
     </ApproverModalComponents.Root>
-  )
-}
+  );
+};
 
-export default ApproverModal
+export default ApproverModal;

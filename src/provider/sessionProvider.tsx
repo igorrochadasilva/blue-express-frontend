@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { SessionProvider } from 'next-auth/react'
-import { ReactNode } from 'react'
-import { ToastContainer } from 'react-toastify'
+import { SessionProvider } from 'next-auth/react';
+import { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 interface TNextAuthSessionProvider {
-  children: ReactNode
+  children: ReactNode;
 }
 
 function NextAuthSessionProvider({ children }: TNextAuthSessionProvider) {
@@ -14,7 +14,7 @@ function NextAuthSessionProvider({ children }: TNextAuthSessionProvider) {
       <ToastContainer />
       {children}
     </SessionProvider>
-  )
+  );
 }
 
-export default NextAuthSessionProvider
+export default NextAuthSessionProvider;

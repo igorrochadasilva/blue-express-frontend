@@ -1,5 +1,5 @@
-import Container from '../../../../components/Global/Container/Container'
-import GenerateRequest from '../../../../components/Pages/GenerateRequest'
+import Container from '../../../../components/Global/Container/Container';
+import GenerateRequest from '../../../../components/Pages/GenerateRequest';
 
 export default async function GenerateContracts() {
   return (
@@ -15,9 +15,11 @@ export default async function GenerateContracts() {
         />
         <GenerateRequest.Button
           text="Distributor Representative Contract"
-          link={'/contract-requests/generate-request/distributor-representatives-contract'}
+          link={
+            '/contract-requests/generate-request/distributor-representatives-contract'
+          }
         />
       </GenerateRequest.Root>
     </Container>
-  )
+  );
 }

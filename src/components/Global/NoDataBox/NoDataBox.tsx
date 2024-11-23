@@ -1,7 +1,7 @@
-import { FaceFrownIcon } from '@heroicons/react/24/outline'
+import { FaceFrownIcon } from '@heroicons/react/24/outline';
 
 interface INoDataBox {
-  text: string
+  text: string;
 }
 
 const NoDataBox = ({ text }: INoDataBox) => {
@@ -10,7 +10,7 @@ const NoDataBox = ({ text }: INoDataBox) => {
       <FaceFrownIcon className="w-10" />
       <span className="text-lg">{text}</span>
     </div>
-  )
-}
+  );
+};
 
-export default NoDataBox
+export default NoDataBox;

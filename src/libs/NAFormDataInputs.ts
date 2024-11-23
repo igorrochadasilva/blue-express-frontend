@@ -1,4 +1,8 @@
-import { approverLevelOptions, companyOptions, requestTypesOptions } from './options'
+import {
+  approverLevelOptions,
+  companyOptions,
+  requestTypesOptions,
+} from './options';
 
 export const NAFormDataInputs = [
   [
@@ -62,4 +66,4 @@ export const NAFormDataInputs = [
       options: approverLevelOptions,
     },
   ],
-]
+];

@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 interface ITableProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Table = ({ children }: ITableProps) => {
@@ -9,7 +9,7 @@ const Table = ({ children }: ITableProps) => {
     <div className="flex flex-col justify-normal">
       <table>{children}</table>
     </div>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

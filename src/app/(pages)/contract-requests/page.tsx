@@ -1,10 +1,10 @@
-import Container from '../../../components/Global/Container/Container'
-import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox'
-import ContractRequestContent from '../../../components/Pages/ContractRequests/ContractRequestContent'
-import { getRequests } from '../../../hooks/GetRequests'
+import Container from '../../../components/Global/Container/Container';
+import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
+import ContractRequestContent from '../../../components/Pages/ContractRequests/ContractRequestContent';
+import { getRequests } from '../../../hooks/GetRequests';
 
 export default async function ContractRequests() {
-  const requestsData = await getRequests()
+  const requestsData = await getRequests();
 
   return (
     <Container
@@ -23,5 +23,5 @@ export default async function ContractRequests() {
         <NoDataBox text="There are no requests to show..." />
       )}
     </Container>
-  )
+  );
 }

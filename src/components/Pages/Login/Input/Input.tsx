@@ -1,18 +1,18 @@
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormRegister } from 'react-hook-form';
 
 type LoginInputs = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 interface IInputProps {
-  labelText: string
-  inputName: 'email' | 'password'
-  inputType: string
-  message: string
-  errors: any
-  patternValue?: RegExp
-  register: UseFormRegister<LoginInputs>
+  labelText: string;
+  inputName: 'email' | 'password';
+  inputType: string;
+  message: string;
+  errors: any;
+  patternValue?: RegExp;
+  register: UseFormRegister<LoginInputs>;
 }
 
 export function Input({
@@ -47,5 +47,5 @@ export function Input({
         </span>
       )}
     </>
-  )
+  );
 }

@@ -1,15 +1,18 @@
-import Content from '../../../../Global/Content/Content'
+import Content from '../../../../Global/Content/Content';
 
 interface IApproverButtons {
-  handleApproverModal: (() => void) | undefined
-  handleModalStatus: ((status: string) => void) | undefined
+  handleApproverModal: (() => void) | undefined;
+  handleModalStatus: ((status: string) => void) | undefined;
 }
 
-const ApproverButtons = ({ handleApproverModal, handleModalStatus }: IApproverButtons) => {
+const ApproverButtons = ({
+  handleApproverModal,
+  handleModalStatus,
+}: IApproverButtons) => {
   const handleModalAction = (status: string) => {
-    handleApproverModal && handleApproverModal()
-    handleModalStatus && handleModalStatus(status)
-  }
+    handleApproverModal && handleApproverModal();
+    handleModalStatus && handleModalStatus(status);
+  };
 
   return (
     <Content>
@@ -44,7 +47,7 @@ const ApproverButtons = ({ handleApproverModal, handleModalStatus }: IApproverBu
         </button>
       </div>
     </Content>
-  )
-}
+  );
+};
 
-export default ApproverButtons
+export default ApproverButtons;

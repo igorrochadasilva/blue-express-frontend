@@ -1,30 +1,48 @@
-import { useEffect, useState } from 'react'
-import { barData, IRequestBody } from '../../../../types/global/types'
-import { filterRequestsByStatus, generateChartBarData } from '../../../../libs/utils'
-import { Chart } from './Chart'
+import { useEffect, useState } from 'react';
+import { barData, IRequestBody } from '../../../../types/global/types';
+import {
+  filterRequestsByStatus,
+  generateChartBarData,
+} from '../../../../libs/utils';
+import { Chart } from './Chart';
 
 interface IRequestsChart {
-  requests: IRequestBody[]
+  requests: IRequestBody[];
 }
 
 const RequestsChart = ({ requests }: IRequestsChart) => {
-  const [barsData, setBarsData] = useState<barData[]>([])
+  const [barsData, setBarsData] = useState<barData[]>([]);
 
   useEffect(() => {
-    const statusWaitingApprovalAmount = filterRequestsByStatus(requests, 'waiting for approval').length
-    const statusApprovedAmount = filterRequestsByStatus(requests, 'approved').length
-    const statusDisapprovedAmount = filterRequestsByStatus(requests, 'disapproved').length
-    const statusWaitingInformationAmount = filterRequestsByStatus(requests, 'waiting for information').length
-    const statusSketchAmount = filterRequestsByStatus(requests, 'sketch').length
+    const statusWaitingApprovalAmount = filterRequestsByStatus(
+      requests,
+      'waiting for approval'
+    ).length;
+    const statusApprovedAmount = filterRequestsByStatus(
+      requests,
+      'approved'
+    ).length;
+    const statusDisapprovedAmount = filterRequestsByStatus(
+      requests,
+      'disapproved'
+    ).length;
+    const statusWaitingInformationAmount = filterRequestsByStatus(
+      requests,
+      'waiting for information'
+    ).length;
+    const statusSketchAmount = filterRequestsByStatus(
+      requests,
+      'sketch'
+    ).length;
     const statusAmounts = [
       statusWaitingApprovalAmount,
       statusApprovedAmount,
       statusDisapprovedAmount,
       statusWaitingInformationAmount,
       statusSketchAmount,
-    ]
+    ];
 
-    const biggerAmount = Math.max(...statusAmounts)
+    const biggerAmount = Math.max(...statusAmounts);
 
     const chartData = generateChartBarData(
       statusWaitingApprovalAmount,
@@ -33,10 +51,10 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
       statusDisapprovedAmount,
       statusSketchAmount,
       biggerAmount
-    )
+    );
 
-    setBarsData(chartData)
-  }, [requests])
+    setBarsData(chartData);
+  }, [requests]);
 
   return (
     <Chart.Root>
@@ -44,13 +62,19 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
       <Chart.Content>
         {barsData.length > 0 ? (
           barsData?.map((bar: barData, i: number) => (
-            <Chart.Bar key={i} barColor={bar.color} barSize={bar.barSize} barText={bar.text} quantity={bar.qtd} />
+            <Chart.Bar
+              key={i}
+              barColor={bar.color}
+              barSize={bar.barSize}
+              barText={bar.text}
+              quantity={bar.qtd}
+            />
           ))
         ) : (
           <Chart.Loading text="loading chart..." />
         )}
       </Chart.Content>
     </Chart.Root>
-  )
-}
-export default RequestsChart
+  );
+};
+export default RequestsChart;

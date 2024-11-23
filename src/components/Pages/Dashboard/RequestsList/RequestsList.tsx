@@ -1,31 +1,38 @@
-import { useEffect, useState } from 'react'
-import { calculateSLA, formatApproverName, formatDate, generateRouteForId } from '../../../../libs/utils'
-import { IRequestBody } from '../../../../types/global/types'
-import ListRequests from './List'
+import { useEffect, useState } from 'react';
+import {
+  calculateSLA,
+  formatApproverName,
+  formatDate,
+  generateRouteForId,
+} from '../../../../libs/utils';
+import { IRequestBody } from '../../../../types/global/types';
+import ListRequests from './List';
 
 interface IRequestsList {
-  requests: IRequestBody[]
+  requests: IRequestBody[];
 }
 
 interface IRequest {
-  type: string
-  status: string
-  statusColor: string
-  requestDate: string
-  requester: string
-  approver: string
-  SLA: string
-  requestId: string
-  id: string
-  order: string
-  link: string
+  type: string;
+  status: string;
+  statusColor: string;
+  requestDate: string;
+  requester: string;
+  approver: string;
+  SLA: string;
+  requestId: string;
+  id: string;
+  order: string;
+  link: string;
 }
 
 const RequestsList = ({ requests }: IRequestsList) => {
-  const [listRequests, setListRequests] = useState<any>()
+  const [listRequests, setListRequests] = useState<any>();
 
   useEffect(() => {
-    const filteredRequests = requests.filter((request) => request.status === 'waiting for approval')
+    const filteredRequests = requests.filter(
+      (request) => request.status === 'waiting for approval'
+    );
 
     const data = filteredRequests.map((request, index) => {
       const statusColor =
@@ -35,11 +42,13 @@ const RequestsList = ({ requests }: IRequestsList) => {
           'waiting for approval': '#F3AF25',
           'waiting for information': '#F3AF25',
           sketch: '#98A4AE',
-        }[request.status] || '#ccc'
+        }[request.status] || '#ccc';
 
-      const formattedApprovers = request.currentApproverName ? formatApproverName(request.currentApproverName) : ''
+      const formattedApprovers = request.currentApproverName
+        ? formatApproverName(request.currentApproverName)
+        : '';
 
-      const requestLink = generateRouteForId(request.requestId, request.id)
+      const requestLink = generateRouteForId(request.requestId, request.id);
 
       return {
         type: request.title,
@@ -52,11 +61,11 @@ const RequestsList = ({ requests }: IRequestsList) => {
         requestId: request.requestId,
         order: index,
         link: requestLink,
-      }
-    })
+      };
+    });
 
-    setListRequests(data)
-  }, [requests])
+    setListRequests(data);
+  }, [requests]);
 
   return (
     <ListRequests.Root>
@@ -80,11 +89,11 @@ const RequestsList = ({ requests }: IRequestsList) => {
                   requester={request.requester}
                   approver={request.approver}
                 />
-              )
+              );
             })}
         </tbody>
       </ListRequests.Table>
     </ListRequests.Root>
-  )
-}
-export default RequestsList
+  );
+};
+export default RequestsList;

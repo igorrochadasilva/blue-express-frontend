@@ -12,7 +12,7 @@ const ListHead = () => {
         <th className="w-1/6">Office</th>
       </tr>
     </thead>
-  )
-}
+  );
+};
 
-export default ListHead
+export default ListHead;

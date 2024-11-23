@@ -4,7 +4,7 @@ import {
   contractTypeOptions,
   typeRequestOrderOptions,
   ufOptions,
-} from './options'
+} from './options';
 
 export const DRCFormDataInputs = [
   [
@@ -215,4 +215,4 @@ export const DRCFormDataInputs = [
       readonly: false,
     },
   ],
-]
+];

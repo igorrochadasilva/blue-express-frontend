@@ -1,20 +1,28 @@
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormRegister } from 'react-hook-form';
 
 type LoginInputs = {
-  password: string
-}
+  password: string;
+};
 
 interface IInputProps {
-  labelText: string
-  inputName: 'password'
-  inputType: string
-  message: string
-  errors: any
-  minLength?: number
-  register: UseFormRegister<LoginInputs>
+  labelText: string;
+  inputName: 'password';
+  inputType: string;
+  message: string;
+  errors: any;
+  minLength?: number;
+  register: UseFormRegister<LoginInputs>;
 }
 
-export function Input({ labelText, inputName, inputType, errors, message, minLength = 6, register }: IInputProps) {
+export function Input({
+  labelText,
+  inputName,
+  inputType,
+  errors,
+  message,
+  minLength = 6,
+  register,
+}: IInputProps) {
   return (
     <>
       <label htmlFor={labelText} className="mb-2 mt-2">
@@ -32,7 +40,9 @@ export function Input({ labelText, inputName, inputType, errors, message, minLen
         })}
         type={inputType}
       />
-      {errors.inputName && <span className="text-sm text-red-500">{errors.inputName.message}</span>}
+      {errors.inputName && (
+        <span className="text-sm text-red-500">{errors.inputName.message}</span>
+      )}
     </>
-  )
+  );
 }
