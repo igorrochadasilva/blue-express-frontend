@@ -12,7 +12,7 @@ interface IFormProps {
 
 export function Form({ onSubmitLogin, children }: IFormProps) {
   return (
-    <form onSubmit={onSubmitLogin} className="px-12 py-6">
+    <form onSubmit={onSubmitLogin} className="px-12 py-6 max-w-96 w-full">
       {children}
     </form>
   );

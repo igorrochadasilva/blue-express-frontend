@@ -11,7 +11,7 @@ export function IconClose({
   handleShowForgetPassword,
 }: ICloseProps) {
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end w-full relative top-[-25px]">
       <XMarkIcon
         onClick={handleShowForgetPassword}
         className={`h-6 w-6 text-slate-800 text-end cursor-pointer ${showForgetPassword ? 'block' : 'hidden'}`}

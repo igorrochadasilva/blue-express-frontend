@@ -1,7 +1,7 @@
 import Container from '../../../../../components/Global/Container/Container';
 import { SSCFormDataInputs } from '../../../../../libs/SSCFormDataInputs';
 import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
-import { getUserSession } from '../../../../../actions/auth';
+import { getUserSession } from '../../../../../actions/auth/getUserSession';
 
 export default async function SoftwareServiceContract() {
   const user = await getUserSession();

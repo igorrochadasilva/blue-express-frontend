@@ -1,6 +1,6 @@
 'use server';
 
-import { getUserSession } from '../../../../actions/auth';
+import { getUserSession } from '../../../../actions/auth/getUserSession';
 import { listUsers } from '../../../../actions/user';
 import Container from '../../../../components/Global/Container/Container';
 import NewApproverContent from '../../../../components/Pages/NewApprover/NewApproverContent';

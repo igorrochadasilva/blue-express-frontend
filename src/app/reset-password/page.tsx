@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Container from '../../components/Global/Container/Container';
 import { useSearchParams } from 'next/navigation';
-import { handleResetPassword } from '../../actions/auth';
+import { handleResetPassword } from '../../actions/auth/handleResetPassword';
 import { ResetPassword } from '../../components/Pages/ResetPassword';
 
 type ResetInput = {

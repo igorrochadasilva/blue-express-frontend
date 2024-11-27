@@ -1,19 +1,15 @@
 import { toast } from 'react-toastify';
 
-export const notifyError = (message: string | null) => {
-  toast.error(message, {
-    position: 'top-right',
-  });
-};
+interface INotifyMessage {
+  message?: string;
+  statusCode?: number;
+}
+export const notifyMessage = ({
+  message = 'An error occurred. Please try again later.',
+  statusCode = 500,
+}: INotifyMessage): void => {
+  const isSuccess = [200, 201].includes(statusCode);
+  const toastType = isSuccess ? toast.success : toast.error;
 
-export const notifySuccess = (message: string) => {
-  toast.success(message, {
-    position: 'top-right',
-  });
-};
-
-export const notifyDefaultError = () => {
-  toast.error('An error occurred. Please try again later.', {
-    position: 'top-right',
-  });
+  toastType(message, { position: 'top-right' });
 };
