@@ -2,7 +2,7 @@ import Container from '../../../../../../components/Global/Container/Container';
 import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs';
 import { getRequest } from '../../../../../../actions/requests';
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
-import { getUserSession } from '../../../../../../actions/auth';
+import { getUserSession } from '../../../../../../actions/auth/getUserSession';
 import ErrorComponent from '../../../../../../components/Global/Error/Error';
 
 interface IDistributorRepresentativeContractRequest {

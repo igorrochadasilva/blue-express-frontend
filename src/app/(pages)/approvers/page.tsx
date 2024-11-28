@@ -2,10 +2,10 @@ import Container from '../../../components/Global/Container/Container';
 import { TApprover, TUser } from '../../../types/global/types';
 import { listApprovers } from '../../../actions/approvers';
 import { formatToUSD } from '../../../libs/utils';
-import { getUserSession } from '../../../actions/auth';
 import ApproverContent from '../../../components/Pages/Approvers/ApproverContent';
 import Content from '../../../components/Global/Content/Content';
 import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
+import { getUserSession } from '../../../actions/auth/getUserSession';
 
 export default async function Approvers() {
   const user: TUser = await getUserSession();

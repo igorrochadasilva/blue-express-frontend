@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export function LogoImg() {
   return (
-    <div className="flex justify-center mb-14">
+    <div className="flex justify-center mb-10">
       <Image
         src="/eaton_logo.svg"
         width={150}

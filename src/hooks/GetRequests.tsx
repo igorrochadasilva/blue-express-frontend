@@ -1,6 +1,6 @@
 'use server';
 
-import { getUserSession } from '../actions/auth';
+import { getUserSession } from '../actions/auth/getUserSession';
 import { listRequests } from '../actions/requests';
 import { IRequestBody, TUser } from '../types/global/types';
 

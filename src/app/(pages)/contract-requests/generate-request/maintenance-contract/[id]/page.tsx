@@ -1,7 +1,7 @@
 import Container from '../../../../../../components/Global/Container/Container';
 import { MCFormDataInputs } from '../../../../../../libs/MCFormDataInputs';
 import { getRequest } from '../../../../../../actions/requests';
-import { getUserSession } from '../../../../../../actions/auth';
+import { getUserSession } from '../../../../../../actions/auth/getUserSession';
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
 
 interface IMaintenanceContractRequest {

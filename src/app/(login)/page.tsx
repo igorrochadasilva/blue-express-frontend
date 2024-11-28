@@ -1,68 +1,73 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { handleForgetPassword } from '../../actions/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { notifyDefaultError, notifyError } from '../../toast/notifications';
 import Loading from '../../components/Global/Loading/loading';
 import { Login } from '../../components/Pages/Login';
-
-interface LoginInputs {
-  email: string;
-  password: string;
-}
+import { handleForgetPassword } from '../../actions/auth/handleForgetPassword';
+import { SignInDTO } from '../../types/auth/sign';
+import { notifyMessage } from '../../toast/notifications';
 
 export default function Home() {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [showForgetPassword, setShowForgetPassword] = useState<boolean>(false);
-  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInputs>();
+  } = useForm<SignInDTO>();
 
   const handleShowForgetPassword = () =>
     setShowForgetPassword(!showForgetPassword);
 
-  const onSubmitLogin: SubmitHandler<LoginInputs> = async (data) => {
-    setIsLoading(true);
+  const handleLogin = async (data: SignInDTO) => {
     const { email, password } = data;
+    const res = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
 
-    if (!showForgetPassword) {
-      const res = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      });
+    if (res?.status === 200) return router.push('/dashboard');
 
-      if (res?.status === 200) {
-        router.push('/dashboard');
-      } else if (res?.status === 401) {
-        notifyError(res.error as string);
-        setIsLoading(false);
-      } else {
-        notifyDefaultError();
-        setIsLoading(false);
-      }
-    } else {
-      const isSendEmail = await handleForgetPassword(data.email);
-      isSendEmail && setShowForgetPassword(false);
-      setIsLoading(false);
-    }
+    notifyMessage({
+      message: res?.error as string,
+      statusCode: res?.status,
+    });
+    setIsLoading(false);
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  const onSubmitForm: SubmitHandler<SignInDTO> = async (data) => {
+    setIsLoading(true);
+
+    if (!showForgetPassword) return handleLogin(data);
+
+    const response = await handleForgetPassword(data.email);
+
+    notifyMessage({
+      message: response?.data?.message ?? response?.message,
+      statusCode: response.statusCode,
+    });
+
+    setIsLoading(false);
+  };
+
+  if (isLoading) return <Loading />;
+
+  return (
     <Login.Root>
-      <Login.IconClose
-        handleShowForgetPassword={handleShowForgetPassword}
-        showForgetPassword
-      />
-      <Login.Form onSubmitLogin={handleSubmit(onSubmitLogin)}>
+      {showForgetPassword && (
+        <Login.IconClose
+          handleShowForgetPassword={handleShowForgetPassword}
+          showForgetPassword
+        />
+      )}
+      <Login.Form onSubmitLogin={handleSubmit(onSubmitForm)}>
         <Login.LogoImg />
         <Login.Content>
           {showForgetPassword && <Login.ForgetPasswordMsg />}
