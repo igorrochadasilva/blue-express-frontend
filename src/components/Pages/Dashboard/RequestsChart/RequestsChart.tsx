@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { barData, IRequestBody } from '../../../../types/global/types';
+import { barData } from '../../../../types/global/types';
 import {
   filterRequestsByStatus,
   generateChartBarData,
 } from '../../../../libs/utils';
 import { Chart } from './Chart';
+import { RequestsData } from '../../../../hooks/useGetRequests';
 
 interface IRequestsChart {
-  requests: IRequestBody[];
+  requests: RequestsData;
 }
 
 const RequestsChart = ({ requests }: IRequestsChart) => {

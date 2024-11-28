@@ -3,13 +3,13 @@ import {
   calculateSLA,
   formatApproverName,
   formatDate,
-  generateRouteForId,
 } from '../../../../libs/utils';
-import { IRequestBody } from '../../../../types/global/types';
 import ListRequests from './List';
+import { RequestsData } from '../../../../hooks/useGetRequests';
+import { generateRouteById } from '../../../../utils/generateRouteById';
 
 interface IRequestsList {
-  requests: IRequestBody[];
+  requests: RequestsData;
 }
 
 interface IRequest {
@@ -48,7 +48,10 @@ const RequestsList = ({ requests }: IRequestsList) => {
         ? formatApproverName(request.currentApproverName)
         : '';
 
-      const requestLink = generateRouteForId(request.requestId, request.id);
+      const requestLink = generateRouteById({
+        id: request.id,
+        title: request.title,
+      });
 
       return {
         type: request.title,
@@ -58,7 +61,6 @@ const RequestsList = ({ requests }: IRequestsList) => {
         requester: request.requesterName,
         approver: formattedApprovers,
         SLA: calculateSLA(request.createdAt),
-        requestId: request.requestId,
         order: index,
         link: requestLink,
       };

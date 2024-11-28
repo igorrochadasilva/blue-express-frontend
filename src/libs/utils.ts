@@ -1,3 +1,4 @@
+import { RequestsData } from '../hooks/useGetRequests';
 import { IApprover, IRequestBody, TUser } from '../types/global/types';
 
 export const formatDate = (dateString: string) => {
@@ -47,19 +48,6 @@ export const formatToUSD = (value: number) => {
   return `$${formattedValue}`;
 };
 
-export const generateRouteForId = (requestId: string, id: number) => {
-  let requestLink = '';
-  if (requestId.includes('MC')) {
-    requestLink = `/contract-requests/generate-request/maintenance-contract/${id}`;
-  } else if (requestId.includes('SSC')) {
-    requestLink = `/contract-requests/generate-request/software-service-contract/${id}`;
-  } else {
-    requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${id}`;
-  }
-
-  return requestLink;
-};
-
 export const generateRequestKey = (requestTitle: string) => {
   let key = '';
 
@@ -82,12 +70,10 @@ export const formatApproverName = (approverNames: string) => {
 };
 
 export const filterRequestsByStatus = (
-  requests: IRequestBody[],
+  requests: RequestsData,
   statusRequest: string
 ) => {
-  return requests.filter(
-    (request: IRequestBody) => request.status === statusRequest
-  );
+  return requests.filter((request) => request.status === statusRequest);
 };
 
 export const generateChartBarData = (

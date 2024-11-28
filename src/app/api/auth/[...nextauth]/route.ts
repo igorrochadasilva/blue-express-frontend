@@ -86,7 +86,7 @@ const nextAuthOptions: NextAuthOptions = {
         position: token.position,
         role: token.role,
         accessToken: token.accessToken,
-      } as any;
+      } as UserSession;
       return session;
     },
   },
