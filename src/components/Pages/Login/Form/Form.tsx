@@ -1,10 +1,5 @@
 import { FormEventHandler, ReactNode } from 'react';
 
-type LoginInputs = {
-  email: string;
-  password: string;
-};
-
 interface IFormProps {
   onSubmitLogin: FormEventHandler<HTMLFormElement>;
   children: ReactNode;

@@ -1,9 +1,10 @@
 import { toast } from 'react-toastify';
 
 interface INotifyMessage {
-  message?: string;
+  message?: string | string[];
   statusCode?: number;
 }
+
 export const notifyMessage = ({
   message = 'An error occurred. Please try again later.',
   statusCode = 500,
@@ -11,5 +12,11 @@ export const notifyMessage = ({
   const isSuccess = [200, 201].includes(statusCode);
   const toastType = isSuccess ? toast.success : toast.error;
 
-  toastType(message, { position: 'top-right' });
+  if (Array.isArray(message)) {
+    message.forEach((msg) => {
+      toastType(msg, { position: 'top-right' });
+    });
+  } else {
+    toastType(message, { position: 'top-right' });
+  }
 };
