@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
 import { barData } from '../../../../types/global/types';
-import {
-  filterRequestsByStatus,
-  generateChartBarData,
-} from '../../../../libs/utils';
 import { Chart } from './Chart';
 import { RequestsData } from '../../../../hooks/useGetRequests';
 
@@ -15,44 +11,35 @@ const RequestsChart = ({ requests }: IRequestsChart) => {
   const [barsData, setBarsData] = useState<barData[]>([]);
 
   useEffect(() => {
-    const statusWaitingApprovalAmount = filterRequestsByStatus(
-      requests,
-      'waiting for approval'
-    ).length;
-    const statusApprovedAmount = filterRequestsByStatus(
-      requests,
-      'approved'
-    ).length;
-    const statusDisapprovedAmount = filterRequestsByStatus(
-      requests,
-      'disapproved'
-    ).length;
-    const statusWaitingInformationAmount = filterRequestsByStatus(
-      requests,
-      'waiting for information'
-    ).length;
-    const statusSketchAmount = filterRequestsByStatus(
-      requests,
-      'sketch'
-    ).length;
-    const statusAmounts = [
-      statusWaitingApprovalAmount,
-      statusApprovedAmount,
-      statusDisapprovedAmount,
-      statusWaitingInformationAmount,
-      statusSketchAmount,
+    const statusTypes = [
+      {
+        key: 'waiting for approval',
+        label: 'waiting approval',
+        color: '#F3AF25',
+      },
+      { key: 'approved', label: 'approved', color: '#00D134' },
+      { key: 'disapproved', label: 'disapproved', color: '#EB1400' },
+      {
+        key: 'waiting for information',
+        label: 'waiting information',
+        color: '#F3AF25',
+      },
+      { key: 'sketch', label: 'sketch', color: '#98A4AE' },
     ];
 
-    const biggerAmount = Math.max(...statusAmounts);
+    const statusCounts = statusTypes.map((status) => ({
+      ...status,
+      count: requests.filter((request) => request.status === status.key).length,
+    }));
 
-    const chartData = generateChartBarData(
-      statusWaitingApprovalAmount,
-      statusWaitingInformationAmount,
-      statusApprovedAmount,
-      statusDisapprovedAmount,
-      statusSketchAmount,
-      biggerAmount
-    );
+    const maxCount = Math.max(...statusCounts.map((status) => status.count));
+
+    const chartData = statusCounts.map((status) => ({
+      text: status.label,
+      color: status.color,
+      barSize: (status.count * 240) / maxCount,
+      qtd: status.count,
+    }));
 
     setBarsData(chartData);
   }, [requests]);

@@ -69,55 +69,6 @@ export const formatApproverName = (approverNames: string) => {
   return formattedApproversName;
 };
 
-export const filterRequestsByStatus = (
-  requests: RequestsData,
-  statusRequest: string
-) => {
-  return requests.filter((request) => request.status === statusRequest);
-};
-
-export const generateChartBarData = (
-  statusWaitingApprovalAmount: number,
-  statusWaitingInformationAmount: number,
-  statusApprovedAmount: number,
-  statusDisapprovedAmount: number,
-  statusSketchAmount: number,
-  biggerAmount: number
-) => {
-  return [
-    {
-      text: 'waiting approval',
-      color: '#F3AF25',
-      barSize: (statusWaitingApprovalAmount * 240) / biggerAmount,
-      qtd: statusWaitingApprovalAmount,
-    },
-    {
-      text: 'waiting information',
-      color: '#F3AF25',
-      barSize: (statusWaitingInformationAmount * 240) / biggerAmount,
-      qtd: statusWaitingInformationAmount,
-    },
-    {
-      text: 'approved',
-      color: '#00D134',
-      barSize: (statusApprovedAmount * 240) / biggerAmount,
-      qtd: statusApprovedAmount,
-    },
-    {
-      text: 'disapproved',
-      color: '#EB1400',
-      barSize: (statusDisapprovedAmount * 240) / biggerAmount,
-      qtd: statusDisapprovedAmount,
-    },
-    {
-      text: 'sketch',
-      color: '#98A4AE',
-      barSize: (statusSketchAmount * 240) / biggerAmount,
-      qtd: statusSketchAmount,
-    },
-  ];
-};
-
 export const generateDefaultValueUseForm = (requestData: IRequestBody) => {
   let defaultValue = {};
   if (requestData.requestId.includes('MC')) {
