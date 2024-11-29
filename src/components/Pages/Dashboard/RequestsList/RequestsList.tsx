@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
-import {
-  calculateSLA,
-  formatApproverName,
-  formatDate,
-} from '../../../../libs/utils';
+import { formatApproverName, formatDate } from '../../../../libs/utils';
 import ListRequests from './List';
 import { RequestsData } from '../../../../hooks/useGetRequests';
 import { generateRouteById } from '../../../../utils/generateRouteById';
 import { MaintenanceContract } from '../../../../types/requests/maintenance.contract';
-import { IRequestBody } from '../../../../types/global/types';
 import { RequestItem } from '../../../../types/dashboard/dashboard';
 import { SoftwareServiceContract } from '../../../../types/requests/softwaerServiceContract';
+import { DistributorRepresentativesContract } from '../../../../types/requests/distributorRepresentativesContract';
 
 const STATUS_COLORS: Record<string, string> = {
   approved: '#00D134',
@@ -27,9 +23,21 @@ interface RequestsListProps {
 const RequestsList = ({ requests }: RequestsListProps) => {
   const [listRequests, setListRequests] = useState<any>();
 
+  const calculateSLA = (date: string) => {
+    const requestDate = new Date(date);
+    const currentDate = new Date();
+    const timeDiffMs = currentDate.getTime() - requestDate.getTime();
+    const daysSinceCreation = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24));
+
+    return daysSinceCreation;
+  };
+
   useEffect(() => {
     const mapRequestToListItem = (
-      request: IRequestBody | MaintenanceContract | SoftwareServiceContract,
+      request:
+        | MaintenanceContract
+        | SoftwareServiceContract
+        | DistributorRepresentativesContract,
       index: number
     ): RequestItem => ({
       id: request.id,

@@ -10,15 +10,6 @@ export const formatDate = (dateString: string) => {
   return `${day}-${month}-${year}`;
 };
 
-export const calculateSLA = (date: string) => {
-  const requestDate = new Date(date);
-  const currentDate = new Date();
-  const timeDiffMs = currentDate.getTime() - requestDate.getTime();
-  const daysSinceCreation = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24));
-
-  return daysSinceCreation;
-};
-
 export const sortRequestType = (a: IApprover, b: IApprover) => {
   const typeOrder = [
     'Maintenance Contract',

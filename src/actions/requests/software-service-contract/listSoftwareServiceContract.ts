@@ -17,7 +17,7 @@ export async function listServiceContract(): Promise<ListSoftwareServiceContract
         email: user.email,
         role: user.role,
       },
-      revalidateTag: 'service-contract',
+      revalidateTag: 'software-service-contract',
     });
 
     return response;
