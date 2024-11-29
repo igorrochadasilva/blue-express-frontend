@@ -49,11 +49,7 @@ export const createApproval = async ({
       requestData,
       justify
     );
-    console.log('🚀 ~ createApproval ~ user:', user);
-    console.log(
-      '🚀 ~ createApproval ~ formatApprovalData:',
-      formatApprovalData
-    );
+
     const approvalResponse = await fetch(
       `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvals`,
       {
@@ -67,10 +63,6 @@ export const createApproval = async ({
     );
 
     const approvalDataResponse = await approvalResponse.json();
-    console.log(
-      '🚀 ~ createApproval ~ approvalDataResponse:',
-      approvalDataResponse
-    );
 
     return approvalDataResponse;
   }

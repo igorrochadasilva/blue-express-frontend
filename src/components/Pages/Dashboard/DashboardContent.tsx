@@ -12,7 +12,6 @@ interface DashBoardContent {
 }
 
 const DashBoardContent = ({ requestsData }: DashBoardContent) => {
-  console.log('🚀 ~ DashBoardContent ~ requestsData:', requestsData);
   const [filteredRequests, setFilteredRequests] = useState<RequestsData>([]);
   const [selectPeriodValue, setSelectPeriodValue] = useState<string>('');
 
