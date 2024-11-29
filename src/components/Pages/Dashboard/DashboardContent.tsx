@@ -1,18 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { IRequestBody } from '../../../types/global/types';
 import PeriodFilter from './PeriodFilter/PeriodFilter';
 import Content from '../../Global/Content/Content';
 import RequestsChart from './RequestsChart/RequestsChart';
+import { RequestsData } from '../../../hooks/useGetRequests';
 import RequestsList from './RequestsList/RequestsList';
 
-interface IDashBoardContent {
-  requestsData: IRequestBody[];
+interface DashBoardContent {
+  requestsData: RequestsData;
 }
 
-const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
-  const [filteredRequests, setFilteredRequests] = useState<IRequestBody[]>([]);
+const DashBoardContent = ({ requestsData }: DashBoardContent) => {
+  const [filteredRequests, setFilteredRequests] = useState<RequestsData>([]);
   const [selectPeriodValue, setSelectPeriodValue] = useState<string>('');
 
   const filterRequestByPeriod = () => {
@@ -20,7 +20,7 @@ const DashBoardContent = ({ requestsData }: IDashBoardContent) => {
       const days = Number(selectPeriodValue);
       const thresholdDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
-      const filterRequests = requestsData.filter((request: IRequestBody) => {
+      const filterRequests = requestsData.filter((request) => {
         const requestDate = new Date(request.createdAt);
         return requestDate >= thresholdDate;
       });

@@ -9,7 +9,7 @@ interface ISoftwareServiceContractRequest {
   params: { id: string };
 }
 
-export default async function SoftwareServiceContractRequest({
+export default async function SoftwareServiceContract({
   params,
 }: ISoftwareServiceContractRequest) {
   const user = await getUserSession();

@@ -1,3 +1,4 @@
+import { RequestsData } from '../hooks/useGetRequests';
 import { IApprover, IRequestBody, TUser } from '../types/global/types';
 
 export const formatDate = (dateString: string) => {
@@ -7,15 +8,6 @@ export const formatDate = (dateString: string) => {
   const year = date.getFullYear();
 
   return `${day}-${month}-${year}`;
-};
-
-export const calculateSLA = (date: string) => {
-  const requestDate = new Date(date);
-  const currentDate = new Date();
-  const timeDiffMs = currentDate.getTime() - requestDate.getTime();
-  const daysSinceCreation = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24));
-
-  return daysSinceCreation;
 };
 
 export const sortRequestType = (a: IApprover, b: IApprover) => {
@@ -47,19 +39,6 @@ export const formatToUSD = (value: number) => {
   return `$${formattedValue}`;
 };
 
-export const generateRouteForId = (requestId: string, id: number) => {
-  let requestLink = '';
-  if (requestId.includes('MC')) {
-    requestLink = `/contract-requests/generate-request/maintenance-contract/${id}`;
-  } else if (requestId.includes('SSC')) {
-    requestLink = `/contract-requests/generate-request/software-service-contract/${id}`;
-  } else {
-    requestLink = `/contract-requests/generate-request/distributor-representatives-contract/${id}`;
-  }
-
-  return requestLink;
-};
-
 export const generateRequestKey = (requestTitle: string) => {
   let key = '';
 
@@ -79,57 +58,6 @@ export const formatApproverName = (approverNames: string) => {
   const formattedApproversName = approverNames.replace(charsToRemove, '');
 
   return formattedApproversName;
-};
-
-export const filterRequestsByStatus = (
-  requests: IRequestBody[],
-  statusRequest: string
-) => {
-  return requests.filter(
-    (request: IRequestBody) => request.status === statusRequest
-  );
-};
-
-export const generateChartBarData = (
-  statusWaitingApprovalAmount: number,
-  statusWaitingInformationAmount: number,
-  statusApprovedAmount: number,
-  statusDisapprovedAmount: number,
-  statusSketchAmount: number,
-  biggerAmount: number
-) => {
-  return [
-    {
-      text: 'waiting approval',
-      color: '#F3AF25',
-      barSize: (statusWaitingApprovalAmount * 240) / biggerAmount,
-      qtd: statusWaitingApprovalAmount,
-    },
-    {
-      text: 'waiting information',
-      color: '#F3AF25',
-      barSize: (statusWaitingInformationAmount * 240) / biggerAmount,
-      qtd: statusWaitingInformationAmount,
-    },
-    {
-      text: 'approved',
-      color: '#00D134',
-      barSize: (statusApprovedAmount * 240) / biggerAmount,
-      qtd: statusApprovedAmount,
-    },
-    {
-      text: 'disapproved',
-      color: '#EB1400',
-      barSize: (statusDisapprovedAmount * 240) / biggerAmount,
-      qtd: statusDisapprovedAmount,
-    },
-    {
-      text: 'sketch',
-      color: '#98A4AE',
-      barSize: (statusSketchAmount * 240) / biggerAmount,
-      qtd: statusSketchAmount,
-    },
-  ];
 };
 
 export const generateDefaultValueUseForm = (requestData: IRequestBody) => {

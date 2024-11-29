@@ -1,15 +1,15 @@
 import Link from 'next/link';
 
 interface IContentProps {
-  order: string;
+  order: number;
   type: string;
   statusColor: string;
   status: string;
   requestDate: string;
   requester: string;
   approver: string;
-  sla: string;
-  requestId: string;
+  sla: number;
+  requestId: number;
   link: string;
 }
 

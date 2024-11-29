@@ -3,10 +3,10 @@
 import Container from '../../../components/Global/Container/Container';
 import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
 import DashBoardContent from '../../../components/Pages/Dashboard/DashboardContent';
-import { getRequests } from '../../../hooks/GetRequests';
+import { useGetRequests } from '../../../hooks/useGetRequests';
 
 export default async function Dashboard() {
-  const requestsData = await getRequests();
+  const requestsData = await useGetRequests();
 
   return (
     <Container title="Dashboard">

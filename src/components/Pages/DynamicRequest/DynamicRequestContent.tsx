@@ -37,10 +37,7 @@ const DynamicRequestContent = ({
   const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
     setIsLoading(true);
     const res = await updateRequest(user, requestRouteType, data);
-    console.log(
-      '🚀 ~ constonSubmitForm:SubmitHandler<IRequestBody>= ~ res:',
-      res
-    );
+
     if (res) {
       router.push('/contract-requests');
     }
@@ -59,7 +56,7 @@ const DynamicRequestContent = ({
     setIsLoading(true);
 
     const res = await createApproval(data);
-    console.log('🚀 ~ handleApproverActionOnRequest ~ res:', res);
+
     if (res.ok) {
       notifySuccess(res);
       router.push('/contract-requests');
