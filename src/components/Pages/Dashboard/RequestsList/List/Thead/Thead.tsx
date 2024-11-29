@@ -4,11 +4,11 @@ const Thead = () => {
       <tr>
         <th>Type</th>
         <th>Status</th>
-        <th>Request Date</th>
+        <th>Contract Date</th>
         <th>Requester</th>
         <th>Approver</th>
         <th>SLA</th>
-        <th>ID Requester</th>
+        <th>Contract ID</th>
         <th></th>
       </tr>
     </thead>

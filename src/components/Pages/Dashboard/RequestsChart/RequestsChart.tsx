@@ -3,11 +3,11 @@ import { barData } from '../../../../types/global/types';
 import { Chart } from './Chart';
 import { RequestsData } from '../../../../hooks/useGetRequests';
 
-interface IRequestsChart {
+interface RequestsChartProps {
   requests: RequestsData;
 }
 
-const RequestsChart = ({ requests }: IRequestsChart) => {
+const RequestsChart = ({ requests }: RequestsChartProps) => {
   const [barsData, setBarsData] = useState<barData[]>([]);
 
   useEffect(() => {

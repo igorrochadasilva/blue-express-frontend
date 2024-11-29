@@ -1,10 +1,10 @@
 import { periodOptions } from '../../../../libs/options';
 
-interface IPeriodFilterProps {
+interface PeriodFilterProps {
   handleSelectPeriodChange: (e: string) => void;
 }
 
-const PeriodFilter = ({ handleSelectPeriodChange }: IPeriodFilterProps) => {
+const PeriodFilter = ({ handleSelectPeriodChange }: PeriodFilterProps) => {
   return (
     <div className="flex flex-col w-28 mb-5">
       <label htmlFor="period" className="text-sm font-semibold">

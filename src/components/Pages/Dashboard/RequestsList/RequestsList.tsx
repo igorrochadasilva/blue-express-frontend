@@ -10,6 +10,7 @@ import { generateRouteById } from '../../../../utils/generateRouteById';
 import { MaintenanceContract } from '../../../../types/requests/maintenance.contract';
 import { IRequestBody } from '../../../../types/global/types';
 import { RequestItem } from '../../../../types/dashboard/dashboard';
+import { SoftwareServiceContract } from '../../../../types/requests/softwaerServiceContract';
 
 const STATUS_COLORS: Record<string, string> = {
   approved: '#00D134',
@@ -28,7 +29,7 @@ const RequestsList = ({ requests }: RequestsListProps) => {
 
   useEffect(() => {
     const mapRequestToListItem = (
-      request: IRequestBody | MaintenanceContract,
+      request: IRequestBody | MaintenanceContract | SoftwareServiceContract,
       index: number
     ): RequestItem => ({
       id: request.id,
