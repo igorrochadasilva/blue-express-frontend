@@ -10,3 +10,10 @@ export interface RequestItem {
   order: number;
   link: string;
 }
+
+export type barData = {
+  text: string;
+  color: string;
+  barSize: number;
+  qtd: number;
+};

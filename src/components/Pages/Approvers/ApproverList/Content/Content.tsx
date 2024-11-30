@@ -1,24 +1,24 @@
-import { IApprover } from '../../../../../types/global/types';
+import { Approver } from '@/types/approvers/approvers';
 import { TrashIcon } from '@heroicons/react/24/solid';
 
-interface IContentProps {
-  approversData: IApprover[];
+interface ContentProps {
+  approversData: Approver[];
   handleTrashClick: (id: number) => void;
 }
 
-const Content = ({ approversData, handleTrashClick }: IContentProps) => {
+const Content = ({ approversData, handleTrashClick }: ContentProps) => {
   return (
     <tbody>
-      {approversData.map((approver: IApprover) => (
+      {approversData.map((approver: Approver) => (
         <tr
           key={approver.id}
           className="text-center border text-sm whitespace-nowrap"
         >
-          <td className="w-1/6 py-3 pl-3">{approver.type}</td>
+          <td className="w-1/6 py-3 pl-3">{approver.title}</td>
           <td className="w-1/6 py-3">{approver.competence}</td>
           <td className="w-1/6 py-3">{approver.approverName}</td>
           <td className="w-1/6 py-3">{approver.level}</td>
-          <td className="w-1/6 py-3">{approver.companyType}</td>
+          <td className="w-1/6 py-3">{approver.company}</td>
           <td className="w-1/6 py-3">
             <TrashIcon
               onClick={() => handleTrashClick(approver.id)}

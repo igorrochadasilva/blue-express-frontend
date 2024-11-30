@@ -1,34 +1,45 @@
 'use client';
 
-import { useState } from 'react';
-import { IApprover, TUser } from '../../../types/global/types';
+import { useState, useCallback } from 'react';
 import ApproversList from './ApproverList';
 import Modal from '../../Global/Modal/Modal';
 import { deleteApprover } from '../../../actions/approvers';
+import { Approver } from '@/types/approvers/approvers';
+import { UserSession } from '@/types/auth/sign';
 
-interface IApproverContent {
-  approversData: IApprover[];
-  user: TUser;
+interface ApproverContentProps {
+  approversData: Approver[];
+  user: UserSession;
 }
 
-const ApproverContent = ({ approversData, user }: IApproverContent) => {
-  const [approvers, setApproves] = useState(approversData);
-  const [showTrashModal, setShowTrashModal] = useState<boolean>(false);
-  const [selectedApproverId, setSelectedApproverId] = useState<number>(0);
+const ApproverContent = ({ approversData, user }: ApproverContentProps) => {
+  const [approvers, setApprovers] = useState(approversData);
+  const [showTrashModal, setShowTrashModal] = useState(false);
+  const [selectedApproverId, setSelectedApproverId] = useState<number | null>(
+    null
+  );
 
-  const handleTrashClick = (id: number) => {
+  const handleTrashClick = useCallback((id: number) => {
     setShowTrashModal(true);
     setSelectedApproverId(id);
-  };
+  }, []);
 
-  const handleDeleteApprover = () => {
-    const approversDataFiltered = approvers.filter(
-      (approver: IApprover) => approver.id !== selectedApproverId
-    );
-    setApproves(approversDataFiltered);
-    deleteApprover(selectedApproverId, user?.accessToken);
+  const closeTrashModal = useCallback(() => {
     setShowTrashModal(false);
-  };
+    setSelectedApproverId(null);
+  }, []);
+
+  const handleDeleteApprover = useCallback(() => {
+    if (selectedApproverId === null) return;
+
+    const updatedApprovers = approvers.filter(
+      (approver) => approver.id !== selectedApproverId
+    );
+
+    setApprovers(updatedApprovers);
+    deleteApprover(selectedApproverId, user?.accessToken);
+    closeTrashModal();
+  }, [approvers, selectedApproverId, user?.accessToken, closeTrashModal]);
 
   return (
     <>
@@ -44,10 +55,11 @@ const ApproverContent = ({ approversData, user }: IApproverContent) => {
       <Modal
         text="Are you sure you want to delete this approver?"
         showModal={showTrashModal}
-        setCloseModal={() => setShowTrashModal(false)}
+        setCloseModal={closeTrashModal}
         action={handleDeleteApprover}
       />
     </>
   );
 };
+
 export default ApproverContent;

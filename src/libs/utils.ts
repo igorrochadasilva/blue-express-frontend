@@ -1,4 +1,4 @@
-import { IApprover, IRequestBody, TUser } from '../types/global/types';
+import { IRequestBody, TUser } from '../types/global/types';
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -7,17 +7,6 @@ export const formatDate = (dateString: string) => {
   const year = date.getFullYear();
 
   return `${day}-${month}-${year}`;
-};
-
-export const sortRequestType = (a: IApprover, b: IApprover) => {
-  const typeOrder = [
-    'Maintenance Contract',
-    'Software Service Contract',
-    'Distributor Representatives Contract',
-  ]; // Desired order
-  const aIndex = typeOrder.indexOf(a.type);
-  const bIndex = typeOrder.indexOf(b.type);
-  return aIndex - bIndex;
 };
 
 export const sortNumber = (a: string, b: string) => {

@@ -5,7 +5,7 @@ interface IModal {
   showModal?: boolean;
   text: string;
   setCloseModal: MouseEventHandler<SVGSVGElement | HTMLButtonElement>;
-  action?: () => void | any;
+  action?: () => void;
 }
 
 const Modal = ({ text, showModal = false, setCloseModal, action }: IModal) => {

@@ -8,18 +8,6 @@ export type Request =
   | SoftwareServiceContract
   | DistributorRepresentativesContract;
 
-export type TApprover = {
-  approverEmail: string;
-  approverName: string;
-  company: string;
-  competence: number;
-  id: number;
-  key: string;
-  level: number;
-  office: string;
-  title: string;
-};
-
 export interface IApprover {
   type: string;
   competence: number;
@@ -43,20 +31,6 @@ export type TUser =
   | undefined;
 
 //Dashboard
-
-export type requestsList = {
-  type: string;
-  status: string;
-  requester: string;
-  id_request: string;
-}[];
-
-export type barData = {
-  text: string;
-  color: string;
-  barSize: number;
-  qtd: number;
-};
 
 export type TFiles = { name: string; link: string }[];
 
