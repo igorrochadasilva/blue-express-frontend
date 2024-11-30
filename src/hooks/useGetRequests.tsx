@@ -1,8 +1,8 @@
 'use server';
 
-import { listDistributorRepresentativesContract } from '../actions/requests/distributor-representatives-contract/listDistributorRepresentativesContract';
-import { listMaintenanceContract } from '../actions/requests/maintenance-contract/listMaintenanceContract';
-import { listServiceContract } from '../actions/requests/software-service-contract/listSoftwareServiceContract';
+import { getDistributorRepresentativesContract } from '../actions/requests/distributor-representatives-contract/getDistributorRepresentativesContract';
+import { getMaintenanceContract } from '../actions/requests/maintenance-contract/getMaintenanceContract';
+import { getServiceContract } from '../actions/requests/software-service-contract/listSoftwareServiceContract';
 import { DistributorRepresentativesContract } from '../types/requests/distributorRepresentativesContract';
 import { MaintenanceContract } from '../types/requests/maintenance.contract';
 import { SoftwareServiceContract } from '../types/requests/softwaerServiceContract';
@@ -26,10 +26,10 @@ export async function useGetRequests() {
     distributorRepresentativesContract: [],
   };
 
-  const maintenanceContractRequests = await listMaintenanceContract();
-  const softwareServiceContract = await listServiceContract();
+  const maintenanceContractRequests = await getMaintenanceContract();
+  const softwareServiceContract = await getServiceContract();
   const distributorRepresentativesContract =
-    await listDistributorRepresentativesContract();
+    await getDistributorRepresentativesContract();
 
   allRequests.maintenanceContract = maintenanceContractRequests?.data;
   allRequests.softwareServiceContract = softwareServiceContract?.data;

@@ -1,10 +1,10 @@
 'use server';
 
-import { ListDistributorRepresentativesContractResponse } from '../../../types/requests/distributorRepresentativesContract';
+import { GetDistributorRepresentativesContractResponse } from '../../../types/requests/distributorRepresentativesContract';
 import { api } from '../../api';
 import { getUserSession } from '../../auth/getUserSession';
 
-export async function listDistributorRepresentativesContract(): Promise<ListDistributorRepresentativesContractResponse> {
+export async function getDistributorRepresentativesContract(): Promise<GetDistributorRepresentativesContractResponse> {
   const user = await getUserSession();
 
   try {
@@ -23,6 +23,6 @@ export async function listDistributorRepresentativesContract(): Promise<ListDist
 
     return response;
   } catch (error) {
-    return error as ListDistributorRepresentativesContractResponse;
+    return error as GetDistributorRepresentativesContractResponse;
   }
 }

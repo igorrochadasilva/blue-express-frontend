@@ -1,10 +1,10 @@
 'use server';
 
-import { ListSoftwareServiceContractResponse } from '../../../types/requests/softwaerServiceContract';
+import { GetSoftwareServiceContractResponse } from '../../../types/requests/softwaerServiceContract';
 import { api } from '../../api';
 import { getUserSession } from '../../auth/getUserSession';
 
-export async function listServiceContract(): Promise<ListSoftwareServiceContractResponse> {
+export async function getServiceContract(): Promise<GetSoftwareServiceContractResponse> {
   const user = await getUserSession();
 
   try {
@@ -23,6 +23,6 @@ export async function listServiceContract(): Promise<ListSoftwareServiceContract
 
     return response;
   } catch (error) {
-    return error as ListSoftwareServiceContractResponse;
+    return error as GetSoftwareServiceContractResponse;
   }
 }

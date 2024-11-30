@@ -43,6 +43,6 @@ export interface MaintenanceContract {
   updatedAt: string;
 }
 
-export interface ListMaintenanceContractResponse extends ErrorResponse {
+export interface GetMaintenanceContractResponse extends ErrorResponse {
   data: MaintenanceContract[];
 }

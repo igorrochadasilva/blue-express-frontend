@@ -40,6 +40,6 @@ export interface SoftwareServiceContract {
   updatedAt: string;
 }
 
-export interface ListSoftwareServiceContractResponse extends ErrorResponse {
+export interface GetSoftwareServiceContractResponse extends ErrorResponse {
   data: SoftwareServiceContract[];
 }

@@ -32,7 +32,7 @@ export interface DistributorRepresentativesContract {
   updatedAt: string; // ISO date string
 }
 
-export interface ListDistributorRepresentativesContractResponse
+export interface GetDistributorRepresentativesContractResponse
   extends ErrorResponse {
   data: DistributorRepresentativesContract[];
 }

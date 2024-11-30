@@ -1,10 +1,10 @@
 'use server';
 
-import { ListMaintenanceContractResponse } from '../../../types/requests/maintenance.contract';
+import { GetMaintenanceContractResponse } from '../../../types/requests/maintenance.contract';
 import { api } from '../../api';
 import { getUserSession } from '../../auth/getUserSession';
 
-export async function listMaintenanceContract(): Promise<ListMaintenanceContractResponse> {
+export async function getMaintenanceContract(): Promise<GetMaintenanceContractResponse> {
   const user = await getUserSession();
 
   try {
@@ -23,6 +23,6 @@ export async function listMaintenanceContract(): Promise<ListMaintenanceContract
 
     return response;
   } catch (error) {
-    return error as ListMaintenanceContractResponse;
+    return error as GetMaintenanceContractResponse;
   }
 }
