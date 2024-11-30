@@ -1,4 +1,3 @@
-import { RequestsData } from '../hooks/useGetRequests';
 import { IApprover, IRequestBody, TUser } from '../types/global/types';
 
 export const formatDate = (dateString: string) => {
