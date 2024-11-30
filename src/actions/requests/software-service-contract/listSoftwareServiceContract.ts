@@ -12,6 +12,7 @@ export async function listServiceContract(): Promise<ListSoftwareServiceContract
       endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/software-service-contract`,
       options: {
         method: 'GET',
+        cache: 'force-cache',
       },
       params: {
         email: user.email,

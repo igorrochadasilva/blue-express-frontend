@@ -12,6 +12,7 @@ export async function listMaintenanceContract(): Promise<ListMaintenanceContract
       endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/maintenance-contract`,
       options: {
         method: 'GET',
+        cache: 'force-cache',
       },
       params: {
         email: user.email,

@@ -12,6 +12,7 @@ export async function listDistributorRepresentativesContract(): Promise<ListDist
       endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/distributor-representatives-contract`,
       options: {
         method: 'GET',
+        cache: 'force-cache',
       },
       params: {
         email: user.email,
