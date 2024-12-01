@@ -1,7 +1,7 @@
 import Container from '../../../../../../components/Global/Container/Container';
 import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs';
 import { getRequest } from '../../../../../../actions/requests';
-import { getUserSession } from '../../../../../../actions/auth';
+import { getUserSession } from '../../../../../../actions/auth/getUserSession';
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
 import ErrorComponent from '../../../../../../components/Global/Error/Error';
 
@@ -9,7 +9,7 @@ interface ISoftwareServiceContractRequest {
   params: { id: string };
 }
 
-export default async function SoftwareServiceContractRequest({
+export default async function SoftwareServiceContract({
   params,
 }: ISoftwareServiceContractRequest) {
   const user = await getUserSession();

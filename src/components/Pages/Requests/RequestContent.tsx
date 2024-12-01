@@ -25,10 +25,6 @@ const RequestContent = ({
     setIsLoading(true);
 
     const res = await createRequest(createRequestRouter, data, user);
-    console.log(
-      '🚀 ~ constonSubmitForm:SubmitHandler<IRequestBody>= ~ res:',
-      res
-    );
 
     if (res.ok) {
       router.push('/contract-requests');

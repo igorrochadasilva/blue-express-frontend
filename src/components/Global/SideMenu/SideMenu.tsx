@@ -7,17 +7,30 @@ import {
 import { ListBulletIcon } from '@heroicons/react/24/solid';
 import { HomeIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
-import { IMenuItems, TUser } from '../../../types/global/types';
+
 import SideMenuContent from '.';
+import { UserSession } from '@/types/auth/sign';
+
+export interface SubMenuItem {
+  title: string;
+  path: string;
+}
+
+export interface MenuItems {
+  title: string;
+  path?: string;
+  icon?: ReactNode;
+  subItems?: SubMenuItem[];
+}
 
 const SideMenu: React.FC = () => {
-  const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const { data: session, status } = useSession();
-  const user: TUser = session?.user;
+  const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const user = session?.user as UserSession;
 
-  const menuItems: IMenuItems[] = [
+  const menuItems: MenuItems[] = [
     {
       title: 'Dashboard',
       path: '/dashboard',
@@ -45,7 +58,7 @@ const SideMenu: React.FC = () => {
     },
   ];
 
-  const handleSubMenuToggle = (item: any) => {
+  const handleSubMenuToggle = (item: MenuItems) => {
     if (item.subItems) {
       setActiveSubMenu(item.title === activeSubMenu ? null : item.title);
     }

@@ -1,5 +1,4 @@
 import Content from './Content/Content';
-
 import Root from './Root/Root';
 import Table from './Table/Table';
 import Thead from './Thead/Thead';

@@ -1,10 +1,5 @@
 import { FormEventHandler, ReactNode } from 'react';
 
-type LoginInputs = {
-  email: string;
-  password: string;
-};
-
 interface IFormProps {
   onSubmitLogin: FormEventHandler<HTMLFormElement>;
   children: ReactNode;
@@ -12,7 +7,7 @@ interface IFormProps {
 
 export function Form({ onSubmitLogin, children }: IFormProps) {
   return (
-    <form onSubmit={onSubmitLogin} className="px-12 py-6">
+    <form onSubmit={onSubmitLogin} className="px-12 py-6 max-w-96 w-full">
       {children}
     </form>
   );

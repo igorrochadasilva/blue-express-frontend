@@ -1,60 +1,63 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { formatToUSD } from '../../../../libs/utils';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import Modal from '../../../Global/Modal/Modal';
-import { deleteApprover } from '../../../../actions/approvers';
-import { IApprover, TApprover } from '../../../../types/global/types';
+import { Approver, ApproverRow } from '@/types/approvers/approvers';
+import { deleteApprover } from '@/actions/approver/deleteApprover';
 
-interface IApproversList {
-  approvers: TApprover[];
-  token: string | undefined;
+interface ApproversListProps {
+  approvers: Approver[];
 }
 
-const ApproversList = ({ approvers, token }: IApproversList) => {
-  const [listApprover, setListApprover] = useState<any>([]);
-  const [showTrashModal, setShowTrashModal] = useState<boolean>(false);
-  const [selectedApproverId, setSelectedApproverId] = useState<number>();
+const ApproversList = ({ approvers }: ApproversListProps) => {
+  const [listApprovers, setListApprovers] = useState<ApproverRow[]>([]);
+  const [showTrashModal, setShowTrashModal] = useState(false);
+  const [selectedApproverId, setSelectedApproverId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
-    const data = approvers.map((approver: TApprover) => {
-      return {
-        type: approver.title,
-        competence: formatToUSD(Number(approver.competence)),
-        approverName: approver.approverName,
-        level: approver.level,
-        companyType: approver.company,
-        id: approver.id,
-      };
-    }, []);
+    const mappedApprovers = approvers.map((approver) => ({
+      type: approver.title,
+      competence: formatToUSD(Number(approver.competence)),
+      approverName: approver.approverName,
+      level: approver.level,
+      companyType: approver.company,
+      id: approver.id,
+    }));
+    setListApprovers(mappedApprovers);
+  }, [approvers]);
 
-    setListApprover(data);
-  }, []);
-
-  const handleTrashClick = (id: number) => {
+  const handleTrashClick = useCallback((id: number) => {
     setShowTrashModal(true);
     setSelectedApproverId(id);
-  };
+  }, []);
 
-  const handleDeleteApprover = () => {
-    if (selectedApproverId) {
-      const data = listApprover.filter(
-        (approver: IApprover) => approver.id !== selectedApproverId
-      );
-      setListApprover(data);
-      deleteApprover(selectedApproverId, token);
-      setShowTrashModal(false);
-    }
-  };
+  const closeTrashModal = useCallback(() => {
+    setShowTrashModal(false);
+    setSelectedApproverId(null);
+  }, []);
+
+  const handleDeleteApprover = useCallback(() => {
+    if (selectedApproverId === null) return;
+
+    const updatedApprovers = listApprovers.filter(
+      (approver) => approver.id !== selectedApproverId
+    );
+    setListApprovers(updatedApprovers);
+    deleteApprover({ id: selectedApproverId });
+    closeTrashModal();
+  }, [selectedApproverId, listApprovers, closeTrashModal]);
 
   return (
     <>
       <div className="flex flex-col justify-normal">
-        {listApprover.length > 0 ? (
+        {listApprovers.length > 0 ? (
           <table>
             <thead>
               <tr className="h-14">
                 <th>Request Type</th>
-                <th>competence</th>
+                <th>Competence</th>
                 <th>Approver</th>
                 <th>Level</th>
                 <th>Company Type</th>
@@ -62,23 +65,21 @@ const ApproversList = ({ approvers, token }: IApproversList) => {
               </tr>
             </thead>
             <tbody>
-              {listApprover.map((approver: IApprover) => {
-                return (
-                  <tr key={approver.id} className="text-center border text-sm">
-                    <td className="w-1/6 py-3 pl-3">{approver.type}</td>
-                    <td className="w-1/6 py-3">{approver.competence}</td>
-                    <td className="w-1/6 py-3">{approver.approverName}</td>
-                    <td className="w-1/6 py-3">{approver.level}</td>
-                    <td className="w-1/6 py-3">{approver.companyType}</td>
-                    <td className="w-1/6 py-3">
-                      <TrashIcon
-                        onClick={() => handleTrashClick(approver.id)}
-                        className="text-center w-4 cursor-pointer text-red-500 m-auto"
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
+              {listApprovers.map((approver) => (
+                <tr key={approver.id} className="text-center border text-sm">
+                  <td className="w-1/6 py-3 pl-3">{approver.type}</td>
+                  <td className="w-1/6 py-3">{approver.competence}</td>
+                  <td className="w-1/6 py-3">{approver.approverName}</td>
+                  <td className="w-1/6 py-3">{approver.level}</td>
+                  <td className="w-1/6 py-3">{approver.companyType}</td>
+                  <td className="w-1/6 py-3">
+                    <TrashIcon
+                      onClick={() => handleTrashClick(approver.id)}
+                      className="text-center w-4 cursor-pointer text-red-500 m-auto"
+                    />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         ) : (
@@ -90,10 +91,11 @@ const ApproversList = ({ approvers, token }: IApproversList) => {
       <Modal
         text="Are you sure you want to delete this approver?"
         showModal={showTrashModal}
-        setCloseModal={() => setShowTrashModal(false)}
+        setCloseModal={closeTrashModal}
         action={handleDeleteApprover}
       />
     </>
   );
 };
+
 export default ApproversList;

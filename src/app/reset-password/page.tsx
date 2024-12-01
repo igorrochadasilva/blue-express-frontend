@@ -1,18 +1,20 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Container from '../../components/Global/Container/Container';
-import { useSearchParams } from 'next/navigation';
-import { handleResetPassword } from '../../actions/auth';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { handleResetPassword } from '../../actions/auth/handleResetPassword';
 import { ResetPassword } from '../../components/Pages/ResetPassword';
-
-type ResetInput = {
-  password: string;
-};
+import { notifyMessage } from '../../toast/notifications';
+import messages from '../../messages/messages';
+import { useState } from 'react';
+import { ResetInput } from '../../types/auth/resetPassword';
+import Loading from '../../components/Global/Loading/loading';
 
 export default function PageResetPassword() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -21,31 +23,46 @@ export default function PageResetPassword() {
   } = useForm<ResetInput>();
 
   const onSubmitLogin: SubmitHandler<ResetInput> = async (data) => {
+    setLoading(true);
+    if (!token)
+      notifyMessage({
+        message: messages.auth.reset_password_token_error,
+        statusCode: 400,
+      });
+
     const { password } = data;
     const response = await handleResetPassword({ password, token });
+
+    notifyMessage({
+      message: response?.data?.message ?? response?.message,
+      statusCode: response.statusCode,
+    });
+
+    if (response?.statusCode === 201) return router.push('/');
+    setLoading(false);
   };
 
+  if (loading) return <Loading />;
+
   return (
-    <Container bgColor="bg-gray-400" showSideMenu={false} isLoginPage={true}>
-      <ResetPassword.Root>
-        <ResetPassword.IconClose />
-        <ResetPassword.Form onSubmitLogin={handleSubmit(onSubmitLogin)}>
-          <ResetPassword.LogoImg />
-          <ResetPassword.Content>
-            <ResetPassword.Text />
-            <ResetPassword.Input
-              inputName="password"
-              inputType="password"
-              labelText="Enter with your new password."
-              message="min length is 6"
-              errors={errors}
-              minLength={6}
-              register={register}
-            />
-            <ResetPassword.Button />
-          </ResetPassword.Content>
-        </ResetPassword.Form>
-      </ResetPassword.Root>
-    </Container>
+    <ResetPassword.Root>
+      <ResetPassword.IconClose />
+      <ResetPassword.Form onSubmitLogin={handleSubmit(onSubmitLogin)}>
+        <ResetPassword.LogoImg />
+        <ResetPassword.Content>
+          <ResetPassword.Text />
+          <ResetPassword.Input
+            inputName="password"
+            inputType="password"
+            labelText="Enter with your new password."
+            message="min length is 6"
+            errors={errors}
+            minLength={6}
+            register={register}
+          />
+          <ResetPassword.Button />
+        </ResetPassword.Content>
+      </ResetPassword.Form>
+    </ResetPassword.Root>
   );
 }

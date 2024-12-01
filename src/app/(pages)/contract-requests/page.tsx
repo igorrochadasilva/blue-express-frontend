@@ -1,10 +1,12 @@
+'use server';
+
 import Container from '../../../components/Global/Container/Container';
 import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
 import ContractRequestContent from '../../../components/Pages/ContractRequests/ContractRequestContent';
-import { getRequests } from '../../../hooks/GetRequests';
+import { useGetRequests } from '../../../hooks/useGetRequests';
 
 export default async function ContractRequests() {
-  const requestsData = await getRequests();
+  const requestsData = await useGetRequests();
 
   return (
     <Container

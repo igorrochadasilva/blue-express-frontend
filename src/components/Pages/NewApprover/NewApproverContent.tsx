@@ -1,41 +1,61 @@
 'use client';
 
-import {
-  IApproverData,
-  INewApproverData,
-  TUser,
-} from '../../../types/global/types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { createApprover } from '../../../actions/approvers';
+
 import FormNewApprover from '.';
 import Content from '../../Global/Content/Content';
-import { NAFormDataInputs } from '../../../libs/NAFormDataInputs';
+import { NewApproverFormInputs } from '../../../libs/NewApproverFormInputs';
 import { useEffect, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { getUser } from '../../../actions/user';
+import { postApprover } from '@/actions/approver/postApprover';
+import { Approver, PostApproverDTO } from '@/types/approvers/approvers';
+import { notifyMessage } from '@/toast/notifications';
+import { UserSession } from '@/types/auth/sign';
+import {
+  RequestCompanyEnum,
+  RequestOfficeEnum,
+  RequestsKeyEnum,
+  RequestsTitleEnum,
+} from '@/types/requests/enums';
+import { NewApproverFormInput, UserNames } from '@/types/approvers/newApprover';
 
-interface INewApproverContent {
-  user: TUser;
-  usersName: string[];
+interface NewApproverContentProps {
+  user: UserSession;
+  usersName: UserNames[];
 }
 
-const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
-  const [userApproversList, setUserApproversList] = useState<IApproverData[]>(
-    []
-  );
+const NewApproverContent = ({ user, usersName }: NewApproverContentProps) => {
+  const [userApproversList, setUserApproversList] = useState<Approver[]>([]);
 
-  const { register, handleSubmit, watch } = useForm<INewApproverData>({
+  const { register, handleSubmit, watch } = useForm<PostApproverDTO>({
     mode: 'all',
+    defaultValues: {
+      title: RequestsTitleEnum.MAINTENANCE_CONTRACT,
+      company: RequestCompanyEnum.PS,
+      competence: 0,
+      key: RequestsKeyEnum.MAINTENANCE_CONTRACT_KEY,
+      level: 0,
+      office: RequestOfficeEnum.SUPERVISOR,
+      userId: 0,
+    },
   });
 
-  const onSubmitNewApproverForm: SubmitHandler<INewApproverData> = async (
+  const onSubmitNewApproverForm: SubmitHandler<PostApproverDTO> = async (
     data
   ) => {
-    const addedApprover: IApproverData = await createApprover(
-      data,
-      user?.accessToken
-    );
-    setUserApproversList([addedApprover, ...userApproversList]);
+    const response = await postApprover(data);
+
+    if (response.statusCode === 201)
+      return setUserApproversList([
+        response.data as Approver,
+        ...userApproversList,
+      ]);
+
+    notifyMessage({
+      message: response.message,
+      statusCode: response.statusCode,
+    });
   };
 
   const handleChangeApproverSelect = async (userId: number) => {
@@ -49,17 +69,17 @@ const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
   };
 
   useEffect(() => {
-    const userSelected = watch('user');
+    const userSelected = watch('userId');
     userSelected && handleChangeApproverSelect(userSelected);
-  }, [watch('user')]);
+  }, [watch('userId')]);
 
   return (
     <FormNewApprover.Form onSubmitForm={handleSubmit(onSubmitNewApproverForm)}>
       <Content>
         <div className="flex flex-col gap-4">
-          {NAFormDataInputs.map((data) => (
+          {NewApproverFormInputs.map((data) => (
             <FormNewApprover.InputGroup key={uuid4()}>
-              {data.map((item: any) => {
+              {data.map((item: NewApproverFormInput) => {
                 if (item.type === 'input') {
                   return (
                     <FormNewApprover.Input
@@ -68,7 +88,8 @@ const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
                       inputName={item.inputName}
                       inputType={item.inputType}
                       required={item.required}
-                      readonly={item.id === 1 ? true : false}
+                      validation={item.validation}
+                      readonly={item.id === 1}
                       register={register}
                     />
                   );
@@ -79,8 +100,9 @@ const NewApproverContent = ({ user, usersName }: INewApproverContent) => {
                       inputName={item.inputName}
                       labelText={item.labelText}
                       options={
-                        item.inputName === 'user' ? usersName : item.options
+                        item.inputName === 'userId' ? usersName : item.options
                       }
+                      validation={item.validation}
                       register={register}
                       required={item.required}
                     />

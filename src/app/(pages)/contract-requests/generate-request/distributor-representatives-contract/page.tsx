@@ -1,4 +1,4 @@
-import { getUserSession } from '../../../../../actions/auth';
+import { getUserSession } from '../../../../../actions/auth/getUserSession';
 import Container from '../../../../../components/Global/Container/Container';
 import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
 import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs';

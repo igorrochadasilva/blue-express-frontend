@@ -5,29 +5,6 @@ import { generateRequestFormData } from '../libs/utils';
 import { revalidateTag } from 'next/cache';
 import { fetchData } from '../libs/FetchData';
 
-export async function listRequests(
-  requestType: string,
-  email: string | null | undefined,
-  role: number | undefined
-) {
-  const res = await fetchData({
-    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`,
-    method: 'GET',
-    params: {
-      email,
-      role,
-    },
-    tag: ['requests-tag'],
-  });
-
-  if (res.ok) {
-    const data = await res.json();
-    return { status: 200, data: data, message: 'successful' };
-  } else {
-    throw res;
-  }
-}
-
 export async function createRequest(
   requestType: string,
   data: IRequestBody,
@@ -56,7 +33,7 @@ export async function createRequest(
     body: newFormData,
     token: user?.accessToken,
   });
-  console.log('create new request', res);
+
   if (res.ok) {
     revalidateTag('requests-tag');
 
@@ -113,7 +90,7 @@ export async function updateRequest(
     tag: [`request-${requestData.id}-tag`],
   });
   const responseData = await res.json();
-  console.log('🚀 ~ updateRequest ~ res:', responseData);
+
   if (res.ok) {
     revalidateTag(`request-${requestData.id}-tag`);
     revalidateTag('requests-tag');

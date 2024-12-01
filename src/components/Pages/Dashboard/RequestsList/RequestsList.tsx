@@ -1,68 +1,62 @@
 import { useEffect, useState } from 'react';
-import {
-  calculateSLA,
-  formatApproverName,
-  formatDate,
-  generateRouteForId,
-} from '../../../../libs/utils';
-import { IRequestBody } from '../../../../types/global/types';
+import { formatApproverName, formatDate } from '../../../../libs/utils';
 import ListRequests from './List';
+import { RequestsData } from '../../../../hooks/useGetRequests';
+import { generateRouteById } from '../../../../utils/generateRouteById';
+import { MaintenanceContract } from '../../../../types/requests/maintenance.contract';
+import { RequestItem } from '../../../../types/dashboard/dashboard';
+import { SoftwareServiceContract } from '../../../../types/requests/softwaerServiceContract';
+import { DistributorRepresentativesContract } from '../../../../types/requests/distributorRepresentativesContract';
 
-interface IRequestsList {
-  requests: IRequestBody[];
+const STATUS_COLORS: Record<string, string> = {
+  approved: '#00D134',
+  disapproved: '#EB1400',
+  'waiting for approval': '#F3AF25',
+  'waiting for information': '#F3AF25',
+  sketch: '#98A4AE',
+};
+
+interface RequestsListProps {
+  requests: RequestsData;
 }
 
-interface IRequest {
-  type: string;
-  status: string;
-  statusColor: string;
-  requestDate: string;
-  requester: string;
-  approver: string;
-  SLA: string;
-  requestId: string;
-  id: string;
-  order: string;
-  link: string;
-}
-
-const RequestsList = ({ requests }: IRequestsList) => {
+const RequestsList = ({ requests }: RequestsListProps) => {
   const [listRequests, setListRequests] = useState<any>();
 
+  const calculateSLA = (date: string) => {
+    const requestDate = new Date(date);
+    const currentDate = new Date();
+    const timeDiffMs = currentDate.getTime() - requestDate.getTime();
+    const daysSinceCreation = Math.floor(timeDiffMs / (1000 * 60 * 60 * 24));
+
+    return daysSinceCreation;
+  };
+
   useEffect(() => {
-    const filteredRequests = requests.filter(
-      (request) => request.status === 'waiting for approval'
-    );
-
-    const data = filteredRequests.map((request, index) => {
-      const statusColor =
-        {
-          approved: '#00D134',
-          disapproved: '#EB1400',
-          'waiting for approval': '#F3AF25',
-          'waiting for information': '#F3AF25',
-          sketch: '#98A4AE',
-        }[request.status] || '#ccc';
-
-      const formattedApprovers = request.currentApproverName
+    const mapRequestToListItem = (
+      request:
+        | MaintenanceContract
+        | SoftwareServiceContract
+        | DistributorRepresentativesContract,
+      index: number
+    ): RequestItem => ({
+      id: request.id,
+      type: request.title,
+      status: request.status,
+      statusColor: STATUS_COLORS[request.status] || '#ccc',
+      requestDate: formatDate(request.createdAt),
+      requester: request.requesterName,
+      approver: request.currentApproverName
         ? formatApproverName(request.currentApproverName)
-        : '';
-
-      const requestLink = generateRouteForId(request.requestId, request.id);
-
-      return {
-        type: request.title,
-        status: request.status,
-        statusColor: statusColor,
-        requestDate: formatDate(request.createdAt),
-        requester: request.requesterName,
-        approver: formattedApprovers,
-        SLA: calculateSLA(request.createdAt),
-        requestId: request.requestId,
-        order: index,
-        link: requestLink,
-      };
+        : '',
+      SLA: calculateSLA(request.createdAt),
+      order: index,
+      link: generateRouteById({ id: request.id, title: request.title }),
     });
+
+    const data = requests
+      .filter((request) => request.status === 'waiting for approval')
+      .map(mapRequestToListItem);
 
     setListRequests(data);
   }, [requests]);
@@ -74,7 +68,7 @@ const RequestsList = ({ requests }: IRequestsList) => {
         <ListRequests.Thead />
         <tbody>
           {listRequests &&
-            listRequests.map((request: IRequest) => {
+            listRequests.map((request: RequestItem) => {
               return (
                 <ListRequests.Content
                   key={request.order}
@@ -84,7 +78,7 @@ const RequestsList = ({ requests }: IRequestsList) => {
                   requestDate={request.requestDate}
                   order={request.order}
                   link={request.link}
-                  requestId={request.requestId}
+                  requestId={request.id}
                   sla={request.SLA}
                   requester={request.requester}
                   approver={request.approver}

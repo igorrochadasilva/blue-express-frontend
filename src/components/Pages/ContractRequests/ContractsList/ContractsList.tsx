@@ -1,91 +1,55 @@
-import { useEffect, useState } from 'react';
-import { IRequestBody } from '../../../../types/global/types';
-import { formatApproverName, generateRouteForId } from '../../../../libs/utils';
+import { formatApproverName } from '../../../../libs/utils';
 import { v4 as uuid4 } from 'uuid';
 import ListRequests from './List';
+import { RequestsData } from '../../../../hooks/useGetRequests';
+import { generateRouteById } from '../../../../utils/generateRouteById';
+import { Request } from '../../../../types/global/types';
 
-interface IContractsList {
-  requests: IRequestBody[];
+interface ContractsListProps {
+  requests: RequestsData;
 }
 
-interface IRequest {
-  id: string;
-  type: string;
-  status: string;
-  statusColor: string;
-  validity: string;
-  requestId: string;
-  level: number;
-  approver: string;
-  order: number;
-  link: string;
-}
+const STATUS_COLORS: Record<string, string> = {
+  approved: '#00D134',
+  disapproved: '#EB1400',
+  'waiting for approval': '#F3AF25',
+  'waiting for information': '#F3AF25',
+  sketch: '#98A4AE',
+};
 
-const ContractsList = ({ requests }: IContractsList) => {
-  const [listRequests, setListRequests] = useState<any>();
-
-  useEffect(() => {
-    const data = requests.map((request, index) => {
-      const statusColor =
-        {
-          approved: '#00D134',
-          disapproved: '#EB1400',
-          'waiting for approval': '#F3AF25',
-          'waiting for information': '#F3AF25',
-          sketch: '#98A4AE',
-        }[request.status] || '#ccc';
-
-      const validity =
-        request.title === 'Distributor Representatives Contract'
-          ? request.endContractDate
-          : request.renewEndDate;
-
-      const formattedApprovers = formatApproverName(
-        request.currentApproverName
-      );
-
-      const requestLink = generateRouteForId(request.requestId, request.id);
-
-      return {
-        id: request.id,
-        type: request.title,
-        status: request.status,
-        statusColor: statusColor,
-        validity,
-        requestId: request.requestId,
-        level: request.currentLevel,
-        approver: formattedApprovers,
-        order: index,
-        link: requestLink,
-      };
-    });
-
-    setListRequests(data);
-  }, [requests]);
-
+const ContractsList = ({ requests }: ContractsListProps) => {
   return (
     <ListRequests.Root>
       <ListRequests.Thead />
       <tbody>
-        {listRequests &&
-          listRequests.map((request: IRequest) => {
-            return (
-              <ListRequests.Content
-                key={uuid4()}
-                order={request.order}
-                type={request.type}
-                statusColor={request.statusColor}
-                status={request.status}
-                validity={request.validity}
-                requestId={request.requestId}
-                level={request.level}
-                approver={request.approver}
-                link={request.link}
-              />
-            );
-          })}
+        {requests.map((request: Request, index: number) => {
+          const statusColor = STATUS_COLORS[request.status] || '#ccc';
+          const formattedApprovers = formatApproverName(
+            request.currentApproverName
+          );
+          const requestLink = generateRouteById({
+            title: request.title,
+            id: request.id,
+          });
+
+          return (
+            <ListRequests.Content
+              key={uuid4()}
+              order={index}
+              type={request.title}
+              statusColor={statusColor}
+              status={request.status}
+              validity={request.renewEndDate}
+              requestId={String(request.id)}
+              level={request.currentLevel}
+              approver={formattedApprovers}
+              link={requestLink}
+            />
+          );
+        })}
       </tbody>
     </ListRequests.Root>
   );
 };
+
 export default ContractsList;
