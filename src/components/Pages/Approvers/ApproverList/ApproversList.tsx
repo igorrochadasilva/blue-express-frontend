@@ -7,10 +7,9 @@ import { deleteApprover } from '@/actions/approver/deleteApprover';
 
 interface ApproversListProps {
   approvers: Approver[];
-  token: string | undefined;
 }
 
-const ApproversList = ({ approvers, token }: ApproversListProps) => {
+const ApproversList = ({ approvers }: ApproversListProps) => {
   const [listApprovers, setListApprovers] = useState<ApproverRow[]>([]);
   const [showTrashModal, setShowTrashModal] = useState(false);
   const [selectedApproverId, setSelectedApproverId] = useState<number | null>(
@@ -48,7 +47,7 @@ const ApproversList = ({ approvers, token }: ApproversListProps) => {
     setListApprovers(updatedApprovers);
     deleteApprover({ id: selectedApproverId });
     closeTrashModal();
-  }, [selectedApproverId, listApprovers, token, closeTrashModal]);
+  }, [selectedApproverId, listApprovers, closeTrashModal]);
 
   return (
     <>

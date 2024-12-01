@@ -3,17 +3,21 @@ import {
   companyOptions,
   requestTypesOptions,
 } from './options';
+import { NewApproverFormInput } from '@/types/approvers/newApprover';
 
-export const NAFormDataInputs = [
+export const NewApproverFormInputs: NewApproverFormInput[][] = [
   [
     {
       id: 1,
       type: 'select',
       labelText: 'Approver',
-      inputName: 'user',
+      inputName: 'userId',
       inputType: '',
       required: true,
       readonly: false,
+      validation: {
+        required: 'Approver is required',
+      },
     },
     {
       id: 2,
@@ -24,6 +28,9 @@ export const NAFormDataInputs = [
       required: true,
       readonly: false,
       options: requestTypesOptions,
+      validation: {
+        required: 'Request type is required',
+      },
     },
     {
       id: 3,
@@ -33,6 +40,13 @@ export const NAFormDataInputs = [
       inputType: 'number',
       required: true,
       readonly: false,
+      validation: {
+        required: 'Approval level is required',
+        min: {
+          value: 1,
+          message: 'Approval level must be at least 1',
+        },
+      },
     },
   ],
   [
@@ -44,6 +58,13 @@ export const NAFormDataInputs = [
       inputType: 'number',
       required: true,
       readonly: false,
+      validation: {
+        required: 'Competence is required',
+        min: {
+          value: 0,
+          message: 'Competence must be a positive number',
+        },
+      },
     },
     {
       id: 5,
@@ -54,6 +75,9 @@ export const NAFormDataInputs = [
       required: true,
       readonly: false,
       options: companyOptions,
+      validation: {
+        required: 'Company type is required',
+      },
     },
     {
       id: 6,
@@ -64,6 +88,9 @@ export const NAFormDataInputs = [
       required: true,
       readonly: false,
       options: approverLevelOptions,
+      validation: {
+        required: 'Office is required',
+      },
     },
   ],
 ];

@@ -13,7 +13,7 @@ interface ApproverContentProps {
   user: UserSession;
 }
 
-const ApproverContent = ({ approversData, user }: ApproverContentProps) => {
+const ApproverContent = ({ approversData }: ApproverContentProps) => {
   const [approvers, setApprovers] = useState(approversData);
   const [showTrashModal, setShowTrashModal] = useState(false);
   const [selectedApproverId, setSelectedApproverId] = useState<number | null>(

@@ -1,39 +1,39 @@
 'use client';
 
-import { UseFormRegister } from 'react-hook-form';
-import { INewApproverData } from '../../../../types/global/types';
+import { RegisterOptions, UseFormRegister } from 'react-hook-form';
+import { PostApproverDTO } from '@/types/approvers/approvers';
 
-type TInput = {
+interface InputProps {
   labelText: string;
-  inputName: any;
+  inputName: keyof PostApproverDTO;
   inputType: string | undefined;
   inputValue?: string | number;
-  validationSchema?: any;
+  validation?: RegisterOptions;
   readonly: boolean | undefined;
   required?: boolean;
   placeholder?: string;
   pattern?: string;
-  register: UseFormRegister<INewApproverData>;
-};
+  register: UseFormRegister<PostApproverDTO>;
+}
 
 const Input = ({
   inputName,
   inputType,
-  validationSchema,
+  validation,
   labelText,
   readonly = false,
   required = false,
   placeholder,
   pattern,
   register,
-}: TInput) => {
+}: InputProps) => {
   return (
     <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
       {labelText}
       <input
         type={inputType}
         className="rounded border-[1px] py-1 px-2 mt-2"
-        {...register(inputName, validationSchema)}
+        {...register(inputName, validation)}
         name={inputName}
         readOnly={readonly}
         required={required}

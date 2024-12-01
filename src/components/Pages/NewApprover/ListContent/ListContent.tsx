@@ -1,10 +1,10 @@
-import { IApproverData } from '../../../../types/global/types';
+import { Approver } from '@/types/approvers/approvers';
 import { v4 as uuid4 } from 'uuid';
-interface IListContentProps {
-  listApprovers: IApproverData[];
+interface ListContentProps {
+  listApprovers: Approver[];
 }
 
-const ListContent = ({ listApprovers }: IListContentProps) => {
+const ListContent = ({ listApprovers }: ListContentProps) => {
   return (
     <tbody>
       {listApprovers.map((approver) => (

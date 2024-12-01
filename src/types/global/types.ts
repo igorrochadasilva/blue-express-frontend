@@ -1,4 +1,3 @@
-import { ReactElement } from 'react';
 import { MaintenanceContract } from '../requests/maintenance.contract';
 import { SoftwareServiceContract } from '../requests/softwaerServiceContract';
 import { DistributorRepresentativesContract } from '../requests/distributorRepresentativesContract';
@@ -24,7 +23,7 @@ export type TUser =
       id?: number;
       position?: string;
       role?: number;
-      name?: any;
+      name?: string;
       email?: string | null | undefined;
       image?: string | null | undefined;
     }
@@ -41,29 +40,4 @@ export interface INewApproverData {
   competence: number;
   company: string;
   key?: string;
-}
-
-export interface IApproverData {
-  id: number;
-  title: string;
-  level: number;
-  key: string;
-  company: string;
-  office: string;
-  competence: number;
-  approverEmail: string;
-  approverName: string;
-  user: any;
-}
-
-export interface IMenuItems {
-  title: string;
-  path?: string;
-  icon?: ReactElement<any, any>;
-  subItems?: ISubMenuItem[];
-}
-
-export interface ISubMenuItem {
-  title: string;
-  path: string;
 }

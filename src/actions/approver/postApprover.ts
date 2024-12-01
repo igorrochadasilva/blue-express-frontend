@@ -1,25 +1,27 @@
 'use server';
 
 import {
-  DeleteApproverDTO,
-  DeleteApproverResponse,
+  PostApproverDTO,
+  PostApproverResponse,
 } from '../../types/approvers/approvers';
 import { api } from '../api';
 import { getUserSession } from '../auth/getUserSession';
+import { buildPostData } from './build';
 
-export async function deleteApprover({
-  id,
-}: DeleteApproverDTO): Promise<DeleteApproverResponse> {
+export async function postApprover(
+  data: PostApproverDTO
+): Promise<PostApproverResponse> {
   const user = await getUserSession();
 
   try {
     const response = await api({
-      endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers/${id}`,
+      endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers`,
       options: {
-        method: 'DELETE',
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
+        body: JSON.stringify(buildPostData(data)),
       },
       params: {
         email: user.email,
@@ -30,6 +32,6 @@ export async function deleteApprover({
 
     return response;
   } catch (error) {
-    return error as DeleteApproverResponse;
+    return error as PostApproverResponse;
   }
 }
