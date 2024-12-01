@@ -24,15 +24,3 @@ export interface NewApproverFormInput {
   options?: SelectOptions[] | UserNames[];
   validation?: RegisterOptions;
 }
-
-export interface GetUser {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  department: string;
-  position: string;
-  createdAt: string;
-  updatedAt: string;
-  role: number;
-}

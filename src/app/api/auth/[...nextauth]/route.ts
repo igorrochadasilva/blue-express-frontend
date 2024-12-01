@@ -24,33 +24,29 @@ const nextAuthOptions: NextAuthOptions = {
       async authorize(credentials) {
         const { email, password } = credentials as SignInDTO;
 
-        try {
-          const res: PostSignInResponse = await api({
-            endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/login`,
-            options: {
-              method: 'POST',
-              body: JSON.stringify({
-                email: email,
-                password: password,
-              }),
-            },
-            ignoreCache: true,
-          });
+        const res: PostSignInResponse = await api({
+          endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/auth/login`,
+          options: {
+            method: 'POST',
+            body: JSON.stringify({
+              email: email,
+              password: password,
+            }),
+          },
+          ignoreCache: true,
+        });
 
-          const user = {
-            id: String(res.data.user.id),
-            name: res.data.user.name,
-            email: res.data.user.email,
-            department: res.data.user.department,
-            position: res.data.user.position,
-            role: res.data.user.role,
-            accessToken: res.data.token,
-          };
+        const user = {
+          id: String(res.data.user.id),
+          name: res.data.user.name,
+          email: res.data.user.email,
+          department: res.data.user.department,
+          position: res.data.user.position,
+          role: res.data.user.role,
+          accessToken: res.data.token,
+        };
 
-          return user;
-        } catch (error: unknown) {
-          throw error;
-        }
+        return user;
       },
     }),
   ],

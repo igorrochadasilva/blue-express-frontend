@@ -1,12 +1,17 @@
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
+import { MenuItems } from '../SideMenu';
 
-interface ISubMenu {
-  handleSubMenuToggle: (item: any) => void;
-  item: any;
+interface SubMenuProps {
+  handleSubMenuToggle: (item: MenuItems) => void;
+  item: MenuItems;
   activeSubMenu: string | null;
 }
 
-const SubMenu = ({ handleSubMenuToggle, item, activeSubMenu }: ISubMenu) => {
+const SubMenu = ({
+  handleSubMenuToggle,
+  item,
+  activeSubMenu,
+}: SubMenuProps) => {
   return (
     <span
       className="flex items-center gap-2"

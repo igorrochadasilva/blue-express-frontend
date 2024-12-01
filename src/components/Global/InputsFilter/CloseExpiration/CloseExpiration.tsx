@@ -3,9 +3,9 @@ import { useState } from 'react';
 const CloseExpiration = () => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleCheckboxChange = (event: any) => {
-    setIsChecked(event.target.checked);
-  };
+  const handleCheckboxChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => setIsChecked(event.target.checked);
 
   return (
     <div className="flex flex-col w-[260px] gap-2 text-be_second_color">
@@ -17,7 +17,7 @@ const CloseExpiration = () => {
         type="checkbox"
         id="myCheckbox"
         name="myCheckbox"
-        checked={isChecked} // Set checked state based on useState
+        checked={isChecked}
         onChange={handleCheckboxChange}
       />
     </div>

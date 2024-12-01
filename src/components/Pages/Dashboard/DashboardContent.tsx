@@ -40,7 +40,7 @@ const DashBoardContent = ({ requestsData }: DashBoardContent) => {
         ? filterRequestByPeriod()
         : setFilteredRequests(requestsData);
     }
-  }, [requestsData, selectPeriodValue]);
+  }, [requestsData, selectPeriodValue, filterRequestByPeriod]);
 
   return (
     <>

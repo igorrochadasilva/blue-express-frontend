@@ -15,5 +15,5 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
     redirect('/');
   }
 
-  return <Layout children={children} />;
+  return <Layout>{children}</Layout>;
 }
