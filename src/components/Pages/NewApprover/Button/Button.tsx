@@ -2,8 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-interface IButtonProps {}
-
 const Button = () => {
   const router = useRouter();
 

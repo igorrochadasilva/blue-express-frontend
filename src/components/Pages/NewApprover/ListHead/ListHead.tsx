@@ -1,5 +1,3 @@
-interface IListHeadProps {}
-
 const ListHead = () => {
   return (
     <thead className="h-16">

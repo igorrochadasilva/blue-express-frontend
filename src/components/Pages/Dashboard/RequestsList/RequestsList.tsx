@@ -21,7 +21,7 @@ interface RequestsListProps {
 }
 
 const RequestsList = ({ requests }: RequestsListProps) => {
-  const [listRequests, setListRequests] = useState<any>();
+  const [listRequests, setListRequests] = useState<RequestItem[]>();
 
   const calculateSLA = (date: string) => {
     const requestDate = new Date(date);

@@ -1,14 +1,12 @@
 import { contractTypesOptions } from '../../../../libs/options';
 
-interface IFilterStatusProps {
+interface FilterStatusProps {
   handleSelectRequestStatusChange: (e: string) => void;
 }
 
 const FilterStatus = ({
   handleSelectRequestStatusChange,
-}: IFilterStatusProps) => {
-  const handleSelectChange = (event: any) => {};
-
+}: FilterStatusProps) => {
   return (
     <div className="flex flex-col w-[200px] gap-2 text-be_second_color">
       <label htmlFor="Status" className="font-semibold">

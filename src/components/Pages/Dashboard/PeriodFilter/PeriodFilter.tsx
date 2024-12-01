@@ -1,3 +1,4 @@
+import { SelectOptions } from '@/types/approvers/newApprover';
 import { periodOptions } from '../../../../libs/options';
 
 interface PeriodFilterProps {
@@ -15,7 +16,7 @@ const PeriodFilter = ({ handleSelectPeriodChange }: PeriodFilterProps) => {
         name="period"
         className="rounded border-[1px] py-1 px-2 mt-2"
       >
-        {periodOptions?.map((option: any) => (
+        {periodOptions?.map((option: SelectOptions) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

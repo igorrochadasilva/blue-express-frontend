@@ -71,7 +71,7 @@ const NewApproverContent = ({ user, usersName }: NewApproverContentProps) => {
   useEffect(() => {
     const userSelected = watch('userId');
     userSelected && handleChangeApproverSelect(userSelected);
-  }, [watch('userId')]);
+  }, [handleChangeApproverSelect, watch]);
 
   return (
     <FormNewApprover.Form onSubmitForm={handleSubmit(onSubmitNewApproverForm)}>
