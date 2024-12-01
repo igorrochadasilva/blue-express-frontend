@@ -5,13 +5,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import FormNewApprover from '.';
 import Content from '../../Global/Content/Content';
 import { NewApproverFormInputs } from '../../../libs/NewApproverFormInputs';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
-import { getUser } from '../../../actions/user';
 import { postApprover } from '@/actions/approver/postApprover';
 import { Approver, PostApproverDTO } from '@/types/approvers/approvers';
 import { notifyMessage } from '@/toast/notifications';
-import { UserSession } from '@/types/auth/sign';
 import {
   RequestCompanyEnum,
   RequestOfficeEnum,
@@ -19,16 +17,17 @@ import {
   RequestsTitleEnum,
 } from '@/types/requests/enums';
 import { NewApproverFormInput, UserNames } from '@/types/approvers/newApprover';
+import { User } from '@/types/approvers/user';
+import { getUserApprovers } from '@/actions/user/getUsersById';
 
 interface NewApproverContentProps {
-  user: UserSession;
-  usersName: UserNames[];
+  usersData: User[];
 }
 
-const NewApproverContent = ({ user, usersName }: NewApproverContentProps) => {
+const NewApproverContent = ({ usersData }: NewApproverContentProps) => {
   const [userApproversList, setUserApproversList] = useState<Approver[]>([]);
 
-  const { register, handleSubmit, watch } = useForm<PostApproverDTO>({
+  const { register, handleSubmit, setValue } = useForm<PostApproverDTO>({
     mode: 'all',
     defaultValues: {
       title: RequestsTitleEnum.MAINTENANCE_CONTRACT,
@@ -59,19 +58,25 @@ const NewApproverContent = ({ user, usersName }: NewApproverContentProps) => {
   };
 
   const handleChangeApproverSelect = async (userId: number) => {
-    const data = await getUser(userId, user?.accessToken, true);
+    const response = await getUserApprovers(userId);
 
-    const { approvers } = data;
+    if (response.statusCode === 200)
+      return setUserApproversList(response?.data?.approvers ?? []);
 
-    if (approvers) {
-      setUserApproversList(approvers);
-    }
+    notifyMessage({
+      message: response?.message,
+      statusCode: response.statusCode,
+    });
   };
 
-  useEffect(() => {
-    const userSelected = watch('userId');
-    userSelected && handleChangeApproverSelect(userSelected);
-  }, [handleChangeApproverSelect, watch]);
+  const usersName: UserNames[] = useMemo(
+    () =>
+      usersData.map((user) => ({
+        value: String(user.id),
+        label: user.name,
+      })),
+    [usersData]
+  );
 
   return (
     <FormNewApprover.Form onSubmitForm={handleSubmit(onSubmitNewApproverForm)}>
@@ -105,6 +110,8 @@ const NewApproverContent = ({ user, usersName }: NewApproverContentProps) => {
                       validation={item.validation}
                       register={register}
                       required={item.required}
+                      handleChangeApproverSelect={handleChangeApproverSelect}
+                      setValue={setValue}
                     />
                   );
                 }
