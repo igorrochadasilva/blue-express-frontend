@@ -3,9 +3,10 @@
 import { useState, useCallback } from 'react';
 import ApproversList from './ApproverList';
 import Modal from '../../Global/Modal/Modal';
-import { deleteApprover } from '../../../actions/approvers';
+import { deleteApprover } from '../../../actions/approver/deleteApprover';
 import { Approver } from '@/types/approvers/approvers';
 import { UserSession } from '@/types/auth/sign';
+import { notifyMessage } from '@/toast/notifications';
 
 interface ApproverContentProps {
   approversData: Approver[];
@@ -29,7 +30,7 @@ const ApproverContent = ({ approversData, user }: ApproverContentProps) => {
     setSelectedApproverId(null);
   }, []);
 
-  const handleDeleteApprover = useCallback(() => {
+  const handleDeleteApprover = useCallback(async () => {
     if (selectedApproverId === null) return;
 
     const updatedApprovers = approvers.filter(
@@ -37,9 +38,16 @@ const ApproverContent = ({ approversData, user }: ApproverContentProps) => {
     );
 
     setApprovers(updatedApprovers);
-    deleteApprover(selectedApproverId, user?.accessToken);
+
+    const response = await deleteApprover({ id: selectedApproverId });
+
+    notifyMessage({
+      message: response?.data?.message ?? response?.message,
+      statusCode: response.statusCode,
+    });
+
     closeTrashModal();
-  }, [approvers, selectedApproverId, user?.accessToken, closeTrashModal]);
+  }, [approvers, selectedApproverId, closeTrashModal]);
 
   return (
     <>

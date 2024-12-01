@@ -2,8 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { formatToUSD } from '../../../../libs/utils';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import Modal from '../../../Global/Modal/Modal';
-import { deleteApprover } from '../../../../actions/approvers';
 import { Approver, ApproverRow } from '@/types/approvers/approvers';
+import { deleteApprover } from '@/actions/approver/deleteApprover';
 
 interface ApproversListProps {
   approvers: Approver[];
@@ -46,7 +46,7 @@ const ApproversList = ({ approvers, token }: ApproversListProps) => {
       (approver) => approver.id !== selectedApproverId
     );
     setListApprovers(updatedApprovers);
-    deleteApprover(selectedApproverId, token);
+    deleteApprover({ id: selectedApproverId });
     closeTrashModal();
   }, [selectedApproverId, listApprovers, token, closeTrashModal]);
 

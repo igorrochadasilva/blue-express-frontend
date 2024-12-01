@@ -1,5 +1,15 @@
 import { ErrorResponse } from '../error';
 
+export interface DeleteApproverDTO {
+  id: number;
+}
+
+export interface DeleteApproverResponse extends ErrorResponse {
+  data?: {
+    message: string;
+  };
+}
+
 export interface ApproverRow {
   type: string;
   competence: string;

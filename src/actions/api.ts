@@ -59,6 +59,7 @@ export async function api({
     }
 
     const data = await result.json();
+
     return {
       data: data,
       statusCode: result.status,

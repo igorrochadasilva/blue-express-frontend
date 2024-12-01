@@ -7,7 +7,6 @@ import { useGetRequests } from '../../../hooks/useGetRequests';
 
 export default async function ContractRequests() {
   const requestsData = await useGetRequests();
-  console.log('🚀 ~ ContractRequests ~ requestsData:', requestsData);
 
   return (
     <Container
