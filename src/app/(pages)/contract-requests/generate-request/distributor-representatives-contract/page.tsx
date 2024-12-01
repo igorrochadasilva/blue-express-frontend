@@ -1,7 +1,7 @@
 import { getUserSession } from '../../../../../actions/auth/getUserSession';
 import Container from '../../../../../components/Global/Container/Container';
 import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
-import { DRCFormDataInputs } from '../../../../../libs/DRCFormDataInputs';
+import { DRCFormDataInputs } from '../../../../../libs/Forms/DistributionRepresentativesContractFormInputs';
 
 export default async function DistributorRepresentativeContract() {
   const user = await getUserSession();

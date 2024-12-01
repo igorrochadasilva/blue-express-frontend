@@ -1,5 +1,5 @@
 import Container from '../../../../../../components/Global/Container/Container';
-import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs';
+import { SSCFormDataInputs } from '../../../../../../libs/Forms/SoftwareServiceFormInputs';
 import { getRequest } from '../../../../../../actions/requests';
 import { getUserSession } from '../../../../../../actions/auth/getUserSession';
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';

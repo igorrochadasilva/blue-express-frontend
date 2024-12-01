@@ -1,5 +1,5 @@
 import Container from '../../../../../../components/Global/Container/Container';
-import { MCFormDataInputs } from '../../../../../../libs/MCFormDataInputs';
+import { MCFormDataInputs } from '../../../../../../libs/Forms/MaintenanceContractFormInputs';
 import { getRequest } from '../../../../../../actions/requests';
 import { getUserSession } from '../../../../../../actions/auth/getUserSession';
 import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';

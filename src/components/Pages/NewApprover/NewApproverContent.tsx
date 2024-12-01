@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import FormNewApprover from '.';
 import Content from '../../Global/Content/Content';
-import { NewApproverFormInputs } from '../../../libs/NewApproverFormInputs';
+import { NewApproverFormInputs } from '../../../libs/Forms/NewApproverFormInputs';
 import { useMemo, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { postApprover } from '@/actions/approver/postApprover';

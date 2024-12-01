@@ -1,12 +1,13 @@
+import { FormDataInputs } from '@/types/requests/requests';
 import {
   approverLevelOptions,
   companyOptions,
-  companyTypeOptions,
   contractTypeOptions,
+  frequencyOptions,
   ufOptions,
-} from './options';
+} from '../options';
 
-export const SSCFormDataInputs = [
+export const MCFormDataInputs: FormDataInputs = [
   [
     {
       id: 1,
@@ -88,18 +89,27 @@ export const SSCFormDataInputs = [
     },
     {
       id: 9,
-      type: 'select',
-      labelText: 'Company Type',
-      inputName: 'companyType',
-      inputType: '',
+      type: 'input',
+      labelText: 'Contract Renew Qtd',
+      inputName: 'contractRenewQtd',
+      inputType: 'text',
       required: true,
       readonly: false,
-      options: companyTypeOptions,
     },
   ],
   [
     {
       id: 10,
+      type: 'select',
+      labelText: 'Frequency',
+      inputName: 'frequency',
+      inputType: '',
+      required: true,
+      readonly: false,
+      options: frequencyOptions,
+    },
+    {
+      id: 11,
       type: 'input',
       labelText: 'Scope',
       inputName: 'scope',
@@ -108,20 +118,11 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
     {
-      id: 11,
-      type: 'input',
-      labelText: 'Payment Condition',
-      inputName: 'paymentCondition',
-      inputType: 'text',
-      required: false,
-      readonly: false,
-    },
-    {
       id: 12,
       type: 'input',
       labelText: 'Contract Total Value',
       inputName: 'contractTotalValue',
-      inputType: 'text',
+      inputType: 'number',
       required: true,
       readonly: false,
     },
@@ -152,7 +153,7 @@ export const SSCFormDataInputs = [
       labelText: 'GM',
       inputName: 'gm',
       inputType: 'number',
-      required: false,
+      required: true,
       readonly: false,
     },
   ],
@@ -160,23 +161,52 @@ export const SSCFormDataInputs = [
     {
       id: 16,
       type: 'input',
-      labelText: 'Inclusion Clauses',
-      inputName: 'inclusionClauses',
-      inputType: 'text',
-      required: false,
+      labelText: 'Renew Index Percentage',
+      inputName: 'renewIndexPercentage',
+      inputType: 'number',
+      required: true,
       readonly: false,
     },
     {
       id: 17,
       type: 'input',
-      labelText: 'Inclusion Description',
-      inputName: 'inclusionDescription',
-      inputType: '',
+      labelText: 'Index',
+      inputName: 'index',
+      inputType: 'text',
       required: false,
       readonly: false,
     },
     {
       id: 18,
+      type: 'input',
+      labelText: 'Payment Condition',
+      inputName: 'paymentCondition',
+      inputType: 'text',
+      required: false,
+      readonly: false,
+    },
+  ],
+  [
+    {
+      id: 19,
+      type: 'input',
+      labelText: 'Inclusion Clauses',
+      inputName: 'inclusionClauses',
+      inputType: 'text',
+      required: true,
+      readonly: false,
+    },
+    {
+      id: 20,
+      type: 'input',
+      labelText: 'Inclusion Description',
+      inputName: 'inclusionDescription',
+      inputType: 'text',
+      required: false,
+      readonly: false,
+    },
+    {
+      id: 21,
       type: 'input',
       labelText: 'legal Indemnification Obligations',
       inputName: 'legalIndemnificationObligations',
@@ -187,16 +217,16 @@ export const SSCFormDataInputs = [
   ],
   [
     {
-      id: 19,
+      id: 22,
       type: 'input',
-      labelText: 'Legal Warranty Obligations',
+      labelText: 'legal Warranty Obligations',
       inputName: 'legalWarrantyObligations',
       inputType: 'text',
       required: false,
       readonly: false,
     },
     {
-      id: 20,
+      id: 23,
       type: 'input',
       labelText: 'legal Damage Cap',
       inputName: 'legalDamageCap',
@@ -205,7 +235,7 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
     {
-      id: 21,
+      id: 24,
       type: 'input',
       labelText: 'Legal Damage Cave',
       inputName: 'legalDamageCave',
@@ -216,7 +246,7 @@ export const SSCFormDataInputs = [
   ],
   [
     {
-      id: 22,
+      id: 25,
       type: 'input',
       labelText: 'Legal Liquidated Damage',
       inputName: 'legalLiquidatedDamages',
@@ -225,7 +255,7 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
     {
-      id: 23,
+      id: 26,
       type: 'input',
       labelText: 'Justify',
       inputName: 'justify',
@@ -234,7 +264,7 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
     {
-      id: 24,
+      id: 27,
       type: 'input',
       labelText: 'Phone',
       inputName: 'phone',
@@ -245,7 +275,7 @@ export const SSCFormDataInputs = [
   ],
   [
     {
-      id: 25,
+      id: 28,
       type: 'input',
       labelText: 'AntiCorruption',
       inputName: 'antiCorruption',
@@ -254,17 +284,17 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
     {
-      id: 26,
+      id: 29,
       type: 'select',
       labelText: 'UF',
       inputName: 'uf',
-      inputType: '',
-      required: false,
+      inputType: 'text',
       readonly: false,
+      required: false,
       options: ufOptions,
     },
     {
-      id: 27,
+      id: 30,
       type: 'input',
       labelText: 'SAP',
       inputName: 'sap',
@@ -275,7 +305,7 @@ export const SSCFormDataInputs = [
   ],
   [
     {
-      id: 28,
+      id: 31,
       type: 'input',
       labelText: 'Contact',
       inputName: 'contact',
@@ -284,17 +314,17 @@ export const SSCFormDataInputs = [
       readonly: false,
     },
     {
-      id: 29,
+      id: 32,
       type: 'select',
-      labelText: 'Approval level',
-      inputName: 'approvalLevel',
+      labelText: 'Level Approval',
       inputType: '',
-      required: false,
+      inputName: 'approvalLevel',
+      required: true,
       readonly: false,
       options: approverLevelOptions,
     },
     {
-      id: 30,
+      id: 33,
       type: 'input',
       labelText: 'Upload Files',
       inputType: 'file',

@@ -1,5 +1,5 @@
 import Container from '../../../../../components/Global/Container/Container';
-import { SSCFormDataInputs } from '../../../../../libs/SSCFormDataInputs';
+import { SSCFormDataInputs } from '../../../../../libs/Forms/SoftwareServiceFormInputs';
 import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
 import { getUserSession } from '../../../../../actions/auth/getUserSession';
 

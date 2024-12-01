@@ -1,25 +1,22 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Request from '..';
-import { IRequestBody, TUser } from '../../../../../types/global/types';
+
 import Content from '../../../../Global/Content/Content';
 import { generateDefaultValueUseForm } from '../../../../../libs/utils';
 import { v4 as uuid4 } from 'uuid';
-interface IRequestForm {
-  user: TUser;
+import { FormDataInputs } from '@/types/requests/requests';
+import { UserSession } from '@/types/auth/sign';
+import { Request as RequestData } from '@/types/global/types';
+import Request from '@/components/Pages/Requests/Request/index';
+import { RequestStatusEnum, RequestsTitleEnum } from '@/types/requests/enums';
+
+interface RequestFormProps {
+  user: UserSession;
   isLoading: boolean;
-  requestData?: IRequestBody;
-  FormDataInputs: {
-    id: number;
-    type: string;
-    labelText: string;
-    inputName: string;
-    inputType: string;
-    required: boolean;
-    options?: any[] | undefined;
-  }[][];
-  onSubmitForm: SubmitHandler<IRequestBody>;
+  requestData?: RequestData;
+  FormDataInputs: FormDataInputs;
+  onSubmitForm: SubmitHandler<RequestData>;
   handleApproverModal?: (() => void) | undefined;
   handleModalStatus?: ((status: string) => void) | undefined;
 }
@@ -32,13 +29,13 @@ const RequestForm = ({
   onSubmitForm,
   handleApproverModal,
   handleModalStatus,
-}: IRequestForm) => {
+}: RequestFormProps) => {
   const generatedDefaultValues = requestData
     ? generateDefaultValueUseForm(requestData)
     : {};
 
   const { register, watch, handleSubmit, setValue, getValues } =
-    useForm<IRequestBody>({
+    useForm<RequestData>({
       mode: 'all',
       defaultValues: {
         ...generatedDefaultValues,
@@ -47,24 +44,29 @@ const RequestForm = ({
     });
 
   const showApproverButtons =
-    user?.role !== 1 && requestData?.status === 'waiting for approval';
-  //const showSaveButton = user?.email === requestData?.author && requestData?.status !== 'waiting for approval'
+    user?.role !== 1 &&
+    requestData?.status === RequestStatusEnum.WAITING_FOR_APPROVAL;
 
   const inputContractTotalValue = watch('contractTotalValue');
   const inputDollarExchangeRate = watch('dollarExchangeRate');
-  const inputTotalValueUSD = inputContractTotalValue / inputDollarExchangeRate;
+  const inputTotalValueUSD =
+    Number(inputContractTotalValue) / Number(inputDollarExchangeRate);
 
-  if (!requestData?.requestId.includes('DRC')) {
-    setValue('totalValueUSD', inputTotalValueUSD);
+  if (
+    !requestData?.title.includes(
+      RequestsTitleEnum.DISTRIBUTOR_REPRESENTATIVES_CONTRACT
+    )
+  ) {
+    setValue('totalValueUSD', String(inputTotalValueUSD));
   }
 
   return (
     <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
       <Content>
         <div className="flex flex-col gap-4">
-          {FormDataInputs.map((data, i) => (
+          {FormDataInputs.map((data) => (
             <Request.InputGroup key={uuid4()}>
-              {data.map((item: any) => {
+              {data.map((item) => {
                 if (item.type === 'input') {
                   return (
                     <Request.Input

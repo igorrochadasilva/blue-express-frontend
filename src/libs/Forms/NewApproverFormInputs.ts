@@ -2,7 +2,7 @@ import {
   approverLevelOptions,
   companyOptions,
   requestTypesOptions,
-} from './options';
+} from '../options';
 import { NewApproverFormInput } from '@/types/approvers/newApprover';
 
 export const NewApproverFormInputs: NewApproverFormInput[][] = [

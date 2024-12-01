@@ -2,36 +2,37 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { IRequestBody, TUser } from '../../../types/global/types';
+import { Request } from '../../../types/global/types';
 import { createRequest } from '../../../actions/requests';
 import RequestForm from './Request/RequestForm/RequestForm';
-import { notifyError, notifySuccess } from '../../../toast/notifications';
 
-interface IRequestContent {
-  user: TUser;
-  FormDataInputs: any[];
-  createRequestRouter: string;
+import { UserSession } from '@/types/auth/sign';
+import { FormDataInputs } from '@/types/requests/requests';
+import { RequestsTitleEnum } from '@/types/requests/enums';
+import { postMaintenanceContract } from '@/actions/requests/maintenance-contract/postMaintenanceContract';
+import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
+
+interface RequestContentProps {
+  user: UserSession;
+  FormDataInputs: FormDataInputs;
+  createRequestRouter: RequestsTitleEnum;
 }
 
 const RequestContent = ({
   user,
   FormDataInputs,
   createRequestRouter,
-}: IRequestContent) => {
+}: RequestContentProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
+  const onSubmitForm: SubmitHandler<Request> = async (data) => {
+    console.log('🚀 ~ constonSubmitForm:SubmitHandler<Request>= ~ data:', data);
     setIsLoading(true);
 
-    const res = await createRequest(createRequestRouter, data, user);
-
-    if (res.ok) {
-      router.push('/contract-requests');
-      notifySuccess('Request Created Successfully.');
-    } else {
-      notifyError('Error to create a new request.');
-    }
+    const res = await postMaintenanceContract(
+      data as unknown as PostMaintenanceContractDTO
+    );
 
     setIsLoading(false);
   };
