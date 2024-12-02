@@ -32,6 +32,7 @@ const RequestContent = ({
     const res = await postMaintenanceContract(
       data as unknown as PostMaintenanceContractDTO
     );
+    console.log('🚀 ~ constonSubmitForm:SubmitHandler<Request>= ~ res:', res);
 
     setIsLoading(false);
   };

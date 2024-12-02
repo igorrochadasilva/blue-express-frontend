@@ -92,7 +92,7 @@ export const MCFormDataInputs: FormDataInputs = [
       type: 'input',
       labelText: 'Contract Renew Qtd',
       inputName: 'contractRenewQtd',
-      inputType: 'text',
+      inputType: 'number',
       required: true,
       readonly: false,
     },

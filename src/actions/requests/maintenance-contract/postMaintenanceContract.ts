@@ -6,6 +6,7 @@ import {
 } from '@/types/requests/maintenance.contract';
 import { api } from '../../api';
 import { getUserSession } from '../../auth/getUserSession';
+import { buildPostMaintenanceContractData } from './build';
 
 export async function postMaintenanceContract(
   data: PostMaintenanceContractDTO
@@ -20,7 +21,7 @@ export async function postMaintenanceContract(
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(buildPostMaintenanceContractData(data, user)),
       },
       params: {
         email: user.email,

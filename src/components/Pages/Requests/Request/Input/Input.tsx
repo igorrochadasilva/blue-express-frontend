@@ -1,27 +1,30 @@
 'use client';
 
-import { UseFormRegister } from 'react-hook-form';
-import { IRequestBody, TFiles } from '../../../../types/global/types';
+import { RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-type TInput = {
+import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
+import { RequestsDTO } from '@/types/requests/requests';
+import { TFiles } from '@/types/global/types';
+
+interface InputProps {
   labelText: string;
-  inputName: any;
+  inputName: keyof PostMaintenanceContractDTO;
   inputType: string | undefined;
   inputValue?: string | number;
-  validationSchema?: any;
+  validation?: RegisterOptions;
   readonly: boolean | undefined;
   required?: boolean;
   placeholder?: string;
   pattern?: string;
   step?: string | number | undefined;
-  register: UseFormRegister<IRequestBody>;
-  getValues: (v: string) => TFiles;
-};
+  register: UseFormRegister<RequestsDTO>;
+  getValues: (v: string) => TFiles; // TODO - Changes after
+}
 
 const Input = ({
   inputName,
   inputType,
-  validationSchema,
+  validation,
   labelText,
   readonly = false,
   required = false,
@@ -30,13 +33,11 @@ const Input = ({
   step = 'any',
   register,
   getValues,
-}: TInput) => {
+}: InputProps) => {
   const files = getValues('files');
 
   const linkFiles = (files: TFiles) => {
-    if (!files || Object.keys(files).length === 0) {
-      return null;
-    }
+    if (!files || Object.keys(files).length === 0) return null;
 
     const arrayFiles = Array.from(files);
 
@@ -53,7 +54,7 @@ const Input = ({
       <input
         type={inputType}
         className="rounded border-[1px] py-1 px-2 mt-2"
-        {...register(inputName, validationSchema)}
+        {...register(inputName, validation)}
         name={inputName}
         readOnly={readonly}
         required={required}

@@ -1,3 +1,5 @@
+import { PostMaintenanceContractDTO } from './maintenance.contract';
+
 export interface FormInputBase {
   id: number;
   type: 'input' | 'select';
@@ -21,3 +23,5 @@ export interface SelectFormInput extends FormInputBase {
 export type FormInput = InputFormInput | SelectFormInput;
 
 export type FormDataInputs = FormInput[][]; // 2D array representing grouped inputs
+
+export type RequestsDTO = PostMaintenanceContractDTO;
