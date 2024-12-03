@@ -1,5 +1,5 @@
+import { periodOptions } from '@/libs/options';
 import { SelectOptions } from '@/types/approvers/newApprover';
-import { periodOptions } from '../../../../libs/options';
 
 interface PeriodFilterProps {
   handleSelectPeriodChange: (e: string) => void;

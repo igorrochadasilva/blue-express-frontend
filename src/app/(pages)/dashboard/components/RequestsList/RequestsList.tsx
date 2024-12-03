@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { formatApproverName, formatDate } from '../../../../libs/utils';
+
 import ListRequests from './List';
-import { RequestsData } from '../../../../hooks/useGetRequests';
-import { generateRouteById } from '../../../../utils/generateRouteById';
-import { MaintenanceContract } from '../../../../types/requests/maintenance.contract';
-import { RequestItem } from '../../../../types/dashboard/dashboard';
-import { SoftwareServiceContract } from '../../../../types/requests/softwaerServiceContract';
-import { DistributorRepresentativesContract } from '../../../../types/requests/distributorRepresentativesContract';
+import { RequestsData } from '@/hooks/useGetRequests';
+import { RequestItem } from '@/types/dashboard/dashboard';
+import { Request } from '@/types/global/types';
+import { formatApproverName, formatDate } from '@/libs/utils';
+import { generateRouteById } from '@/utils/generateRouteById';
 
 const STATUS_COLORS: Record<string, string> = {
   approved: '#00D134',
@@ -34,10 +33,7 @@ const RequestsList = ({ requests }: RequestsListProps) => {
 
   useEffect(() => {
     const mapRequestToListItem = (
-      request:
-        | MaintenanceContract
-        | SoftwareServiceContract
-        | DistributorRepresentativesContract,
+      request: Request,
       index: number
     ): RequestItem => ({
       id: request.id,

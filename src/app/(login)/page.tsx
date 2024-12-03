@@ -4,11 +4,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import Loading from '../../components/Global/Loading/loading';
-import { Login } from '../../components/Pages/Login';
-import { handleForgetPassword } from '../../actions/auth/handleForgetPassword';
-import { SignInDTO } from '../../types/auth/sign';
-import { notifyMessage } from '../../toast/notifications';
+import { SignInDTO } from '@/types/auth/sign';
+import { notifyMessage } from '@/toast/notifications';
+import Loading from '@/components/Global/Loading/loading';
+import { handleForgetPassword } from '@/actions/auth/handleForgetPassword';
+import { Login } from './components';
 
 export default function Home() {
   const router = useRouter();

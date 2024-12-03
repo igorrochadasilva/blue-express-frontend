@@ -2,9 +2,6 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import FormNewApprover from '.';
-import Content from '../../Global/Content/Content';
-import { NewApproverFormInputs } from '../../../libs/Forms/NewApproverFormInputs';
 import { useMemo, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { postApprover } from '@/actions/approver/postApprover';
@@ -19,12 +16,15 @@ import {
 import { NewApproverFormInput, UserNames } from '@/types/approvers/newApprover';
 import { User } from '@/types/approvers/user';
 import { getUserApprovers } from '@/actions/user/getUsersById';
+import Content from '@/components/Global/Content/Content';
+import { NewApproverFormInputs } from '@/libs/Forms/NewApproverFormInputs';
+import FormNewApprover from './Form';
 
-interface NewApproverContentProps {
+interface NewApproverProps {
   usersData: User[];
 }
 
-const NewApproverContent = ({ usersData }: NewApproverContentProps) => {
+export const NewApprover = ({ usersData }: NewApproverProps) => {
   const [userApproversList, setUserApproversList] = useState<Approver[]>([]);
 
   const { register, handleSubmit, setValue } = useForm<PostApproverDTO>({
@@ -132,5 +132,3 @@ const NewApproverContent = ({ usersData }: NewApproverContentProps) => {
     </FormNewApprover.Form>
   );
 };
-
-export default NewApproverContent;

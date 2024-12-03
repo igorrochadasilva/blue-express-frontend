@@ -1,15 +1,15 @@
-import Container from '../../../../../components/Global/Container/Container';
-import { MCFormDataInputs } from '../../../../../libs/Forms/MaintenanceContractFormInputs';
-import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
-import { getUserSession } from '../../../../../actions/auth/getUserSession';
+import { getUserSession } from '@/actions/auth/getUserSession';
+import Container from '@/components/Global/Container/Container';
 import { RequestsTitleEnum } from '@/types/requests/enums';
+import { MaintenanceContract } from './components/MaintenanceContract';
+import { MCFormDataInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 
-export default async function MaintenanceContract() {
+export default async function MaintenanceContractPage() {
   const user = await getUserSession();
 
   return (
     <Container title={RequestsTitleEnum.MAINTENANCE_CONTRACT}>
-      <RequestContent
+      <MaintenanceContract
         user={user}
         FormDataInputs={MCFormDataInputs}
         createRequestRouter={RequestsTitleEnum.MAINTENANCE_CONTRACT}

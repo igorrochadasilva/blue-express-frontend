@@ -1,10 +1,10 @@
 'use server';
 
-import Container from '../../../../components/Global/Container/Container';
-import NewApproverContent from '../../../../components/Pages/NewApprover/NewApproverContent';
 import { getUsers } from '@/actions/user/getUsers';
+import { NewApprover } from './components/NewApprover';
+import Container from '@/components/Global/Container/Container';
 
-export default async function NewApprover() {
+export default async function NewApproverPage() {
   const usersData = await getUsers();
 
   return (
@@ -13,7 +13,7 @@ export default async function NewApprover() {
       btnNavigateLink="/approver/new-approver"
       btnNavigateText="New Approver"
     >
-      <NewApproverContent usersData={usersData?.data ?? []} />
+      <NewApprover usersData={usersData?.data ?? []} />
     </Container>
   );
 }

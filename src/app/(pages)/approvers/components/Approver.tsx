@@ -1,19 +1,20 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import ApproversList from './ApproverList';
-import Modal from '../../Global/Modal/Modal';
-import { deleteApprover } from '../../../actions/approver/deleteApprover';
+import List from './List';
+
 import { Approver } from '@/types/approvers/approvers';
 import { UserSession } from '@/types/auth/sign';
 import { notifyMessage } from '@/toast/notifications';
+import { deleteApprover } from '@/actions/approver/deleteApprover';
+import Modal from '@/components/Global/Modal/Modal';
 
-interface ApproverContentProps {
+interface ApproversProps {
   approversData: Approver[];
   user: UserSession;
 }
 
-const ApproverContent = ({ approversData }: ApproverContentProps) => {
+export const Approvers = ({ approversData }: ApproversProps) => {
   const [approvers, setApprovers] = useState(approversData);
   const [showTrashModal, setShowTrashModal] = useState(false);
   const [selectedApproverId, setSelectedApproverId] = useState<number | null>(
@@ -51,15 +52,15 @@ const ApproverContent = ({ approversData }: ApproverContentProps) => {
 
   return (
     <>
-      <ApproversList.Root>
+      <List.Root>
         <table>
-          <ApproversList.Head />
-          <ApproversList.Content
+          <List.Head />
+          <List.Content
             approversData={approvers}
             handleTrashClick={handleTrashClick}
           />
         </table>
-      </ApproversList.Root>
+      </List.Root>
       <Modal
         text="Are you sure you want to delete this approver?"
         showModal={showTrashModal}
@@ -69,5 +70,3 @@ const ApproverContent = ({ approversData }: ApproverContentProps) => {
     </>
   );
 };
-
-export default ApproverContent;

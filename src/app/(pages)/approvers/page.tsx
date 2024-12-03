@@ -1,11 +1,11 @@
-import Container from '../../../components/Global/Container/Container';
-import ApproverContent from '../../../components/Pages/Approvers/ApproverContent';
-import Content from '../../../components/Global/Content/Content';
-import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
 import { getApprovers } from '@/actions/approver/getApprovers';
 import { getUserSession } from '@/actions/auth/getUserSession';
+import Container from '@/components/Global/Container/Container';
+import Content from '@/components/Global/Content/Content';
+import NoDataBox from '@/components/Global/NoDataBox/NoDataBox';
+import { Approvers } from './components/Approver';
 
-export default async function Approvers() {
+export default async function ApproversPage() {
   const allApprovers = await getApprovers();
   const user = await getUserSession();
 
@@ -18,7 +18,7 @@ export default async function Approvers() {
     >
       {allApprovers.data.length > 0 ? (
         <Content>
-          <ApproverContent approversData={allApprovers.data} user={user} />
+          <Approvers approversData={allApprovers.data} user={user} />
         </Content>
       ) : (
         <NoDataBox text="There are no approvers to show..." />

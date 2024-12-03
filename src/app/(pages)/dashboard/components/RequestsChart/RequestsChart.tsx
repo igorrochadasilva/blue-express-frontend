@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Chart } from './Chart';
-import { RequestsData } from '../../../../hooks/useGetRequests';
+
 import { barData } from '@/types/dashboard/dashboard';
+import { RequestsData } from '@/hooks/useGetRequests';
 
 interface RequestsChartProps {
   requests: RequestsData;

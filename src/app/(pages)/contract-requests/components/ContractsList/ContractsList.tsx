@@ -1,9 +1,9 @@
-import { formatApproverName } from '../../../../libs/utils';
+import { formatApproverName } from '../../../../../libs/utils';
 import { v4 as uuid4 } from 'uuid';
 import ListRequests from './List';
-import { RequestsData } from '../../../../hooks/useGetRequests';
-import { generateRouteById } from '../../../../utils/generateRouteById';
-import { Request } from '../../../../types/global/types';
+import { RequestsData } from '../../../../../hooks/useGetRequests';
+import { generateRouteById } from '../../../../../utils/generateRouteById';
+import { Request } from '../../../../../types/global/types';
 
 interface ContractsListProps {
   requests: RequestsData;

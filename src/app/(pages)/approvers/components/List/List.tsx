@@ -1,15 +1,16 @@
 import { useEffect, useState, useCallback } from 'react';
-import { formatToUSD } from '../../../../libs/utils';
-import { TrashIcon } from '@heroicons/react/24/solid';
-import Modal from '../../../Global/Modal/Modal';
+
 import { Approver, ApproverRow } from '@/types/approvers/approvers';
 import { deleteApprover } from '@/actions/approver/deleteApprover';
+import { formatToUSD } from '@/libs/utils';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import Modal from '@/components/Global/Modal/Modal';
 
-interface ApproversListProps {
+interface ListProps {
   approvers: Approver[];
 }
 
-const ApproversList = ({ approvers }: ApproversListProps) => {
+export const List = ({ approvers }: ListProps) => {
   const [listApprovers, setListApprovers] = useState<ApproverRow[]>([]);
   const [showTrashModal, setShowTrashModal] = useState(false);
   const [selectedApproverId, setSelectedApproverId] = useState<number | null>(
@@ -97,5 +98,3 @@ const ApproversList = ({ approvers }: ApproversListProps) => {
     </>
   );
 };
-
-export default ApproversList;

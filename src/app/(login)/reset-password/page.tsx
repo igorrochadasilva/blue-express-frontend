@@ -2,15 +2,16 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { handleResetPassword } from '../../actions/auth/handleResetPassword';
-import { ResetPassword } from '../../components/Pages/ResetPassword';
-import { notifyMessage } from '../../toast/notifications';
-import messages from '../../messages/messages';
 import { useState } from 'react';
-import { ResetInput } from '../../types/auth/resetPassword';
-import Loading from '../../components/Global/Loading/loading';
+import { ResetInput } from '@/types/auth/resetPassword';
+import { notifyMessage } from '@/toast/notifications';
+import { handleResetPassword } from '@/actions/auth/handleResetPassword';
+import Loading from '@/components/Global/Loading/loading';
 
-export default function PageResetPassword() {
+import messages from '@/messages/messages';
+import { ResetPassword } from './components';
+
+export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');

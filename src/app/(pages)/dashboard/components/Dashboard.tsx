@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import PeriodFilter from './PeriodFilter/PeriodFilter';
-import Content from '../../Global/Content/Content';
-import RequestsChart from './RequestsChart/RequestsChart';
-import { RequestsData } from '../../../hooks/useGetRequests';
-import RequestsList from './RequestsList/RequestsList';
 
-interface DashBoardContent {
+import RequestsChart from './RequestsChart/RequestsChart';
+import RequestsList from './RequestsList/RequestsList';
+import { RequestsData } from '@/hooks/useGetRequests';
+import Content from '@/components/Global/Content/Content';
+
+interface DashBoardProps {
   requestsData: RequestsData;
 }
 
-const DashBoardContent = ({ requestsData }: DashBoardContent) => {
+export const DashBoard = ({ requestsData }: DashBoardProps) => {
   const [filteredRequests, setFilteredRequests] = useState<RequestsData>([]);
   const [selectPeriodValue, setSelectPeriodValue] = useState<string>('');
 
@@ -54,4 +55,3 @@ const DashBoardContent = ({ requestsData }: DashBoardContent) => {
     </>
   );
 };
-export default DashBoardContent;
