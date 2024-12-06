@@ -49,7 +49,9 @@ export interface GetMaintenanceContractResponse extends ErrorResponse {
 }
 
 export interface GetMaintenanceContractByIdResponse extends ErrorResponse {
-  data: MaintenanceContract;
+  data: {
+    request: MaintenanceContract;
+  };
 }
 
 export interface PostMaintenanceContractDTO {

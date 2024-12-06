@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    logging: {
-        fetches: {
-          fullUrl: true,
-          hmrRefreshes: true,
-        },
+  logging: {
+    fetches: {
+      fullUrl: true,
+      hmrRefreshes: true,
     },
-    output: 'standalone',
+  },
+  output: 'standalone',
 };
 
 export default nextConfig;
