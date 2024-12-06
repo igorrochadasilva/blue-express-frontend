@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PeriodFilter from './PeriodFilter/PeriodFilter';
 
 import RequestsChart from './RequestsChart/RequestsChart';
@@ -16,7 +16,7 @@ export const DashBoard = ({ requestsData }: DashBoardProps) => {
   const [filteredRequests, setFilteredRequests] = useState<RequestsData>([]);
   const [selectPeriodValue, setSelectPeriodValue] = useState<string>('');
 
-  const filterRequestByPeriod = () => {
+  const filterRequestByPeriod = useCallback(() => {
     if (selectPeriodValue !== 'all') {
       const days = Number(selectPeriodValue);
       const thresholdDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
@@ -30,7 +30,7 @@ export const DashBoard = ({ requestsData }: DashBoardProps) => {
     } else {
       setFilteredRequests(requestsData);
     }
-  };
+  }, [selectPeriodValue, requestsData, setFilteredRequests]);
 
   const handleSelectPeriodChange = (value: string) =>
     setSelectPeriodValue(value);

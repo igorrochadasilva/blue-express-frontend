@@ -22,5 +22,5 @@ export interface NewApproverFormInput {
   required: boolean;
   readonly: boolean;
   options?: SelectOptions[] | UserNames[];
-  validation?: RegisterOptions;
+  validation?: RegisterOptions<PostApproverDTO, keyof PostApproverDTO>;
 }

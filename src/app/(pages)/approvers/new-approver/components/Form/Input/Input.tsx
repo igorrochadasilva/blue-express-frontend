@@ -8,7 +8,7 @@ interface InputProps {
   inputName: keyof PostApproverDTO;
   inputType: string | undefined;
   inputValue?: string | number;
-  validation?: RegisterOptions;
+  validation?: RegisterOptions<PostApproverDTO, keyof PostApproverDTO>;
   readonly: boolean | undefined;
   required?: boolean;
   placeholder?: string;

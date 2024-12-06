@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import {
   PostApproverDTO,
   PostApproverResponse,
@@ -11,6 +12,7 @@ import { buildPostData } from './build';
 export async function postApprover(
   data: PostApproverDTO
 ): Promise<PostApproverResponse> {
+  console.log('🚀 ~ data:', data);
   const user = await getUserSession();
 
   try {
@@ -27,8 +29,9 @@ export async function postApprover(
         email: user.email,
         role: user.role,
       },
-      revalidateTag: 'approvers',
     });
+
+    revalidateTag('approvers');
 
     return response;
   } catch (error) {

@@ -43,3 +43,44 @@ export interface SoftwareServiceContract {
 export interface GetSoftwareServiceContractResponse extends ErrorResponse {
   data: SoftwareServiceContract[];
 }
+
+export interface PostSoftwareServiceContractDTO {
+  requesterName: string;
+  requesterId: number;
+  clientName: string;
+  clmHeaderNumber: string;
+  clmLineNumber: string;
+  typeContract: string;
+  companyType: string;
+  company: string;
+  status: string;
+  renewStartDate: string;
+  renewEndDate: string;
+  scope: string;
+  contractTotalValue: number;
+  dollarExchangeRate: number;
+  totalValueUSD: number;
+  gm: number;
+  paymentCondition: string;
+  inclusionClauses: string;
+  inclusionDescription: string;
+  legalIndemnificationObligations: string;
+  legalWarrantyObligations: string;
+  legalDamageCap: string;
+  legalDamageCave: string;
+  legalLiquidatedDamages: string;
+  justify: string;
+  requestId: string;
+  currentLevel: number;
+  approvalLevel: string;
+  phone: string;
+  contact: string;
+  antiCorruption: string;
+  uf: string;
+  sap: string;
+  files: string;
+}
+
+export interface PostSoftwareServiceContractResponse extends ErrorResponse {
+  data?: { message: string };
+}

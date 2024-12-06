@@ -1,47 +1,9 @@
 'use server';
 
-import { IRequestBody, TUser } from '../types/global/types';
+import { TUser } from '../types/global/types';
 import { generateRequestFormData } from '../libs/utils';
 import { revalidateTag } from 'next/cache';
 import { fetchData } from '../libs/FetchData';
-
-export async function createRequest(
-  requestType: string,
-  data: IRequestBody,
-  user: TUser
-) {
-  const { files, ...dataRest } = data;
-
-  const formatData = generateRequestFormData(requestType, dataRest, user);
-  formatData.filesName = '';
-
-  const newFormData = new FormData();
-  const arrayFiles = Array.from(files);
-
-  arrayFiles.forEach((file: any) => {
-    newFormData.append(file.name, file);
-    formatData.filesName += file.name + ',';
-  });
-
-  formatData.filesName = formatData.filesName.slice(0, -1);
-
-  newFormData.append('data', JSON.stringify(formatData));
-
-  const res = await fetchData({
-    router: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/${requestType}`,
-    method: 'POST',
-    body: newFormData,
-    token: user?.accessToken,
-  });
-
-  if (res.ok) {
-    revalidateTag('requests-tag');
-
-    return res;
-  } else {
-    throw res;
-  }
-}
 
 export async function getRequest(requestType: string, id: string) {
   const res = await fetchData({
@@ -61,7 +23,7 @@ export async function getRequest(requestType: string, id: string) {
 export async function updateRequest(
   user: TUser,
   requestType: string,
-  data: IRequestBody
+  data: any
 ) {
   const { files, ...requestData } = data;
   const newFormData = new FormData();
@@ -70,11 +32,6 @@ export async function updateRequest(
   const formatData = generateRequestFormData(requestType, requestData);
 
   formatData.filesName = '';
-
-  arrayFiles.forEach((file: any) => {
-    newFormData.append(file.name, file);
-    formatData.filesName += file.name + ',';
-  });
 
   formatData.filesName = formatData.filesName.slice(0, -1);
 

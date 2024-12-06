@@ -1,27 +1,27 @@
-'use client';
-
-import { RegisterOptions, UseFormRegister } from 'react-hook-form';
-
-import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
-import { RequestsDTO } from '@/types/requests/requests';
 import { TFiles } from '@/types/global/types';
+import {
+  RegisterOptions,
+  UseFormRegister,
+  FieldValues,
+  Path,
+} from 'react-hook-form';
 
-interface InputProps {
+interface InputProps<TFormValues extends FieldValues> {
   labelText: string;
-  inputName: keyof PostMaintenanceContractDTO;
+  inputName: Path<TFormValues>; // Ensure inputName is a valid path of TFormValues
   inputType: string | undefined;
   inputValue?: string | number;
-  validation?: RegisterOptions;
+  validation?: RegisterOptions<TFormValues, Path<TFormValues>>;
   readonly: boolean | undefined;
   required?: boolean;
   placeholder?: string;
   pattern?: string;
   step?: string | number | undefined;
-  register: UseFormRegister<RequestsDTO>;
-  getValues: (v: string) => TFiles; // TODO - Changes after
+  register: UseFormRegister<TFormValues>;
+  getValues: (v: string) => TFiles;
 }
 
-const Input = ({
+const Input = <TFormValues extends FieldValues>({
   inputName,
   inputType,
   validation,
@@ -33,7 +33,7 @@ const Input = ({
   step = 'any',
   register,
   getValues,
-}: InputProps) => {
+}: InputProps<TFormValues>) => {
   const files = getValues('files');
 
   const linkFiles = (files: TFiles) => {
@@ -49,13 +49,13 @@ const Input = ({
   };
 
   return (
-    <label htmlFor={inputName} className="flex flex-col flex-1 mb-2">
+    <label htmlFor={String(inputName)} className="flex flex-col flex-1 mb-2">
       {labelText}
       <input
         type={inputType}
         className="rounded border-[1px] py-1 px-2 mt-2"
         {...register(inputName, validation)}
-        name={inputName}
+        name={String(inputName)}
         readOnly={readonly}
         required={required}
         placeholder={placeholder}

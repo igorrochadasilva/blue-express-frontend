@@ -2,11 +2,11 @@
 
 import Container from '@/components/Global/Container/Container';
 import NoDataBox from '@/components/Global/NoDataBox/NoDataBox';
-import { useGetRequests } from '@/hooks/useGetRequests';
+import { getRequests } from '@/hooks/useGetRequests';
 import ContractRequest from './components/ContractRequest';
 
 export default async function ContractRequestsPage() {
-  const requestsData = await useGetRequests();
+  const requestsData = await getRequests();
 
   return (
     <Container

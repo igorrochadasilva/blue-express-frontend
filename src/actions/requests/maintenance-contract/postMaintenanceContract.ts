@@ -6,7 +6,7 @@ import {
 } from '@/types/requests/maintenance.contract';
 import { api } from '../../api';
 import { getUserSession } from '../../auth/getUserSession';
-import { buildPostMaintenanceContractData } from './build';
+import { revalidateTag } from 'next/cache';
 
 export async function postMaintenanceContract(
   data: PostMaintenanceContractDTO
@@ -21,7 +21,10 @@ export async function postMaintenanceContract(
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
-        body: JSON.stringify(buildPostMaintenanceContractData(data, user)),
+        body: JSON.stringify({
+          ...data,
+          requesterId: Number(user.id),
+        } as PostMaintenanceContractDTO),
       },
       params: {
         email: user.email,
@@ -29,6 +32,8 @@ export async function postMaintenanceContract(
       },
       ignoreCache: true,
     });
+
+    revalidateTag('maintenance-contract');
 
     return response;
   } catch (error) {

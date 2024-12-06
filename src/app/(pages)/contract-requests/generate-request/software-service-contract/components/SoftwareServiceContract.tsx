@@ -4,78 +4,84 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuid4 } from 'uuid';
 
-import { postMaintenanceContract } from '@/actions/requests/maintenance-contract/postMaintenanceContract';
-import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
-
 import Content from '@/components/Global/Content/Content';
-import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
-import Request from '../../components/Request';
+
 import { UserSession } from '@/types/auth/sign';
 import { notifyMessage } from '@/toast/notifications';
 import { useRouter } from 'next/navigation';
 import { RequestStatusEnum } from '@/types/requests/enums';
+import { PostSoftwareServiceContractDTO } from '@/types/requests/softwaerServiceContract';
+import { postSoftwareServiceContract } from '@/actions/requests/software-service-contract/postSoftwareServiceContract';
+import Request from '../../components/Request';
+import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
 
-const INITIAL_MAINTENANCE_CONTRACT_FORM = {
-  requesterId: 0,
-  requesterName: '',
-  clientName: 'clientName',
-  clmHeaderNumber: 'clmHeaderNumber',
-  clmLineNumber: 'clmLineNumber',
-  typeContract: 'new',
-  status: RequestStatusEnum.WAITING_FOR_APPROVAL,
+const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContractDTO = {
+  requesterName: 'John Doe',
+  requesterId: 1,
+  clientName: 'Tech Solutions Inc.',
+  clmHeaderNumber: 'CLM2024-001',
+  clmLineNumber: 'LN002',
+  typeContract: 'renovation',
+  companyType: 'public',
   company: 'PD',
-  renewStartDate: '2024-12-06',
-  renewEndDate: '2024-12-08',
-  contractRenewQtd: 0,
-  frequency: 'monthly',
-  scope: 'scope',
-  contractTotalValue: 10,
+  status: RequestStatusEnum.WAITING_FOR_APPROVAL,
+  renewStartDate: '2024-01-01',
+  renewEndDate: '2025-01-01',
+  scope: 'Provide annual software maintenance and updates',
+  contractTotalValue: 20,
   dollarExchangeRate: 5,
-  totalValueUSD: 50,
+  totalValueUSD: 100,
   gm: 1,
-  renewIndexPercentage: 1,
-  index: 1,
-  paymentCondition: 'paymentCondition',
-  inclusionClauses: 'inclusionClauses',
-  inclusionDescription: 'inclusionDescription',
-  legalIndemnificationObligations: 'legalIndemnificationObligations',
-  legalWarrantyObligations: 'legalWarrantyObligations',
-  legalDamageCap: 'legalDamageCap',
-  legalDamageCave: 'legalDamageCave',
-  legalLiquidatedDamages: 'legalLiquidatedDamages',
-  justify: 'justify',
-  approvalLevel: 'supervisor',
-  phone: '11111',
-  contact: 'igor082011@gmail.com',
-  antiCorruption: 'yes',
+  paymentCondition: 'Quarterly payments',
+  inclusionClauses: 'All upgrades and patches are included',
+  inclusionDescription: 'Includes major and minor software updates',
+  legalIndemnificationObligations: 'Provider indemnifies client',
+  legalWarrantyObligations: '12 months on services rendered',
+  legalDamageCap: 'Maximum liability $50,000',
+  legalDamageCave: 'No damages for natural disasters',
+  legalLiquidatedDamages: 'Agreed at $500 per day of delay',
+  justify:
+    'This contract ensures continuous software support and upgrades as required by SLA.',
+  requestId: '',
+  currentLevel: 1,
+  approvalLevel: 'controller',
+  phone: '+1-800-555-1234',
+  contact: 'support@techsolutions.com',
+  antiCorruption: 'No bribery or unethical practices allowed',
   uf: 'SP',
-  sap: 'sp',
+  sap: 'SAP54321',
+  files: '',
 };
 
-interface MaintenanceContractProps {
+interface SoftwareServiceContractProps {
   userSession: UserSession;
 }
 
-export const MaintenanceContract = ({
+export const SoftwareServiceContract = ({
   userSession,
-}: MaintenanceContractProps) => {
+}: SoftwareServiceContractProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const { register, watch, handleSubmit, setValue, getValues } =
-    useForm<PostMaintenanceContractDTO>({
+    useForm<PostSoftwareServiceContractDTO>({
       mode: 'all',
       defaultValues: {
-        ...INITIAL_MAINTENANCE_CONTRACT_FORM,
+        ...INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM,
         requesterName: userSession.name,
       },
     });
 
-  const onSubmitForm: SubmitHandler<PostMaintenanceContractDTO> = async (
+  const onSubmitForm: SubmitHandler<PostSoftwareServiceContractDTO> = async (
     data
   ) => {
+    console.log('🚀 ~ data:', data);
     setIsLoading(true);
-    const response = await postMaintenanceContract(data);
+    const response = await postSoftwareServiceContract(data);
+    console.log(
+      '🚀 ~ constonSubmitForm:SubmitHandler<Request>= ~ response:',
+      response
+    );
 
     notifyMessage({
       message: response?.data?.message ?? response?.message,
@@ -100,7 +106,7 @@ export const MaintenanceContract = ({
     <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
       <Content>
         <div className="flex flex-col gap-4">
-          {MaintenanceContractFormInputs.map((data) => (
+          {SoftwareServiceFormInputs.map((data) => (
             <Request.InputGroup key={uuid4()}>
               {data.map((item) => {
                 if (item.type === 'input') {

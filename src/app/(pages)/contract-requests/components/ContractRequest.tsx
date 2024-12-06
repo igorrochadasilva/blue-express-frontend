@@ -1,11 +1,10 @@
 'use client';
 
+import Content from '@/components/Global/Content/Content';
+import InputsFilter from '@/components/Global/InputsFilter';
+import { RequestsData } from '@/hooks/useGetRequests';
 import { useEffect, useState, useCallback } from 'react';
-import { Request } from '../../../../types/global/types';
-import Content from '../../../../components/Global/Content/Content';
-import InputsFilter from '../../../../components/Global/InputsFilter';
 import ContractsList from './ContractsList/ContractsList';
-import { RequestsData } from '../../../../hooks/useGetRequests';
 
 interface ContractRequestContentProps {
   requestsData: RequestsData;
@@ -24,7 +23,7 @@ const ContractRequestContent = ({
   const applyFilters = useCallback(() => {
     const { requestId, status } = selectedFilters;
 
-    const filtered = requestsData.filter((request: Request) => {
+    const filtered = requestsData.filter((request) => {
       const matchesRequestId = !requestId || String(request.id) === requestId;
       const matchesStatus = !status || request.status === status;
 

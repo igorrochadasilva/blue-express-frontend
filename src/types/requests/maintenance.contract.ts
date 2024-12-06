@@ -1,3 +1,4 @@
+import { File } from 'buffer';
 import { ErrorResponse } from '../error';
 
 export interface MaintenanceContract {
@@ -82,8 +83,9 @@ export interface PostMaintenanceContractDTO {
   antiCorruption: string;
   uf: string; // State abbreviation
   sap: string;
+  files?: File[];
 }
 
 export interface PostMaintenanceContractResponse extends ErrorResponse {
-  data: MaintenanceContract[];
+  data?: { message: string };
 }

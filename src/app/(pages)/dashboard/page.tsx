@@ -1,12 +1,12 @@
 'use server';
 
 import Container from '@/components/Global/Container/Container';
-import { useGetRequests } from '@/hooks/useGetRequests';
+import { getRequests } from '@/hooks/useGetRequests';
 import { DashBoard } from './components/Dashboard';
 import NoDataBox from '@/components/Global/NoDataBox/NoDataBox';
 
 export default async function DashboardPage() {
-  const requestsData = await useGetRequests();
+  const requestsData = await getRequests();
 
   return (
     <Container title="Dashboard">

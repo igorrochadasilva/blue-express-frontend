@@ -27,7 +27,7 @@ interface NewApproverProps {
 export const NewApprover = ({ usersData }: NewApproverProps) => {
   const [userApproversList, setUserApproversList] = useState<Approver[]>([]);
 
-  const { register, handleSubmit, setValue } = useForm<PostApproverDTO>({
+  const { register, handleSubmit } = useForm<PostApproverDTO>({
     mode: 'all',
     defaultValues: {
       title: RequestsTitleEnum.MAINTENANCE_CONTRACT,
@@ -110,8 +110,11 @@ export const NewApprover = ({ usersData }: NewApproverProps) => {
                       validation={item.validation}
                       register={register}
                       required={item.required}
-                      handleChangeApproverSelect={handleChangeApproverSelect}
-                      setValue={setValue}
+                      handleChangeApproverSelect={
+                        item.inputName === 'userId'
+                          ? handleChangeApproverSelect
+                          : undefined
+                      }
                     />
                   );
                 }

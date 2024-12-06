@@ -1,8 +1,8 @@
-import Container from '../../../../../../components/Global/Container/Container';
-import { MCFormDataInputs } from '../../../../../../libs/Forms/MaintenanceContractFormInputs';
-import { getRequest } from '../../../../../../actions/requests';
-import { getUserSession } from '../../../../../../actions/auth/getUserSession';
-import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
+import { getUserSession } from '@/actions/auth/getUserSession';
+import { getRequest } from '@/actions/requests';
+import Container from '@/components/Global/Container/Container';
+import DynamicRequestContent from '@/components/Pages/DynamicRequest/DynamicRequestContent';
+import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 
 interface IMaintenanceContractRequest {
   params: { id: string };
@@ -22,7 +22,7 @@ export default async function MaintenanceContractRequest({
         <DynamicRequestContent
           user={user}
           requestData={{ ...data.request, files: data.files }}
-          FormDataInputs={MCFormDataInputs}
+          FormDataInputs={MaintenanceContractFormInputs}
           requestRouteType={'maintenance-contract'}
         />
       ) : null}

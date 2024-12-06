@@ -1,4 +1,4 @@
-import { UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 type LoginInputs = {
   email: string;
@@ -10,7 +10,7 @@ interface IInputProps {
   inputName: 'email' | 'password';
   inputType: string;
   message: string;
-  errors: any;
+  errors: FieldErrors;
   patternValue?: RegExp;
   register: UseFormRegister<LoginInputs>;
 }

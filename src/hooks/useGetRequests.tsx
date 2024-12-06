@@ -19,7 +19,7 @@ export type RequestsData = (
   | DistributorRepresentativesContract
 )[];
 
-export async function useGetRequests() {
+export async function getRequests() {
   const allRequests: Requests = {
     maintenanceContract: [],
     softwareServiceContract: [],
