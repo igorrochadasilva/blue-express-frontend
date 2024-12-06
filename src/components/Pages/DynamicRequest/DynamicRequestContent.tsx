@@ -29,7 +29,6 @@ const DynamicRequestContent = ({
 }: IDynamicRequestContent) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  //approver modal states
   const [showApproverModal, setShowApproverModal] = useState(false);
   const [modalStatus, setModalStatus] = useState('');
   const [justifyApproverModal, setJustifyApproverModal] = useState('');

@@ -12,7 +12,6 @@ import { buildPostData } from './build';
 export async function postApprover(
   data: PostApproverDTO
 ): Promise<PostApproverResponse> {
-  console.log('🚀 ~ data:', data);
   const user = await getUserSession();
 
   try {
