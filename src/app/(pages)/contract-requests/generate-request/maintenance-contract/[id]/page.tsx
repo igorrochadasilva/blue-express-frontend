@@ -11,8 +11,8 @@ interface MaintenanceContractIdPageProps {
 export default async function MaintenanceContractIdPage({
   params,
 }: MaintenanceContractIdPageProps) {
-  const user = await getUserSession();
   const { id } = params;
+  const user = await getUserSession();
   const maintenanceContractData = await getMaintenanceContractById(id);
 
   return (

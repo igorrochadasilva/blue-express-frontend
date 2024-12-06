@@ -12,6 +12,8 @@ import Request from '../../../components/Request';
 import Content from '@/components/Global/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import ApproverModal from '@/components/Global/ApproverModal/ApproverModal';
+import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
+import { notifyMessage } from '@/toast/notifications';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
@@ -23,7 +25,6 @@ export const MaintenanceContractId = ({
   maintenanceContractData,
 }: MaintenanceContractIdProps) => {
   console.log('🚀 ~ maintenanceContractData:', maintenanceContractData);
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showApproverModal, setShowApproverModal] = useState(false);
@@ -35,7 +36,7 @@ export const MaintenanceContractId = ({
       mode: 'all',
       defaultValues: {
         ...maintenanceContractData,
-        requesterId: maintenanceContractData.id,
+        id: maintenanceContractData.id,
         contractTotalValue: Number(maintenanceContractData.contractTotalValue),
         dollarExchangeRate: Number(maintenanceContractData.dollarExchangeRate),
         totalValueUSD: Number(maintenanceContractData.totalValueUSD),
@@ -47,48 +48,33 @@ export const MaintenanceContractId = ({
     });
 
   const onSubmitForm: SubmitHandler<UpdateMaintenanceContractDTO> = async (
-    data
+    maintenanceContractDTO
   ) => {
-    setIsLoading(true);
-    // const response = await postMaintenanceContract(data);
+    delete maintenanceContractDTO.files;
 
-    // notifyMessage({
-    //   message: response?.data?.message ?? response?.message,
-    //   statusCode: response.statusCode,
-    // });
+    const response = await putMaintenanceContractById(maintenanceContractDTO);
 
-    // if (response.statusCode === 201) return router.push('/contract-requests');
+    notifyMessage({
+      message: response?.data?.message ?? response?.message,
+      statusCode: response?.statusCode,
+    });
+
+    if (response.statusCode === 200) return router.push('/contract-requests');
 
     setIsLoading(false);
   };
 
-  // const handleApproverActionOnRequest = async (statusAction: string) => {
-  //   const data = {
-  //     user: user,
-  //     statusAction: statusAction,
-  //     requestData: requestData,
-  //     justify: justifyApproverModal,
-  //     url: requestRouteType,
-  //   };
-
-  //   setIsLoading(true);
-
-  //   const res = await createApproval(data);
-
-  //   if (res.ok) {
-  //     notifySuccess(res);
-  //     router.push('/contract-requests');
-  //   } else {
-  //     res ? notifyError(res.message) : notifyDefaultError();
-  //     setJustifyApproverModal('');
-  //     setIsLoading(false);
-  //     setShowApproverModal(!showApproverModal);
-  //   }
-  // };
-
-  // const handleApproverModal = () => {
-  //   setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
-  // };
+  const handleApproverActionOnRequest = async (statusAction: string) => {
+    // const data = {
+    //   user: user,
+    //   statusAction: statusAction,
+    //   requestData: requestData,
+    //   justify: justifyApproverModal,
+    //   url: requestRouteType,
+    // };
+    setIsLoading(true);
+    // const res = await createApproval(data);
+  };
 
   const handleModalStatus = (status: string) => setModalStatus(status);
 
@@ -96,9 +82,14 @@ export const MaintenanceContractId = ({
     event: ChangeEvent<HTMLTextAreaElement>
   ) => setJustifyApproverModal(event.target.value);
 
+  const handleShowApproverModal = () => {
+    setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
+  };
+
   const showApproverButtons =
-    user?.role !== 1 &&
-    maintenanceContractData?.status === 'waiting for approval';
+    (maintenanceContractData?.status === 'waiting for approval' &&
+      user?.role === 3) ||
+    maintenanceContractData.currentApproverName.includes(user.name);
 
   return (
     <>
@@ -140,7 +131,7 @@ export const MaintenanceContractId = ({
         </Content>
         {showApproverButtons ? (
           <Request.ApproverButtons
-            handleApproverModal={() => {}}
+            handleApproverModal={handleShowApproverModal}
             handleModalStatus={handleModalStatus}
           />
         ) : (
@@ -149,9 +140,9 @@ export const MaintenanceContractId = ({
       </Request.Form>
       {showApproverModal && (
         <ApproverModal
-          handleJustifyApproverModal={() => {}}
-          handleApproverActionOnRequest={async () => {}}
-          handleApproverModal={() => {}}
+          handleJustifyApproverModal={handleJustifyApproverModal}
+          handleApproverActionOnRequest={handleApproverActionOnRequest}
+          handleApproverModal={handleShowApproverModal}
           modalStatus={modalStatus}
           justifyApproverModal={justifyApproverModal}
         />

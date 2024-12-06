@@ -97,4 +97,13 @@ export interface PostMaintenanceContractResponse extends ErrorResponse {
 }
 
 export interface UpdateMaintenanceContractDTO
-  extends PostMaintenanceContractDTO {}
+  extends Omit<PostMaintenanceContractDTO, 'requesterId'> {
+  id: number;
+  requesterId?: number;
+}
+
+export interface UpdateMaintenanceContractResponse extends ErrorResponse {
+  data: {
+    message: string;
+  };
+}

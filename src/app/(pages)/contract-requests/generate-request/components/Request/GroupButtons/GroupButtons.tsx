@@ -1,10 +1,10 @@
 import Content from '@/components/Global/Content/Content';
 
-interface IGroupButtons {
+interface GroupButtonsProps {
   isLoading: boolean;
 }
 
-const GroupButtons = ({ isLoading }: IGroupButtons) => {
+const GroupButtons = ({ isLoading }: GroupButtonsProps) => {
   return (
     <Content>
       <div className="flex justify-end gap-4">
