@@ -1,40 +1,34 @@
 'use client';
 
 import { SubmitHandler } from 'react-hook-form';
-import { IRequestBody, TUser } from '../../../types/global/types';
 import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import RequestForm from '../Requests/Request/RequestForm/RequestForm';
-import ApproverModal from '../../Global/ApproverModal/ApproverModal';
-import { createApproval } from '../../../actions/approvals';
-import { updateRequest } from '../../../actions/requests';
 import {
-  notifyDefaultError,
-  notifyError,
-  notifySuccess,
-} from '../../../toast/notifications';
+  MaintenanceContract,
+  UpdateMaintenanceContractDTO,
+} from '@/types/requests/maintenance.contract';
+import { UserSession } from '@/types/auth/sign';
 
-interface IDynamicRequestContent {
-  user: TUser;
-  requestData: IRequestBody;
-  FormDataInputs: any[];
-  requestRouteType: string;
+interface MaintenanceContractIdProps {
+  user: UserSession;
+  maintenanceContractData: MaintenanceContract;
 }
 
-const DynamicRequestContent = ({
+export const MaintenanceContractId = ({
   user,
-  requestData,
-  FormDataInputs,
-  requestRouteType,
-}: IDynamicRequestContent) => {
+  maintenanceContractData,
+}: MaintenanceContractIdProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showApproverModal, setShowApproverModal] = useState(false);
   const [modalStatus, setModalStatus] = useState('');
   const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
-  const onSubmitForm: SubmitHandler<IRequestBody> = async (data) => {
+  const onSubmitForm: SubmitHandler<UpdateMaintenanceContractDTO> = async (
+    data
+  ) => {
     setIsLoading(true);
+
     const res = await updateRequest(user, requestRouteType, data);
 
     if (res) {
@@ -100,5 +94,3 @@ const DynamicRequestContent = ({
     </>
   );
 };
-
-export default DynamicRequestContent;

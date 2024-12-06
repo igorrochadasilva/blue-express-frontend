@@ -48,6 +48,10 @@ export interface GetMaintenanceContractResponse extends ErrorResponse {
   data: MaintenanceContract[];
 }
 
+export interface GetMaintenanceContractByIdResponse extends ErrorResponse {
+  data: MaintenanceContract;
+}
+
 export interface PostMaintenanceContractDTO {
   requesterId: number;
   requesterName: string;
@@ -89,3 +93,6 @@ export interface PostMaintenanceContractDTO {
 export interface PostMaintenanceContractResponse extends ErrorResponse {
   data?: { message: string };
 }
+
+export interface UpdateMaintenanceContractDTO
+  extends PostMaintenanceContractDTO {}
