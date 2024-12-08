@@ -4,7 +4,7 @@ import { Approver, ApproverRow } from '@/types/approvers/approvers';
 import { deleteApprover } from '@/actions/approver/deleteApprover';
 import { formatToUSD } from '@/libs/utils';
 import { TrashIcon } from '@heroicons/react/24/solid';
-import Modal from '@/components/Global/Modal/Modal';
+import { Modal } from '@/components/Modal/Modal';
 
 interface ListProps {
   approvers: Approver[];

@@ -1,5 +1,5 @@
 import { getUserSession } from '@/actions/auth/getUserSession';
-import Container from '@/components/Global/Container/Container';
+import Container from '@/components/Container/Container';
 import { MaintenanceContractId } from './components/MaitenanceContractId';
 import { getMaintenanceContractById } from '@/actions/requests/maintenance-contract/getMaintenanceContractById';
 import { RequestsTitleEnum } from '@/types/requests/enums';

@@ -1,4 +1,4 @@
-import Content from '@/components/Global/Content/Content';
+import Content from '@/components/Content/Content';
 
 interface IApproverButtons {
   handleApproverModal: (() => void) | undefined;

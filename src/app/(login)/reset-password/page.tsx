@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { ResetInput } from '@/types/auth/resetPassword';
 import { notifyMessage } from '@/toast/notifications';
 import { handleResetPassword } from '@/actions/auth/handleResetPassword';
-import Loading from '@/components/Global/Loading/loading';
+import Loading from '@/components/Loading/loading';
 
 import messages from '@/messages/messages';
 import { ResetPassword } from './components';

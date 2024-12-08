@@ -1,10 +1,10 @@
 'use client';
 
-import Content from '@/components/Global/Content/Content';
-import InputsFilter from '@/components/Global/InputsFilter';
 import { RequestsData } from '@/hooks/useGetRequests';
 import { useEffect, useState, useCallback } from 'react';
 import ContractsList from './ContractsList/ContractsList';
+import { Content } from '@/components/Content/Content';
+import { InputsFilter } from '@/components/InputsFilter';
 
 interface ContractRequestContentProps {
   requestsData: RequestsData;

@@ -1,8 +1,8 @@
 import { getApprovers } from '@/actions/approver/getApprovers';
 import { getUserSession } from '@/actions/auth/getUserSession';
-import Container from '@/components/Global/Container/Container';
-import Content from '@/components/Global/Content/Content';
-import NoDataBox from '@/components/Global/NoDataBox/NoDataBox';
+import Container from '@/components/Container/Container';
+import Content from '@/components/Content/Content';
+import NoDataBox from '@/components/NoDataBox/NoDataBox';
 import { Approvers } from './components/Approver';
 
 export default async function ApproversPage() {

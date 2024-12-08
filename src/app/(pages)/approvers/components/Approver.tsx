@@ -7,7 +7,7 @@ import { Approver } from '@/types/approvers/approvers';
 import { UserSession } from '@/types/auth/sign';
 import { notifyMessage } from '@/toast/notifications';
 import { deleteApprover } from '@/actions/approver/deleteApprover';
-import Modal from '@/components/Global/Modal/Modal';
+import Modal from '@/components/Modal/Modal';
 
 interface ApproversProps {
   approversData: Approver[];

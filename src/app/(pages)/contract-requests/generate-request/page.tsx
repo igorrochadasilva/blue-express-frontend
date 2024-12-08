@@ -1,4 +1,4 @@
-import Container from '@/components/Global/Container/Container';
+import Container from '@/components/Container/Container';
 import GenerateRequest from './components';
 
 export default async function GenerateContractsPage() {

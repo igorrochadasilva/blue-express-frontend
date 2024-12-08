@@ -1,7 +1,7 @@
 'use server';
 
-import Container from '@/components/Global/Container/Container';
-import NoDataBox from '@/components/Global/NoDataBox/NoDataBox';
+import Container from '@/components/Container/Container';
+import NoDataBox from '@/components/NoDataBox/NoDataBox';
 import { getRequests } from '@/hooks/useGetRequests';
 import ContractRequest from './components/ContractRequest';
 

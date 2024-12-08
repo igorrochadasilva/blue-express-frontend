@@ -1,6 +1,6 @@
 import { getUserSession } from '@/actions/auth/getUserSession';
 import { SoftwareServiceContract } from './components/SoftwareServiceContract';
-import Container from '@/components/Global/Container/Container';
+import Container from '@/components/Container/Container';
 
 export default async function SoftwareServiceContractPage() {
   const user = await getUserSession();

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuid4 } from 'uuid';
 
-import Content from '@/components/Global/Content/Content';
+import Content from '@/components/Content/Content';
 
 import { UserSession } from '@/types/auth/sign';
 import { notifyMessage } from '@/toast/notifications';

@@ -6,7 +6,7 @@ import PeriodFilter from './PeriodFilter/PeriodFilter';
 import RequestsChart from './RequestsChart/RequestsChart';
 import RequestsList from './RequestsList/RequestsList';
 import { RequestsData } from '@/hooks/useGetRequests';
-import Content from '@/components/Global/Content/Content';
+import Content from '@/components/Content/Content';
 
 interface DashBoardProps {
   requestsData: RequestsData;

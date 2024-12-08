@@ -9,9 +9,9 @@ import {
 } from '@/types/requests/maintenance.contract';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
-import Content from '@/components/Global/Content/Content';
+import Content from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
-import ApproverModal from '@/components/Global/ApproverModal/ApproverModal';
+import ApproverModal from '@/components/ApproverModal/ApproverModal';
 import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
 import { notifyMessage } from '@/toast/notifications';
 import { isValidApprover } from '@/utils/isValidApprover';
