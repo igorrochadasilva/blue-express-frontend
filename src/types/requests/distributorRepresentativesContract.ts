@@ -37,6 +37,13 @@ export interface GetDistributorRepresentativesContractResponse
   data: DistributorRepresentativesContract[];
 }
 
+export interface GetDistributorRepresentativesContractByIdResponse
+  extends ErrorResponse {
+  data: {
+    request: DistributorRepresentativesContract;
+  };
+}
+
 export interface PostDistributorRepresentativesContractDTO {
   requesterName?: string;
   requesterId: number;
@@ -69,4 +76,17 @@ export interface PostDistributorRepresentativesContractDTO {
 export interface PostDistributorRepresentativesContractResponse
   extends ErrorResponse {
   data?: { message: string };
+}
+
+export interface UpdateDistributorRepresentativesContractDTO
+  extends Omit<PostDistributorRepresentativesContractDTO, 'requesterId'> {
+  id: number;
+  requesterId?: number;
+}
+
+export interface UpdateDistributorRepresentativesContractResponse
+  extends ErrorResponse {
+  data: {
+    message: string;
+  };
 }
