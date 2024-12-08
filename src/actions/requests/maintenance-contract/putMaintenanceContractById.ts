@@ -6,21 +6,28 @@ import {
   UpdateMaintenanceContractResponse,
 } from '../../../types/requests/maintenance.contract';
 import { api } from '../../api';
+import { getUserSession } from '@/actions/auth/getUserSession';
 
 // TODO - Add authorization to update
 export async function putMaintenanceContractById(
   maintenanceContractDTO: UpdateMaintenanceContractDTO
 ): Promise<UpdateMaintenanceContractResponse> {
-  console.log('🚀 ~ maintenanceContractData:', maintenanceContractDTO);
+  delete maintenanceContractDTO.files;
+  const user = await getUserSession();
 
   try {
     const response = await api({
       endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/maintenance-contract/${maintenanceContractDTO.id}`,
       options: {
         method: 'PUT',
+        body: JSON.stringify(maintenanceContractDTO),
+      },
+      params: {
+        user: user.id,
+        role: user.role,
+        approver: false,
       },
     });
-    console.log('🚀 ~ response:', response);
 
     revalidateTag('maintenance-contract');
 

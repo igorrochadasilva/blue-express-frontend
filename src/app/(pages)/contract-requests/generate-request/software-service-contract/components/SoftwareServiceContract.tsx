@@ -50,7 +50,6 @@ const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContractDTO = {
   antiCorruption: 'No bribery or unethical practices allowed',
   uf: 'SP',
   sap: 'SAP54321',
-  files: '',
 };
 
 interface SoftwareServiceContractProps {
@@ -75,13 +74,8 @@ export const SoftwareServiceContract = ({
   const onSubmitForm: SubmitHandler<PostSoftwareServiceContractDTO> = async (
     data
   ) => {
-    console.log('🚀 ~ data:', data);
     setIsLoading(true);
     const response = await postSoftwareServiceContract(data);
-    console.log(
-      '🚀 ~ constonSubmitForm:SubmitHandler<Request>= ~ response:',
-      response
-    );
 
     notifyMessage({
       message: response?.data?.message ?? response?.message,

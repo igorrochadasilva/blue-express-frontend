@@ -3,28 +3,29 @@ import { v4 as uuid4 } from 'uuid';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  MaintenanceContract,
-  UpdateMaintenanceContractDTO,
-} from '@/types/requests/maintenance.contract';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
 import Content from '@/components/Global/Content/Content';
-import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
+
 import ApproverModal from '@/components/Global/ApproverModal/ApproverModal';
-import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
 import { notifyMessage } from '@/toast/notifications';
+import {
+  SoftwareServiceContract,
+  UpdateSoftwareServiceContractDTO,
+} from '@/types/requests/softwaerServiceContract';
+import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
+import { putSoftwareServiceContractById } from '@/actions/requests/software-service-contract/putSoftwareServiceContractById';
 import { isValidApprover } from '@/utils/isValidApprover';
 
-interface MaintenanceContractIdProps {
+interface SoftwareServiceContractIdProps {
   user: UserSession;
-  maintenanceContractData: MaintenanceContract;
+  softwareServiceContractData: SoftwareServiceContract;
 }
 
-export const MaintenanceContractId = ({
+export const SoftwareServiceContractId = ({
   user,
-  maintenanceContractData,
-}: MaintenanceContractIdProps) => {
+  softwareServiceContractData,
+}: SoftwareServiceContractIdProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showApproverModal, setShowApproverModal] = useState(false);
@@ -32,25 +33,28 @@ export const MaintenanceContractId = ({
   const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
   const { register, handleSubmit, getValues } =
-    useForm<UpdateMaintenanceContractDTO>({
+    useForm<UpdateSoftwareServiceContractDTO>({
       mode: 'all',
       defaultValues: {
-        ...maintenanceContractData,
-        id: maintenanceContractData.id,
-        contractTotalValue: Number(maintenanceContractData.contractTotalValue),
-        dollarExchangeRate: Number(maintenanceContractData.dollarExchangeRate),
-        totalValueUSD: Number(maintenanceContractData.totalValueUSD),
-        gm: Number(maintenanceContractData.gm),
-        renewIndexPercentage: Number(
-          maintenanceContractData.renewIndexPercentage
+        ...softwareServiceContractData,
+        id: softwareServiceContractData.id,
+        contractTotalValue: Number(
+          softwareServiceContractData.contractTotalValue
         ),
+        dollarExchangeRate: Number(
+          softwareServiceContractData.dollarExchangeRate
+        ),
+        totalValueUSD: Number(softwareServiceContractData.totalValueUSD),
+        gm: Number(softwareServiceContractData.gm),
       },
     });
 
-  const onSubmitForm: SubmitHandler<UpdateMaintenanceContractDTO> = async (
-    maintenanceContractDTO
+  const onSubmitForm: SubmitHandler<UpdateSoftwareServiceContractDTO> = async (
+    softwareServiceContractDTO
   ) => {
-    const response = await putMaintenanceContractById(maintenanceContractDTO);
+    const response = await putSoftwareServiceContractById(
+      softwareServiceContractDTO
+    );
 
     notifyMessage({
       message: response?.data?.message ?? response?.message,
@@ -87,8 +91,8 @@ export const MaintenanceContractId = ({
   const showApproverButtons = isValidApprover({
     userName: user.name,
     userRole: user.role,
-    contractApproverNames: maintenanceContractData.currentApproverName,
-    contractStatus: maintenanceContractData.status,
+    contractApproverNames: softwareServiceContractData.currentApproverName,
+    contractStatus: softwareServiceContractData.status,
   });
 
   return (
@@ -96,7 +100,7 @@ export const MaintenanceContractId = ({
       <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
         <Content>
           <div className="flex flex-col gap-4">
-            {MaintenanceContractFormInputs.map((data) => (
+            {SoftwareServiceFormInputs.map((data) => (
               <Request.InputGroup key={uuid4()}>
                 {data.map((item) => {
                   if (item.type === 'input') {

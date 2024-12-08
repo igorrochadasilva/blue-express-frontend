@@ -44,6 +44,12 @@ export interface GetSoftwareServiceContractResponse extends ErrorResponse {
   data: SoftwareServiceContract[];
 }
 
+export interface GetSoftwareServiceContractByIdResponse extends ErrorResponse {
+  data: {
+    request: SoftwareServiceContract;
+  };
+}
+
 export interface PostSoftwareServiceContractDTO {
   requesterName: string;
   requesterId: number;
@@ -78,9 +84,21 @@ export interface PostSoftwareServiceContractDTO {
   antiCorruption: string;
   uf: string;
   sap: string;
-  files: string;
+  files?: File[];
 }
 
 export interface PostSoftwareServiceContractResponse extends ErrorResponse {
   data?: { message: string };
+}
+
+export interface UpdateSoftwareServiceContractDTO
+  extends Omit<PostSoftwareServiceContractDTO, 'requesterId'> {
+  id: number;
+  requesterId?: number;
+}
+
+export interface UpdateSoftwareServiceContractResponse extends ErrorResponse {
+  data: {
+    message: string;
+  };
 }

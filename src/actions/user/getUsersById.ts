@@ -11,19 +11,20 @@ export async function getUserApprovers(
 
   try {
     const response = await api({
-      endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/users/${id}?approvers=true`,
+      endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/users/${id}`,
       options: {
         method: 'GET',
-        cache: 'force-cache',
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       },
+      ignoreCache: true,
       params: {
+        approvers: 'true',
         email: user.email,
         role: user.role,
       },
-      revalidateTag: 'users',
+      revalidateTag: 'approvers',
     });
 
     return response;
