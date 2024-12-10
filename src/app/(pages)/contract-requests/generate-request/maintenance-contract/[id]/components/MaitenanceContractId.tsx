@@ -9,11 +9,11 @@ import {
 } from '@/types/requests/maintenance.contract';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
-import Content from '@/components/Content/Content';
+import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import ApproverModal from '@/components/ApproverModal/ApproverModal';
 import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
-import { notifyMessage } from '@/toast/notifications';
+import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
 
 interface MaintenanceContractIdProps {

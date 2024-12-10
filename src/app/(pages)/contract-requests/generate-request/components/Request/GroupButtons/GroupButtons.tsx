@@ -1,4 +1,4 @@
-import Content from '@/components/Content/Content';
+import { Content } from '@/components/Content/Content';
 
 interface GroupButtonsProps {
   isLoading: boolean;

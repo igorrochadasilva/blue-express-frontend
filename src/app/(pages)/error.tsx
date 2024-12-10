@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorComponent from '@/components/Error/Error';
+import { ErrorComponent } from '@/components/Error/Error';
 
 interface IError {
   error: Error & { digest?: string };

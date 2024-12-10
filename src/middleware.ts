@@ -8,7 +8,7 @@ const PROTECTED_ROUTES = ['/dashboard', '/approvers', '/contract-requests'];
 const PUBLIC_ROUTES = ['/', '/reset-password'];
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl; // Get the current route
+  const { pathname } = req.nextUrl;
   const token = await getToken({ req, secret });
 
   const isProtectedRoute = PROTECTED_ROUTES.some((route) =>

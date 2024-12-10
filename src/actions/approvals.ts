@@ -3,7 +3,6 @@
 import { IRequestBody, TUser } from '../types/global/types';
 import { generateApprovalFormData, generateRequestStatus } from '../libs/utils';
 import { revalidateTag } from 'next/cache';
-import { fetchData } from '../libs/FetchData';
 
 export interface ICreateApproval {
   user: TUser;

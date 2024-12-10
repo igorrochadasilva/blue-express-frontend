@@ -4,12 +4,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { ResetInput } from '@/types/auth/resetPassword';
-import { notifyMessage } from '@/toast/notifications';
 import { handleResetPassword } from '@/actions/auth/handleResetPassword';
-import Loading from '@/components/Loading/loading';
+import { Loading } from '@/components/Loading/loading';
 
-import messages from '@/messages/messages';
 import { ResetPassword } from './components';
+import { notifyMessage } from '@/utils/notifyMessage';
+import { messages } from '@/utils/messages';
 
 export default function ResetPasswordPage() {
   const router = useRouter();

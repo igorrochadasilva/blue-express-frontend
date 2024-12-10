@@ -1,9 +1,9 @@
 'use server';
 
-import Container from '@/components/Container/Container';
-import NoDataBox from '@/components/NoDataBox/NoDataBox';
+import { Container } from '@/components/Container/Container';
 import { getRequests } from '@/hooks/useGetRequests';
 import ContractRequest from './components/ContractRequest';
+import { NoDataBox } from '@/components/NoDataBox/NoDataBox';
 
 export default async function ContractRequestsPage() {
   const requestsData = await getRequests();

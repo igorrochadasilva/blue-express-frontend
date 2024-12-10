@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { SignInDTO } from '@/types/auth/sign';
-import { notifyMessage } from '@/toast/notifications';
-import Loading from '@/components/Loading/loading';
+
+import { Loading } from '@/components/Loading/loading';
 import { handleForgetPassword } from '@/actions/auth/handleForgetPassword';
 import { Login } from './components';
+import { notifyMessage } from '@/utils/notifyMessage';
 
 export default function Home() {
   const router = useRouter();

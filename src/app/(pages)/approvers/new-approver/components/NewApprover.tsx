@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { postApprover } from '@/actions/approver/postApprover';
 import { Approver, PostApproverDTO } from '@/types/approvers/approvers';
-import { notifyMessage } from '@/toast/notifications';
+import { notifyMessage } from '@/utils/notifyMessage';
 import {
   RequestCompanyEnum,
   RequestOfficeEnum,
@@ -16,7 +16,7 @@ import {
 import { NewApproverFormInput, UserNames } from '@/types/approvers/newApprover';
 import { User } from '@/types/approvers/user';
 import { getUserApprovers } from '@/actions/user/getUsersById';
-import Content from '@/components/Content/Content';
+import { Content } from '@/components/Content/Content';
 import { NewApproverFormInputs } from '@/libs/Forms/NewApproverFormInputs';
 import FormNewApprover from './Form';
 

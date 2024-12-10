@@ -7,11 +7,11 @@ import { v4 as uuid4 } from 'uuid';
 import { postMaintenanceContract } from '@/actions/requests/maintenance-contract/postMaintenanceContract';
 import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
 
-import Content from '@/components/Content/Content';
+import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import Request from '../../components/Request';
 import { UserSession } from '@/types/auth/sign';
-import { notifyMessage } from '@/toast/notifications';
+import { notifyMessage } from '@/utils/notifyMessage';
 import { useRouter } from 'next/navigation';
 import { RequestStatusEnum } from '@/types/requests/enums';
 

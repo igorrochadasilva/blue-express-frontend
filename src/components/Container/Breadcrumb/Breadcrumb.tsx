@@ -1,9 +1,8 @@
 'use client';
-
-import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { v4 as uuid4 } from 'uuid';
+import { ChevronRightIcon } from '@heroicons/react/24/solid';
 
 export const Breadcrumb = () => {
   const pathName = usePathname();

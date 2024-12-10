@@ -5,10 +5,10 @@ import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
-import Content from '@/components/Content/Content';
+import { Content } from '@/components/Content/Content';
 
 import ApproverModal from '@/components/ApproverModal/ApproverModal';
-import { notifyMessage } from '@/toast/notifications';
+import { notifyMessage } from '@/utils/notifyMessage';
 import {
   SoftwareServiceContract,
   UpdateSoftwareServiceContractDTO,
