@@ -87,6 +87,8 @@ export const MaintenanceContract = ({
     setIsLoading(false);
   };
 
+  const handleSaveDraft = () => setValue('status', RequestStatusEnum.SKETCH);
+
   const inputContractTotalValue = watch('contractTotalValue');
   const inputDollarExchangeRate = watch('dollarExchangeRate');
 
@@ -133,7 +135,10 @@ export const MaintenanceContract = ({
           ))}
         </div>
       </Content>
-      <Request.GroupButtons isLoading={isLoading} />
+      <Request.GroupButtons
+        handleSaveDraft={handleSaveDraft}
+        isLoading={isLoading}
+      />
     </Request.Form>
   );
 };

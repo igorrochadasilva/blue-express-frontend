@@ -15,6 +15,7 @@ import ApproverModal from '@/components/ApproverModal/ApproverModal';
 import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
+import { RequestStatusEnum } from '@/types/requests/enums';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
@@ -31,7 +32,7 @@ export const MaintenanceContractId = ({
   const [modalStatus, setModalStatus] = useState('');
   const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
-  const { register, handleSubmit, getValues } =
+  const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateMaintenanceContractDTO>({
       mode: 'all',
       defaultValues: {
@@ -84,6 +85,9 @@ export const MaintenanceContractId = ({
     setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
   };
 
+  const handleSaveWaitingApproval = () =>
+    setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
+
   const showApproverButtons = isValidApprover({
     userName: user.name,
     userRole: user.role,
@@ -135,7 +139,13 @@ export const MaintenanceContractId = ({
             handleModalStatus={handleModalStatus}
           />
         ) : (
-          <Request.GroupButtons isLoading={isLoading} />
+          <Request.GroupButtons
+            isFormUpdate={
+              maintenanceContractData.status !== RequestStatusEnum.SKETCH
+            }
+            isLoading={isLoading}
+            handleSaveWaitingApproval={handleSaveWaitingApproval}
+          />
         )}
       </Request.Form>
       {showApproverModal && (

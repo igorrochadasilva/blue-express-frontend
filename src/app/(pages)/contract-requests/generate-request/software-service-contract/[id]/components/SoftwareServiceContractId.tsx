@@ -16,6 +16,7 @@ import {
 import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
 import { putSoftwareServiceContractById } from '@/actions/requests/software-service-contract/putSoftwareServiceContractById';
 import { isValidApprover } from '@/utils/isValidApprover';
+import { RequestStatusEnum } from '@/types/requests/enums';
 
 interface SoftwareServiceContractIdProps {
   user: UserSession;
@@ -32,7 +33,7 @@ export const SoftwareServiceContractId = ({
   const [modalStatus, setModalStatus] = useState('');
   const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
-  const { register, handleSubmit, getValues } =
+  const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateSoftwareServiceContractDTO>({
       mode: 'all',
       defaultValues: {
@@ -85,8 +86,12 @@ export const SoftwareServiceContractId = ({
   ) => setJustifyApproverModal(event.target.value);
 
   const handleShowApproverModal = () => {
-    setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
+    setShowApproverModal(!showApproverModal);
+    setJustifyApproverModal('');
   };
+
+  const handleSaveWaitingApproval = () =>
+    setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
     userName: user.name,
@@ -139,7 +144,13 @@ export const SoftwareServiceContractId = ({
             handleModalStatus={handleModalStatus}
           />
         ) : (
-          <Request.GroupButtons isLoading={isLoading} />
+          <Request.GroupButtons
+            isFormUpdate={
+              softwareServiceContractData.status !== RequestStatusEnum.SKETCH
+            }
+            isLoading={isLoading}
+            handleSaveWaitingApproval={handleSaveWaitingApproval}
+          />
         )}
       </Request.Form>
       {showApproverModal && (

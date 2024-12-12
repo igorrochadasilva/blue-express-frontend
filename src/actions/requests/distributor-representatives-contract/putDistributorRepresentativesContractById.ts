@@ -25,7 +25,7 @@ export async function putDistributorRepresentativesContractById(
       params: {
         user: user.id,
         role: user.role,
-        approver: false,
+        approver: user.role !== 1,
       },
     });
 

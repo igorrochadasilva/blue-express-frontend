@@ -15,6 +15,7 @@ import {
 } from '@/types/requests/distributorRepresentativesContract';
 import { putDistributorRepresentativesContractById } from '@/actions/requests/distributor-representatives-contract/putDistributorRepresentativesContractById';
 import { DistributorRepresentativesFormInputs } from '@/libs/Forms/DistributionRepresentativesContractFormInputs';
+import { RequestStatusEnum } from '@/types/requests/enums';
 
 interface DistributorRepresentativesContractIdProps {
   user: UserSession;
@@ -31,7 +32,7 @@ export const DistributorRepresentativesContractId = ({
   const [modalStatus, setModalStatus] = useState('');
   const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
-  const { register, handleSubmit, getValues } =
+  const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateDistributorRepresentativesContractDTO>({
       mode: 'all',
       defaultValues: {
@@ -81,6 +82,9 @@ export const DistributorRepresentativesContractId = ({
   const handleShowApproverModal = () => {
     setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
   };
+
+  const handleSaveWaitingApproval = () =>
+    setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
     userName: user.name,
@@ -134,7 +138,14 @@ export const DistributorRepresentativesContractId = ({
             handleModalStatus={handleModalStatus}
           />
         ) : (
-          <Request.GroupButtons isLoading={isLoading} />
+          <Request.GroupButtons
+            isLoading={isLoading}
+            isFormUpdate={
+              distributorRepresentativesContractData.status !==
+              RequestStatusEnum.SKETCH
+            }
+            handleSaveWaitingApproval={handleSaveWaitingApproval}
+          />
         )}
       </Request.Form>
       {showApproverModal && (

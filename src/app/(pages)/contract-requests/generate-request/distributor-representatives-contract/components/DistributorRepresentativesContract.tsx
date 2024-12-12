@@ -53,7 +53,7 @@ export const DistributorRepresentativesContract = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, getValues } =
+  const { register, handleSubmit, getValues, setValue } =
     useForm<PostDistributorRepresentativesContractDTO>({
       mode: 'all',
       defaultValues: {
@@ -78,6 +78,8 @@ export const DistributorRepresentativesContract = ({
 
     setIsLoading(false);
   };
+
+  const handleSaveDraft = () => setValue('status', RequestStatusEnum.SKETCH);
 
   return (
     <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
@@ -116,7 +118,10 @@ export const DistributorRepresentativesContract = ({
           ))}
         </div>
       </Content>
-      <Request.GroupButtons isLoading={isLoading} />
+      <Request.GroupButtons
+        handleSaveDraft={handleSaveDraft}
+        isLoading={isLoading}
+      />
     </Request.Form>
   );
 };
