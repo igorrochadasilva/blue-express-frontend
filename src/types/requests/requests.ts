@@ -25,3 +25,9 @@ export type FormInput = InputFormInput | SelectFormInput;
 export type FormDataInputs = FormInput[][]; // 2D array representing grouped inputs
 
 export type RequestsDTO = PostMaintenanceContractDTO;
+
+export enum UserRole {
+  USER = 0,
+  APPROVER = 1,
+  ADMIN = 2,
+}

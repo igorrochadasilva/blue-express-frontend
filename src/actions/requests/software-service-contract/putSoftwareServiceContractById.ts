@@ -7,6 +7,8 @@ import {
   UpdateSoftwareServiceContractResponse,
 } from '@/types/requests/softwaerServiceContract';
 import { getUserSession } from '@/actions/auth/getUserSession';
+import { RequestStatusEnum } from '@/types/requests/enums';
+import { isApprobation } from '@/utils/isApprobation';
 
 // TODO - Add authorization to update
 export async function putSoftwareServiceContractById(
@@ -14,6 +16,11 @@ export async function putSoftwareServiceContractById(
 ): Promise<UpdateSoftwareServiceContractResponse> {
   delete softwareServiceContractDTO.files;
   const user = await getUserSession();
+  const approver = isApprobation({
+    contractStatus: softwareServiceContractDTO.status as RequestStatusEnum,
+    userRole: user.role,
+  });
+
   try {
     const response = await api({
       endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/request/software-service-contract/${softwareServiceContractDTO.id}`,
@@ -24,7 +31,7 @@ export async function putSoftwareServiceContractById(
       params: {
         user: user.id,
         role: user.role,
-        approver: user.role !== 1,
+        approver,
       },
     });
 

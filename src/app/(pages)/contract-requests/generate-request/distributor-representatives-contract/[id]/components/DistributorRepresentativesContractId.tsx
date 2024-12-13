@@ -87,11 +87,11 @@ export const DistributorRepresentativesContractId = ({
     setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
-    userName: user.name,
-    userRole: user.role,
+    user: user,
     contractApproverNames:
       distributorRepresentativesContractData.currentApproverName,
     contractStatus: distributorRepresentativesContractData.status,
+    contractAuthor: distributorRepresentativesContractData.author,
   });
 
   return (

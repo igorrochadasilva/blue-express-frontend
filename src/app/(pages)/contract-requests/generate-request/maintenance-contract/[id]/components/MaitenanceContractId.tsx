@@ -89,10 +89,10 @@ export const MaintenanceContractId = ({
     setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
-    userName: user.name,
-    userRole: user.role,
+    user: user,
     contractApproverNames: maintenanceContractData.currentApproverName,
     contractStatus: maintenanceContractData.status,
+    contractAuthor: maintenanceContractData.author,
   });
 
   return (

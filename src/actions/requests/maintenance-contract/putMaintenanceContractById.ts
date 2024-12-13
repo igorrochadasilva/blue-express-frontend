@@ -7,6 +7,8 @@ import {
 } from '../../../types/requests/maintenance.contract';
 import { api } from '../../api';
 import { getUserSession } from '@/actions/auth/getUserSession';
+import { isApprobation } from '@/utils/isApprobation';
+import { RequestStatusEnum } from '@/types/requests/enums';
 
 // TODO - Add authorization to update
 export async function putMaintenanceContractById(
@@ -14,6 +16,10 @@ export async function putMaintenanceContractById(
 ): Promise<UpdateMaintenanceContractResponse> {
   delete maintenanceContractDTO.files;
   const user = await getUserSession();
+  const approver = isApprobation({
+    contractStatus: maintenanceContractDTO.status as RequestStatusEnum,
+    userRole: user.role,
+  });
 
   try {
     const response = await api({
@@ -25,7 +31,7 @@ export async function putMaintenanceContractById(
       params: {
         user: user.id,
         role: user.role,
-        approver: user.role !== 1,
+        approver,
       },
     });
 

@@ -1,20 +1,26 @@
+import { UserSession } from '@/types/auth/sign';
 import { RequestStatusEnum } from '@/types/requests/enums';
+import { UserRole } from '@/types/requests/requests';
 
 interface isValidApproverProp {
-  userRole: number;
-  userName: string;
+  user: UserSession;
   contractStatus: string;
   contractApproverNames: string;
+  contractAuthor: string;
 }
 
 export const isValidApprover = ({
-  userName,
-  userRole,
+  user,
   contractStatus,
   contractApproverNames,
+  contractAuthor,
 }: isValidApproverProp): boolean => {
   return (
-    contractStatus !== RequestStatusEnum.WAITING_FOR_APPROVAL &&
-    (userRole === 3 || contractApproverNames.includes(userName))
+    (contractStatus === RequestStatusEnum.WAITING_FOR_APPROVAL ||
+      contractStatus !== RequestStatusEnum.SKETCH) &&
+    user.role !== UserRole.USER &&
+    (contractApproverNames.includes(user.name) ||
+      user.email === contractAuthor ||
+      user.role === UserRole.ADMIN)
   );
 };

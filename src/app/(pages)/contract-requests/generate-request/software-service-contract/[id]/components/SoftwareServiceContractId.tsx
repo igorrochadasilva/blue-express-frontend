@@ -94,8 +94,8 @@ export const SoftwareServiceContractId = ({
     setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
-    userName: user.name,
-    userRole: user.role,
+    user: user,
+    contractAuthor: softwareServiceContractData.author,
     contractApproverNames: softwareServiceContractData.currentApproverName,
     contractStatus: softwareServiceContractData.status,
   });
