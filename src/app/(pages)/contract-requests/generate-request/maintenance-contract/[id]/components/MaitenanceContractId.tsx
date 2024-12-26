@@ -15,7 +15,11 @@ import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
-import { RequestStatusEnum, RequestsTitleEnum } from '@/types/requests/enums';
+import {
+  RequestsRoutesEnum,
+  RequestStatusEnum,
+  RequestsTitleEnum,
+} from '@/types/requests/enums';
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { showSaveButtons } from '@/utils/showSaveButtons';
 
@@ -86,8 +90,9 @@ export const MaintenanceContractId = ({
       typeRequest: RequestsTitleEnum.MAINTENANCE_CONTRACT,
       author: user.email,
       userID: user.id,
-      contractID: maintenanceContractData.id,
-      level: maintenanceContractData.currentLevel++,
+      maintenanceContractID: maintenanceContractData.id,
+      level: maintenanceContractData.currentLevel,
+      routeRequest: RequestsRoutesEnum.MAINTENANCE_CONTRACT,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

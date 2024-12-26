@@ -1,7 +1,11 @@
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { IModalOptions } from '../../ApproverModal';
 import { postApproval } from '@/actions/approval/postApproval';
-import { RequestStatusEnum, RequestsTitleEnum } from '@/types/requests/enums';
+import {
+  RequestsRoutesEnum,
+  RequestStatusEnum,
+  RequestsTitleEnum,
+} from '@/types/requests/enums';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { useRouter } from 'next/navigation';
 
@@ -16,16 +20,23 @@ export const Buttons = ({ modalOptions }: ButtonsProps) => {
 
   const handlePostApproval = async () => {
     const response = await postApproval({
-      author: approvalDTO?.author ?? '',
-      justify: justify,
-      level: approvalDTO?.level ?? 0,
-      status: modalActionType ?? RequestStatusEnum.WAITING_FOR_APPROVAL,
-      title: approvalDTO?.title ?? RequestsTitleEnum.MAINTENANCE_CONTRACT,
-      typeRequest: approvalDTO?.title ?? RequestsTitleEnum.MAINTENANCE_CONTRACT,
-      userID: approvalDTO?.userID ?? 0,
-      maintenanceContractID: approvalDTO?.contractID,
+      data: {
+        author: approvalDTO?.author ?? '',
+        justify: justify,
+        level: approvalDTO?.level ?? 0,
+        status: modalActionType ?? RequestStatusEnum.WAITING_FOR_APPROVAL,
+        title: approvalDTO?.title ?? RequestsTitleEnum.MAINTENANCE_CONTRACT,
+        typeRequest:
+          approvalDTO?.title ?? RequestsTitleEnum.MAINTENANCE_CONTRACT,
+        userID: approvalDTO?.userID ?? 0,
+        maintenanceContractID: approvalDTO?.maintenanceContractID,
+        softwareServiceContractID: approvalDTO?.softwareServiceContractID,
+        distributorRepresentativesContractID:
+          approvalDTO?.distributorRepresentativesContractID,
+      },
+      route:
+        approvalDTO?.routeRequest ?? RequestsRoutesEnum.MAINTENANCE_CONTRACT,
     });
-    console.log('🚀 ~ handlePostApproval ~ response:', response);
 
     notifyMessage({
       message: response?.data?.message ?? response?.message,

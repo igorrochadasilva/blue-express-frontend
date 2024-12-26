@@ -1,4 +1,8 @@
-import { RequestStatusEnum, RequestsTitleEnum } from '@/types/requests/enums';
+import {
+  RequestsRoutesEnum,
+  RequestStatusEnum,
+  RequestsTitleEnum,
+} from '@/types/requests/enums';
 import { create } from 'zustand';
 
 interface ApprovalDTO {
@@ -6,9 +10,12 @@ interface ApprovalDTO {
   level?: number;
   status?: RequestStatusEnum;
   typeRequest?: RequestsTitleEnum;
+  routeRequest: RequestsRoutesEnum;
   author?: string;
-  contractID?: number;
   userID?: number;
+  maintenanceContractID?: number;
+  softwareServiceContractID?: number;
+  distributorRepresentativesContractID?: number;
 }
 
 interface ApproverModalState {

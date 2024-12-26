@@ -12,6 +12,7 @@ export async function postApproval(
   data: PostApprovalDTO
 ): Promise<PostApprovalResponse> {
   const user = await getUserSession();
+  const { data: dto, route } = data;
 
   try {
     const response = await api({
@@ -22,14 +23,14 @@ export async function postApproval(
           Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify({
-          ...data,
-          userID: Number(data.userID),
+          ...dto,
+          userID: Number(data.data.userID),
         }),
       },
     });
 
     revalidateTag('approval');
-    revalidateTag('maintenance-contract');
+    revalidateTag(route);
 
     return response;
   } catch (error) {

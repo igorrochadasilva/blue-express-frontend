@@ -1,22 +1,27 @@
 'use client';
 import { v4 as uuid4 } from 'uuid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
 import { Content } from '@/components/Content/Content';
-
-import ApproverModal from '@/components/ApproverModal/ApproverModal';
-import { notifyMessage } from '@/utils/notifyMessage';
 import {
   SoftwareServiceContract,
   UpdateSoftwareServiceContractDTO,
 } from '@/types/requests/softwaerServiceContract';
 import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
 import { putSoftwareServiceContractById } from '@/actions/requests/software-service-contract/putSoftwareServiceContractById';
+import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
-import { RequestStatusEnum } from '@/types/requests/enums';
+import {
+  RequestsRoutesEnum,
+  RequestStatusEnum,
+  RequestsTitleEnum,
+} from '@/types/requests/enums';
+import { useApproverModal } from '@/hooks/useApproverModal';
+import { showSaveButtons } from '@/utils/showSaveButtons';
+import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 
 interface SoftwareServiceContractIdProps {
   user: UserSession;
@@ -28,10 +33,8 @@ export const SoftwareServiceContractId = ({
   softwareServiceContractData,
 }: SoftwareServiceContractIdProps) => {
   const router = useRouter();
+  const { modal, showModal, setApprovalDTO } = useApproverModal();
   const [isLoading, setIsLoading] = useState(false);
-  const [showApproverModal, setShowApproverModal] = useState(false);
-  const [modalStatus, setModalStatus] = useState('');
-  const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
   const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateSoftwareServiceContractDTO>({
@@ -67,29 +70,6 @@ export const SoftwareServiceContractId = ({
     setIsLoading(false);
   };
 
-  const handleApproverActionOnRequest = async (statusAction: string) => {
-    // const data = {
-    //   user: user,
-    //   statusAction: statusAction,
-    //   requestData: requestData,
-    //   justify: justifyApproverModal,
-    //   url: requestRouteType,
-    // };
-    setIsLoading(true);
-    // const res = await createApproval(data);
-  };
-
-  const handleModalStatus = (status: string) => setModalStatus(status);
-
-  const handleJustifyApproverModal = (
-    event: ChangeEvent<HTMLTextAreaElement>
-  ) => setJustifyApproverModal(event.target.value);
-
-  const handleShowApproverModal = () => {
-    setShowApproverModal(!showApproverModal);
-    setJustifyApproverModal('');
-  };
-
   const handleSaveWaitingApproval = () =>
     setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
@@ -99,6 +79,26 @@ export const SoftwareServiceContractId = ({
     contractApproverNames: softwareServiceContractData.currentApproverName,
     contractStatus: softwareServiceContractData.status,
   });
+
+  const showSaveButtonsValidation = showSaveButtons({
+    user,
+    contractStatus: softwareServiceContractData.status,
+    contractAuthor: softwareServiceContractData.author,
+  });
+
+  useEffect(() => {
+    showModal(false);
+    setApprovalDTO({
+      title: RequestsTitleEnum.SOFTWARE_SERVICE_CONTRACT,
+      typeRequest: RequestsTitleEnum.SOFTWARE_SERVICE_CONTRACT,
+      author: user.email,
+      userID: user.id,
+      softwareServiceContractID: softwareServiceContractData.id,
+      level: softwareServiceContractData.currentLevel,
+      routeRequest: RequestsRoutesEnum.SOFTWARE_SERVICE_CONTRACT,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -138,12 +138,8 @@ export const SoftwareServiceContractId = ({
             ))}
           </div>
         </Content>
-        {showApproverButtons ? (
-          <Request.ApproverButtons
-            handleApproverModal={handleShowApproverModal}
-            handleModalStatus={handleModalStatus}
-          />
-        ) : (
+        {showApproverButtons && <Request.ApproverButtons />}
+        {showSaveButtonsValidation && (
           <Request.GroupButtons
             isFormUpdate={
               softwareServiceContractData.status !== RequestStatusEnum.SKETCH
@@ -153,15 +149,7 @@ export const SoftwareServiceContractId = ({
           />
         )}
       </Request.Form>
-      {showApproverModal && (
-        <ApproverModal
-          handleJustifyApproverModal={handleJustifyApproverModal}
-          handleApproverActionOnRequest={handleApproverActionOnRequest}
-          handleApproverModal={handleShowApproverModal}
-          modalStatus={modalStatus}
-          justifyApproverModal={justifyApproverModal}
-        />
-      )}
+      {modal && <ApproverModal />}
     </>
   );
 };
