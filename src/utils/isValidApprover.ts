@@ -16,8 +16,7 @@ export const isValidApprover = ({
   contractAuthor,
 }: isValidApproverProp): boolean => {
   return (
-    (contractStatus === RequestStatusEnum.WAITING_FOR_APPROVAL ||
-      contractStatus !== RequestStatusEnum.SKETCH) &&
+    contractStatus === RequestStatusEnum.WAITING_FOR_APPROVAL &&
     user.role !== UserRole.USER &&
     (contractApproverNames.includes(user.name) ||
       user.email === contractAuthor ||

@@ -1,7 +1,7 @@
 'use client';
 import { v4 as uuid4 } from 'uuid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   MaintenanceContract,
@@ -11,11 +11,13 @@ import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
 import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
-import ApproverModal from '@/components/ApproverModal/ApproverModal';
+import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
-import { RequestStatusEnum } from '@/types/requests/enums';
+import { RequestStatusEnum, RequestsTitleEnum } from '@/types/requests/enums';
+import { useApproverModal } from '@/hooks/useApproverModal';
+import { showSaveButtons } from '@/utils/showSaveButtons';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
@@ -27,10 +29,8 @@ export const MaintenanceContractId = ({
   maintenanceContractData,
 }: MaintenanceContractIdProps) => {
   const router = useRouter();
+  const { modal, showModal, setApprovalDTO } = useApproverModal();
   const [isLoading, setIsLoading] = useState(false);
-  const [showApproverModal, setShowApproverModal] = useState(false);
-  const [modalStatus, setModalStatus] = useState('');
-  const [justifyApproverModal, setJustifyApproverModal] = useState('');
 
   const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateMaintenanceContractDTO>({
@@ -63,28 +63,6 @@ export const MaintenanceContractId = ({
     setIsLoading(false);
   };
 
-  const handleApproverActionOnRequest = async (statusAction: string) => {
-    // const data = {
-    //   user: user,
-    //   statusAction: statusAction,
-    //   requestData: requestData,
-    //   justify: justifyApproverModal,
-    //   url: requestRouteType,
-    // };
-    setIsLoading(true);
-    // const res = await createApproval(data);
-  };
-
-  const handleModalStatus = (status: string) => setModalStatus(status);
-
-  const handleJustifyApproverModal = (
-    event: ChangeEvent<HTMLTextAreaElement>
-  ) => setJustifyApproverModal(event.target.value);
-
-  const handleShowApproverModal = () => {
-    setShowApproverModal(!showApproverModal), setJustifyApproverModal('');
-  };
-
   const handleSaveWaitingApproval = () =>
     setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
@@ -94,6 +72,25 @@ export const MaintenanceContractId = ({
     contractStatus: maintenanceContractData.status,
     contractAuthor: maintenanceContractData.author,
   });
+
+  const showSaveButtonsValidation = showSaveButtons({
+    user,
+    contractStatus: maintenanceContractData.status,
+    contractAuthor: maintenanceContractData.author,
+  });
+
+  useEffect(() => {
+    showModal(false);
+    setApprovalDTO({
+      title: RequestsTitleEnum.MAINTENANCE_CONTRACT,
+      typeRequest: RequestsTitleEnum.MAINTENANCE_CONTRACT,
+      author: user.email,
+      userID: user.id,
+      contractID: maintenanceContractData.id,
+      level: maintenanceContractData.currentLevel++,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -133,12 +130,8 @@ export const MaintenanceContractId = ({
             ))}
           </div>
         </Content>
-        {showApproverButtons ? (
-          <Request.ApproverButtons
-            handleApproverModal={handleShowApproverModal}
-            handleModalStatus={handleModalStatus}
-          />
-        ) : (
+        {showApproverButtons && <Request.ApproverButtons />}
+        {showSaveButtonsValidation && (
           <Request.GroupButtons
             isFormUpdate={
               maintenanceContractData.status !== RequestStatusEnum.SKETCH
@@ -148,15 +141,7 @@ export const MaintenanceContractId = ({
           />
         )}
       </Request.Form>
-      {showApproverModal && (
-        <ApproverModal
-          handleJustifyApproverModal={handleJustifyApproverModal}
-          handleApproverActionOnRequest={handleApproverActionOnRequest}
-          handleApproverModal={handleShowApproverModal}
-          modalStatus={modalStatus}
-          justifyApproverModal={justifyApproverModal}
-        />
-      )}
+      {modal && <ApproverModal />}
     </>
   );
 };

@@ -11,23 +11,23 @@ export interface FormInputBase {
 }
 
 export interface InputFormInput extends FormInputBase {
-  type: 'input'; // Narrow type to "input"
-  step?: string; // Optional for number inputs
+  type: 'input';
+  step?: string;
 }
 
 export interface SelectFormInput extends FormInputBase {
-  type: 'select'; // Narrow type to "select"
-  options?: Array<{ value: string | number; label: string }>; // Options for select inputs
+  type: 'select';
+  options?: Array<{ value: string | number; label: string }>;
 }
 
 export type FormInput = InputFormInput | SelectFormInput;
 
-export type FormDataInputs = FormInput[][]; // 2D array representing grouped inputs
+export type FormDataInputs = FormInput[][];
 
 export type RequestsDTO = PostMaintenanceContractDTO;
 
 export enum UserRole {
-  USER = 0,
-  APPROVER = 1,
-  ADMIN = 2,
+  USER = 1,
+  APPROVER = 2,
+  ADMIN = 3,
 }

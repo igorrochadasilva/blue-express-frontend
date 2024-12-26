@@ -1,84 +1,63 @@
-import { ChangeEvent } from 'react';
+import { RequestStatusEnum } from '@/types/requests/enums';
 import { ApproverModalComponents } from './Components';
-
-interface ApproverModalProps {
-  handleJustifyApproverModal: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  handleApproverActionOnRequest: (statusAction: string) => Promise<void>;
-  handleApproverModal: () => void;
-  modalStatus: string;
-  justifyApproverModal: string;
-}
+import { useApproverModal } from '@/hooks/useApproverModal';
 
 export interface IModalOptions {
+  type: RequestStatusEnum | null;
   color: string;
   showNextLevel: boolean;
   text: string;
 }
 
-export const ApproverModal = ({
-  handleJustifyApproverModal,
-  handleApproverActionOnRequest,
-  handleApproverModal,
-  modalStatus,
-  justifyApproverModal,
-}: ApproverModalProps) => {
-  let modalOptions: IModalOptions = {
-    color: '',
-    showNextLevel: false,
-    text: 'string',
-  };
-
-  const disableButton = justifyApproverModal.length === 0 ? true : false;
-
-  switch (modalStatus) {
-    case 'information':
-      modalOptions = {
+const getModalOptions = (
+  contractStatus: RequestStatusEnum | null
+): IModalOptions => {
+  switch (contractStatus) {
+    case RequestStatusEnum.WAITING_FOR_INFORMATION:
+      return {
+        type: RequestStatusEnum.WAITING_FOR_INFORMATION,
         color: '#ED8B00',
         showNextLevel: false,
         text: 'information',
       };
-      break;
-    case 'disapprove':
-      modalOptions = {
+    case RequestStatusEnum.DISAPPROVED:
+      return {
+        type: RequestStatusEnum.DISAPPROVED,
         color: '#EB1400',
         showNextLevel: false,
         text: 'disapprove',
       };
-      break;
-    case 'forward':
-      modalOptions = {
+    case RequestStatusEnum.APPROVED:
+      return {
+        type: RequestStatusEnum.APPROVED,
         color: '#005EB8',
         showNextLevel: true,
         text: 'approve',
       };
-      break;
     default:
-      modalOptions = {
+      return {
+        type: RequestStatusEnum.APPROVED,
         color: '#005EB8',
         showNextLevel: false,
         text: 'approve',
       };
   }
+};
+
+export const ApproverModal = () => {
+  const { modalActionType } = useApproverModal();
+
+  const modalOptions = getModalOptions(modalActionType);
 
   return (
     <ApproverModalComponents.Root>
       <ApproverModalComponents.Content>
-        <ApproverModalComponents.Close
-          handleApproverModal={handleApproverModal}
-          text="Justify"
-        />
-        <ApproverModalComponents.Justify
-          handleJustifyApproverModal={handleJustifyApproverModal}
-        />
+        <ApproverModalComponents.Close text="Justify" />
+        <ApproverModalComponents.Justify />
         {modalOptions.showNextLevel && (
           <ApproverModalComponents.NextLevel text="Follow approval for 3rd level" />
         )}
-        <ApproverModalComponents.Buttons
-          disableButton={disableButton}
-          handleApproverActionOnRequest={handleApproverActionOnRequest}
-          handleApproverModal={handleApproverModal}
-          modalOptions={modalOptions}
-        />
+        <ApproverModalComponents.Buttons modalOptions={modalOptions} />
       </ApproverModalComponents.Content>
     </ApproverModalComponents.Root>
   );
