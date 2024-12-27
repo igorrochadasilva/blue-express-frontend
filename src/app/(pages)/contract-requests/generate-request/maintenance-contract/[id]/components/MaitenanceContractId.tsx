@@ -31,7 +31,7 @@ export const MaintenanceContractId = ({
   maintenanceContractData,
 }: MaintenanceContractIdProps) => {
   const { modal, showModal, setApprovalDTO } = useApproverModal();
-  const { updateMaintenanceContract, isLoading } = useRequestUpdate();
+  const { updateMaintenanceContract } = useRequestUpdate();
 
   const methods = useForm<UpdateMaintenanceContractDTO>({
     mode: 'all',
@@ -53,9 +53,6 @@ export const MaintenanceContractId = ({
   ) => {
     updateMaintenanceContract(maintenanceContractDTO);
   };
-
-  const handleSaveWaitingApproval = () =>
-    methods.setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
     user: user,
@@ -128,8 +125,6 @@ export const MaintenanceContractId = ({
             isFormUpdate={
               maintenanceContractData.status !== RequestStatusEnum.SKETCH
             }
-            isLoading={isLoading}
-            handleSaveWaitingApproval={handleSaveWaitingApproval}
           />
         )}
       </Request.Form>

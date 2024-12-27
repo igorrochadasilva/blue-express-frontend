@@ -1,8 +1,7 @@
 'use client';
 import { v4 as uuid4 } from 'uuid';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
 import { Content } from '@/components/Content/Content';
@@ -31,35 +30,30 @@ export const SoftwareServiceContractId = ({
   user,
   softwareServiceContractData,
 }: SoftwareServiceContractIdProps) => {
-  const router = useRouter();
   const { modal, showModal, setApprovalDTO } = useApproverModal();
-  const { updateSoftwareServiceContract, isLoading } = useRequestUpdate();
+  const { updateSoftwareServiceContract } = useRequestUpdate();
 
-  const { register, handleSubmit, getValues, setValue } =
-    useForm<UpdateSoftwareServiceContractDTO>({
-      mode: 'all',
-      defaultValues: {
-        ...softwareServiceContractData,
-        id: softwareServiceContractData.id,
-        contractTotalValue: Number(
-          softwareServiceContractData.contractTotalValue
-        ),
-        dollarExchangeRate: Number(
-          softwareServiceContractData.dollarExchangeRate
-        ),
-        totalValueUSD: Number(softwareServiceContractData.totalValueUSD),
-        gm: Number(softwareServiceContractData.gm),
-      },
-    });
+  const methods = useForm<UpdateSoftwareServiceContractDTO>({
+    mode: 'all',
+    defaultValues: {
+      ...softwareServiceContractData,
+      id: softwareServiceContractData.id,
+      contractTotalValue: Number(
+        softwareServiceContractData.contractTotalValue
+      ),
+      dollarExchangeRate: Number(
+        softwareServiceContractData.dollarExchangeRate
+      ),
+      totalValueUSD: Number(softwareServiceContractData.totalValueUSD),
+      gm: Number(softwareServiceContractData.gm),
+    },
+  });
 
   const onSubmitForm: SubmitHandler<UpdateSoftwareServiceContractDTO> = async (
     softwareServiceContractDTO
   ) => {
     updateSoftwareServiceContract(softwareServiceContractDTO);
   };
-
-  const handleSaveWaitingApproval = () =>
-    setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
     user: user,
@@ -89,8 +83,8 @@ export const SoftwareServiceContractId = ({
   }, []);
 
   return (
-    <>
-      <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
+    <FormProvider {...methods}>
+      <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
         <Content>
           <div className="flex flex-col gap-4">
             {SoftwareServiceFormInputs.map((data) => (
@@ -105,8 +99,8 @@ export const SoftwareServiceContractId = ({
                         inputType={item.inputType}
                         required={item.required}
                         readonly={item.id === 1 ? true : false}
-                        register={register}
-                        getValues={getValues}
+                        register={methods.register}
+                        getValues={methods.getValues}
                       />
                     );
                   } else {
@@ -116,7 +110,7 @@ export const SoftwareServiceContractId = ({
                         inputName={item.inputName}
                         labelText={item.labelText}
                         options={item.options}
-                        register={register}
+                        register={methods.register}
                         required={item.required}
                       />
                     );
@@ -132,12 +126,10 @@ export const SoftwareServiceContractId = ({
             isFormUpdate={
               softwareServiceContractData.status !== RequestStatusEnum.SKETCH
             }
-            isLoading={isLoading}
-            handleSaveWaitingApproval={handleSaveWaitingApproval}
           />
         )}
       </Request.Form>
       {modal && <ApproverModal />}
-    </>
+    </FormProvider>
   );
 };
