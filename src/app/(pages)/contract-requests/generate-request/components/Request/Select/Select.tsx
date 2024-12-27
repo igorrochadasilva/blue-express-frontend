@@ -2,9 +2,9 @@
 
 import {
   RegisterOptions,
-  UseFormRegister,
   FieldValues,
   Path,
+  useFormContext,
 } from 'react-hook-form';
 import { SelectOptions } from '@/types/approvers/newApprover';
 
@@ -15,7 +15,6 @@ type SelectProps<TFormValues extends FieldValues> = {
   required?: boolean;
   readonly?: boolean;
   options?: SelectOptions[];
-  register: UseFormRegister<TFormValues>;
 };
 
 const Select = <TFormValues extends FieldValues>({
@@ -24,8 +23,8 @@ const Select = <TFormValues extends FieldValues>({
   validation,
   required = false,
   options,
-  register,
 }: SelectProps<TFormValues>) => {
+  const { register } = useFormContext<TFormValues>();
   return (
     <label htmlFor={String(inputName)} className="flex flex-col flex-1 mb-2">
       {labelText}

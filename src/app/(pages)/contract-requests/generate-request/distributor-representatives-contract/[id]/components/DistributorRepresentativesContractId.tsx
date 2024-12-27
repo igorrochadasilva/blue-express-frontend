@@ -98,8 +98,6 @@ export const DistributorRepresentativesContractId = ({
                         inputType={item.inputType}
                         required={item.required}
                         readonly={item.id === 1 ? true : false}
-                        register={methods.register}
-                        getValues={methods.getValues}
                       />
                     );
                   } else {
@@ -109,7 +107,6 @@ export const DistributorRepresentativesContractId = ({
                         inputName={item.inputName}
                         labelText={item.labelText}
                         options={item.options}
-                        register={methods.register}
                         required={item.required}
                       />
                     );

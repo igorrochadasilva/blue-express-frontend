@@ -99,8 +99,6 @@ export const SoftwareServiceContractId = ({
                         inputType={item.inputType}
                         required={item.required}
                         readonly={item.id === 1 ? true : false}
-                        register={methods.register}
-                        getValues={methods.getValues}
                       />
                     );
                   } else {
@@ -110,7 +108,6 @@ export const SoftwareServiceContractId = ({
                         inputName={item.inputName}
                         labelText={item.labelText}
                         options={item.options}
-                        register={methods.register}
                         required={item.required}
                       />
                     );

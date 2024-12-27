@@ -1,14 +1,14 @@
 import { TFiles } from '@/types/global/types';
 import {
   RegisterOptions,
-  UseFormRegister,
   FieldValues,
   Path,
+  useFormContext,
 } from 'react-hook-form';
 
 interface InputProps<TFormValues extends FieldValues> {
   labelText: string;
-  inputName: Path<TFormValues>; // Ensure inputName is a valid path of TFormValues
+  inputName: Path<TFormValues>;
   inputType: string | undefined;
   inputValue?: string | number;
   validation?: RegisterOptions<TFormValues, Path<TFormValues>>;
@@ -17,8 +17,6 @@ interface InputProps<TFormValues extends FieldValues> {
   placeholder?: string;
   pattern?: string;
   step?: string | number | undefined;
-  register: UseFormRegister<TFormValues>;
-  getValues: (v: string) => TFiles;
 }
 
 const Input = <TFormValues extends FieldValues>({
@@ -31,10 +29,9 @@ const Input = <TFormValues extends FieldValues>({
   placeholder,
   pattern,
   step = 'any',
-  register,
-  getValues,
 }: InputProps<TFormValues>) => {
-  const files = getValues('files');
+  const { register, getValues } = useFormContext<TFormValues>();
+  const files = getValues('files' as Path<TFormValues>);
 
   const linkFiles = (files: TFiles) => {
     if (!files || Object.keys(files).length === 0) return null;
