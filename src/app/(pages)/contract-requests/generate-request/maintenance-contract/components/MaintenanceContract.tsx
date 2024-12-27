@@ -1,19 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuid4 } from 'uuid';
 
-import { postMaintenanceContract } from '@/actions/requests/maintenance-contract/postMaintenanceContract';
 import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
 
 import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import Request from '../../components/Request';
 import { UserSession } from '@/types/auth/sign';
-import { notifyMessage } from '@/utils/notifyMessage';
-import { useRouter } from 'next/navigation';
 import { RequestStatusEnum } from '@/types/requests/enums';
+import { useRequestCreate } from '@/hooks/useRequestsCreate';
 
 const INITIAL_MAINTENANCE_CONTRACT_FORM = {
   requesterId: 0,
@@ -59,86 +57,68 @@ interface MaintenanceContractProps {
 export const MaintenanceContract = ({
   userSession,
 }: MaintenanceContractProps) => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { createMaintenanceContract } = useRequestCreate();
 
-  const { register, watch, handleSubmit, setValue, getValues } =
-    useForm<PostMaintenanceContractDTO>({
-      mode: 'all',
-      defaultValues: {
-        ...INITIAL_MAINTENANCE_CONTRACT_FORM,
-        requesterName: userSession.name,
-      },
-    });
+  const methods = useForm<PostMaintenanceContractDTO>({
+    mode: 'all',
+    defaultValues: {
+      ...INITIAL_MAINTENANCE_CONTRACT_FORM,
+      requesterName: userSession.name,
+    },
+  });
 
   const onSubmitForm: SubmitHandler<PostMaintenanceContractDTO> = async (
-    data
+    maintenanceContractDTO
   ) => {
-    setIsLoading(true);
-    const response = await postMaintenanceContract(data);
-
-    notifyMessage({
-      message: response?.data?.message ?? response?.message,
-      statusCode: response.statusCode,
-    });
-
-    if (response.statusCode === 201) return router.push('/contract-requests');
-
-    setIsLoading(false);
+    createMaintenanceContract(maintenanceContractDTO);
   };
 
-  const handleSaveDraft = () => setValue('status', RequestStatusEnum.SKETCH);
-
-  const inputContractTotalValue = watch('contractTotalValue');
-  const inputDollarExchangeRate = watch('dollarExchangeRate');
+  const inputContractTotalValue = methods.watch('contractTotalValue');
+  const inputDollarExchangeRate = methods.watch('dollarExchangeRate');
 
   useEffect(() => {
     const inputTotalValueUSD =
       inputContractTotalValue / inputDollarExchangeRate;
-    setValue('totalValueUSD', inputTotalValueUSD);
-  }, [inputContractTotalValue, inputDollarExchangeRate, setValue]);
+    methods.setValue('totalValueUSD', inputTotalValueUSD);
+  }, [inputContractTotalValue, inputDollarExchangeRate, methods]);
 
   return (
-    <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
-      <Content>
-        <div className="flex flex-col gap-4">
-          {MaintenanceContractFormInputs.map((data) => (
-            <Request.InputGroup key={uuid4()}>
-              {data.map((item) => {
-                if (item.type === 'input') {
-                  return (
-                    <Request.Input
-                      key={uuid4()}
-                      labelText={item.labelText}
-                      inputName={item.inputName}
-                      inputType={item.inputType}
-                      required={item.required}
-                      readonly={item.id === 1 ? true : false}
-                      register={register}
-                      getValues={getValues}
-                    />
-                  );
-                } else {
-                  return (
-                    <Request.Select
-                      key={item.id}
-                      inputName={item.inputName}
-                      labelText={item.labelText}
-                      options={item.options}
-                      register={register}
-                      required={item.required}
-                    />
-                  );
-                }
-              })}
-            </Request.InputGroup>
-          ))}
-        </div>
-      </Content>
-      <Request.GroupButtons
-        handleSaveDraft={handleSaveDraft}
-        isLoading={isLoading}
-      />
-    </Request.Form>
+    <FormProvider {...methods}>
+      <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
+        <Content>
+          <div className="flex flex-col gap-4">
+            {MaintenanceContractFormInputs.map((data) => (
+              <Request.InputGroup key={uuid4()}>
+                {data.map((item) => {
+                  if (item.type === 'input') {
+                    return (
+                      <Request.Input
+                        key={uuid4()}
+                        labelText={item.labelText}
+                        inputName={item.inputName}
+                        inputType={item.inputType}
+                        required={item.required}
+                        readonly={item.id === 1 ? true : false}
+                      />
+                    );
+                  } else {
+                    return (
+                      <Request.Select
+                        key={item.id}
+                        inputName={item.inputName}
+                        labelText={item.labelText}
+                        options={item.options}
+                        required={item.required}
+                      />
+                    );
+                  }
+                })}
+              </Request.InputGroup>
+            ))}
+          </div>
+        </Content>
+        <Request.GroupButtons />
+      </Request.Form>
+    </FormProvider>
   );
 };
