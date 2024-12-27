@@ -1,7 +1,7 @@
 'use client';
 import { v4 as uuid4 } from 'uuid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
@@ -10,9 +10,7 @@ import {
   DistributorRepresentativesContract,
   UpdateDistributorRepresentativesContractDTO,
 } from '@/types/requests/distributorRepresentativesContract';
-import { putDistributorRepresentativesContractById } from '@/actions/requests/distributor-representatives-contract/putDistributorRepresentativesContractById';
 import { DistributorRepresentativesFormInputs } from '@/libs/Forms/DistributionRepresentativesContractFormInputs';
-import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
 import {
   RequestsRoutesEnum,
@@ -22,6 +20,7 @@ import {
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { showSaveButtons } from '@/utils/showSaveButtons';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
+import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
 
 interface DistributorRepresentativesContractIdProps {
   user: UserSession;
@@ -34,7 +33,8 @@ export const DistributorRepresentativesContractId = ({
 }: DistributorRepresentativesContractIdProps) => {
   const router = useRouter();
   const { modal, showModal, setApprovalDTO } = useApproverModal();
-  const [isLoading, setIsLoading] = useState(false);
+  const { updateDistributorRepresentativesContract, isLoading } =
+    useRequestUpdate();
 
   const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateDistributorRepresentativesContractDTO>({
@@ -51,18 +51,9 @@ export const DistributorRepresentativesContractId = ({
   const onSubmitForm: SubmitHandler<
     UpdateDistributorRepresentativesContractDTO
   > = async (distributorRepresentativesContractDTO) => {
-    const response = await putDistributorRepresentativesContractById(
+    updateDistributorRepresentativesContract(
       distributorRepresentativesContractDTO
     );
-
-    notifyMessage({
-      message: response?.data?.message ?? response?.message,
-      statusCode: response?.statusCode,
-    });
-
-    if (response.statusCode === 200) return router.push('/contract-requests');
-
-    setIsLoading(false);
   };
 
   const handleSaveWaitingApproval = () =>

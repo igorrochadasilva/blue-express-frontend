@@ -1,7 +1,7 @@
 'use client';
 import { v4 as uuid4 } from 'uuid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
@@ -11,8 +11,6 @@ import {
   UpdateSoftwareServiceContractDTO,
 } from '@/types/requests/softwaerServiceContract';
 import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
-import { putSoftwareServiceContractById } from '@/actions/requests/software-service-contract/putSoftwareServiceContractById';
-import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
 import {
   RequestsRoutesEnum,
@@ -22,6 +20,7 @@ import {
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { showSaveButtons } from '@/utils/showSaveButtons';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
+import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
 
 interface SoftwareServiceContractIdProps {
   user: UserSession;
@@ -34,7 +33,7 @@ export const SoftwareServiceContractId = ({
 }: SoftwareServiceContractIdProps) => {
   const router = useRouter();
   const { modal, showModal, setApprovalDTO } = useApproverModal();
-  const [isLoading, setIsLoading] = useState(false);
+  const { updateSoftwareServiceContract, isLoading } = useRequestUpdate();
 
   const { register, handleSubmit, getValues, setValue } =
     useForm<UpdateSoftwareServiceContractDTO>({
@@ -56,18 +55,7 @@ export const SoftwareServiceContractId = ({
   const onSubmitForm: SubmitHandler<UpdateSoftwareServiceContractDTO> = async (
     softwareServiceContractDTO
   ) => {
-    const response = await putSoftwareServiceContractById(
-      softwareServiceContractDTO
-    );
-
-    notifyMessage({
-      message: response?.data?.message ?? response?.message,
-      statusCode: response?.statusCode,
-    });
-
-    if (response.statusCode === 200) return router.push('/contract-requests');
-
-    setIsLoading(false);
+    updateSoftwareServiceContract(softwareServiceContractDTO);
   };
 
   const handleSaveWaitingApproval = () =>

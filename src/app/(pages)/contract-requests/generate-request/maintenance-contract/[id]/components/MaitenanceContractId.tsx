@@ -1,8 +1,7 @@
 'use client';
 import { v4 as uuid4 } from 'uuid';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 import {
   MaintenanceContract,
   UpdateMaintenanceContractDTO,
@@ -12,8 +11,6 @@ import Request from '../../../components/Request';
 import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
-import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
-import { notifyMessage } from '@/utils/notifyMessage';
 import { isValidApprover } from '@/utils/isValidApprover';
 import {
   RequestsRoutesEnum,
@@ -22,6 +19,7 @@ import {
 } from '@/types/requests/enums';
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { showSaveButtons } from '@/utils/showSaveButtons';
+import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
@@ -32,43 +30,32 @@ export const MaintenanceContractId = ({
   user,
   maintenanceContractData,
 }: MaintenanceContractIdProps) => {
-  const router = useRouter();
   const { modal, showModal, setApprovalDTO } = useApproverModal();
-  const [isLoading, setIsLoading] = useState(false);
+  const { updateMaintenanceContract, isLoading } = useRequestUpdate();
 
-  const { register, handleSubmit, getValues, setValue } =
-    useForm<UpdateMaintenanceContractDTO>({
-      mode: 'all',
-      defaultValues: {
-        ...maintenanceContractData,
-        id: maintenanceContractData.id,
-        contractTotalValue: Number(maintenanceContractData.contractTotalValue),
-        dollarExchangeRate: Number(maintenanceContractData.dollarExchangeRate),
-        totalValueUSD: Number(maintenanceContractData.totalValueUSD),
-        gm: Number(maintenanceContractData.gm),
-        renewIndexPercentage: Number(
-          maintenanceContractData.renewIndexPercentage
-        ),
-      },
-    });
+  const methods = useForm<UpdateMaintenanceContractDTO>({
+    mode: 'all',
+    defaultValues: {
+      ...maintenanceContractData,
+      id: maintenanceContractData.id,
+      contractTotalValue: Number(maintenanceContractData.contractTotalValue),
+      dollarExchangeRate: Number(maintenanceContractData.dollarExchangeRate),
+      totalValueUSD: Number(maintenanceContractData.totalValueUSD),
+      gm: Number(maintenanceContractData.gm),
+      renewIndexPercentage: Number(
+        maintenanceContractData.renewIndexPercentage
+      ),
+    },
+  });
 
   const onSubmitForm: SubmitHandler<UpdateMaintenanceContractDTO> = async (
     maintenanceContractDTO
   ) => {
-    const response = await putMaintenanceContractById(maintenanceContractDTO);
-
-    notifyMessage({
-      message: response?.data?.message ?? response?.message,
-      statusCode: response?.statusCode,
-    });
-
-    if (response.statusCode === 200) return router.push('/contract-requests');
-
-    setIsLoading(false);
+    updateMaintenanceContract(maintenanceContractDTO);
   };
 
   const handleSaveWaitingApproval = () =>
-    setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
+    methods.setValue('status', RequestStatusEnum.WAITING_FOR_APPROVAL);
 
   const showApproverButtons = isValidApprover({
     user: user,
@@ -98,8 +85,8 @@ export const MaintenanceContractId = ({
   }, []);
 
   return (
-    <>
-      <Request.Form onSubmitForm={handleSubmit(onSubmitForm)}>
+    <FormProvider {...methods}>
+      <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
         <Content>
           <div className="flex flex-col gap-4">
             {MaintenanceContractFormInputs.map((data) => (
@@ -114,8 +101,8 @@ export const MaintenanceContractId = ({
                         inputType={item.inputType}
                         required={item.required}
                         readonly={item.id === 1 ? true : false}
-                        register={register}
-                        getValues={getValues}
+                        register={methods.register}
+                        getValues={methods.getValues}
                       />
                     );
                   } else {
@@ -125,7 +112,7 @@ export const MaintenanceContractId = ({
                         inputName={item.inputName}
                         labelText={item.labelText}
                         options={item.options}
-                        register={register}
+                        register={methods.register}
                         required={item.required}
                       />
                     );
@@ -147,6 +134,6 @@ export const MaintenanceContractId = ({
         )}
       </Request.Form>
       {modal && <ApproverModal />}
-    </>
+    </FormProvider>
   );
 };
