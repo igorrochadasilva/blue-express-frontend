@@ -1,7 +1,7 @@
-import Container from '../../../../components/Global/Container/Container';
-import GenerateRequest from '../../../../components/Pages/GenerateRequest';
+import { Container } from '@/components/Container/Container';
+import GenerateRequest from './components';
 
-export default async function GenerateContracts() {
+export default async function GenerateContractsPage() {
   return (
     <Container title="Generate Contracts">
       <GenerateRequest.Root>

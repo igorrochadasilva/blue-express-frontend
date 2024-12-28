@@ -1,18 +1,13 @@
-import Container from '../../../../../components/Global/Container/Container';
-import { SSCFormDataInputs } from '../../../../../libs/SSCFormDataInputs';
-import RequestContent from '../../../../../components/Pages/Requests/RequestContent';
-import { getUserSession } from '../../../../../actions/auth/getUserSession';
+import { getUserSession } from '@/actions/auth/getUserSession';
+import { SoftwareServiceContract } from './components/SoftwareServiceContract';
+import { Container } from '@/components/Container/Container';
 
-export default async function SoftwareServiceContract() {
+export default async function SoftwareServiceContractPage() {
   const user = await getUserSession();
 
   return (
     <Container title="Software Service Contract">
-      <RequestContent
-        user={user}
-        FormDataInputs={SSCFormDataInputs}
-        createRequestRouter="software-service-contract"
-      />
+      <SoftwareServiceContract userSession={user} />
     </Container>
   );
 }

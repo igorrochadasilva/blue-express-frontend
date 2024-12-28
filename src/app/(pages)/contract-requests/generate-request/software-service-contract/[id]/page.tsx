@@ -1,36 +1,28 @@
-import Container from '../../../../../../components/Global/Container/Container';
-import { SSCFormDataInputs } from '../../../../../../libs/SSCFormDataInputs';
-import { getRequest } from '../../../../../../actions/requests';
-import { getUserSession } from '../../../../../../actions/auth/getUserSession';
-import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
-import ErrorComponent from '../../../../../../components/Global/Error/Error';
+import { getUserSession } from '@/actions/auth/getUserSession';
+import { Container } from '@/components/Container/Container';
+import { RequestsTitleEnum } from '@/types/requests/enums';
+import { getSoftwareServiceContractById } from '@/actions/requests/software-service-contract/getSoftwareServiceContractById';
+import { SoftwareServiceContractId } from './components/SoftwareServiceContractId';
 
-interface ISoftwareServiceContractRequest {
+interface SoftwareServiceContractIdPageProps {
   params: { id: string };
 }
 
-export default async function SoftwareServiceContract({
+export default async function SoftwareServiceContractIdPage({
   params,
-}: ISoftwareServiceContractRequest) {
-  const user = await getUserSession();
+}: SoftwareServiceContractIdPageProps) {
   const { id } = params;
-  const requestData = await getRequest('software-service-contract', id);
-  const { status, data, message } = requestData;
-
-  if (status !== 200) {
-    return <ErrorComponent message={message} />;
-  }
+  const user = await getUserSession();
+  const softwareServiceContractData = await getSoftwareServiceContractById(id);
 
   return (
-    <Container title={data?.requestId}>
-      {requestData ? (
-        <DynamicRequestContent
-          user={user}
-          requestData={{ ...data.request, files: data.files }}
-          FormDataInputs={SSCFormDataInputs}
-          requestRouteType={'software-service-contract'}
-        />
-      ) : null}
+    <Container
+      title={`${RequestsTitleEnum.SOFTWARE_SERVICE_CONTRACT} -  ${String(softwareServiceContractData?.data?.request.id)}`}
+    >
+      <SoftwareServiceContractId
+        user={user}
+        softwareServiceContractData={softwareServiceContractData?.data?.request}
+      />
     </Container>
   );
 }

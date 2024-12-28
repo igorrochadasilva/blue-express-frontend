@@ -3,7 +3,7 @@
 import { ErrorResponse } from '../types/error';
 
 type FetchOptions = RequestInit;
-type QueryParams = Record<string | number, string | number | boolean>;
+type QueryParams = Record<string | number, string | number | boolean | null>;
 
 interface APIProps {
   endpoint: string;

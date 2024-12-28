@@ -1,12 +1,12 @@
 'use server';
 
-import Container from '../../../components/Global/Container/Container';
-import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
-import ContractRequestContent from '../../../components/Pages/ContractRequests/ContractRequestContent';
-import { useGetRequests } from '../../../hooks/useGetRequests';
+import { Container } from '@/components/Container/Container';
+import { getRequests } from '@/hooks/useGetRequests';
+import ContractRequest from './components/ContractRequest';
+import { NoDataBox } from '@/components/NoDataBox/NoDataBox';
 
-export default async function ContractRequests() {
-  const requestsData = await useGetRequests();
+export default async function ContractRequestsPage() {
+  const requestsData = await getRequests();
 
   return (
     <Container
@@ -20,7 +20,7 @@ export default async function ContractRequests() {
       btnBgHover="bg-slate-300"
     >
       {requestsData.length > 0 ? (
-        <ContractRequestContent requestsData={requestsData} />
+        <ContractRequest requestsData={requestsData} />
       ) : (
         <NoDataBox text="There are no requests to show..." />
       )}

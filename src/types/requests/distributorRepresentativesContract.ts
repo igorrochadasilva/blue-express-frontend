@@ -36,3 +36,57 @@ export interface GetDistributorRepresentativesContractResponse
   extends ErrorResponse {
   data: DistributorRepresentativesContract[];
 }
+
+export interface GetDistributorRepresentativesContractByIdResponse
+  extends ErrorResponse {
+  data: {
+    request: DistributorRepresentativesContract;
+  };
+}
+
+export interface PostDistributorRepresentativesContractDTO {
+  requesterName?: string;
+  requesterId: number;
+  clmHeaderNumber: string;
+  clmLineNumber?: string;
+  typeContract: string;
+  company: string;
+  status: string;
+  renewStartDate: string;
+  renewEndDate: string;
+  nameRepresentativeDistributor: string;
+  vendor?: string;
+  commissionPercentage?: number;
+  manager?: string;
+  activity?: string;
+  justify: string;
+  requestId: string;
+  approvalDate?: string;
+  approvalLevel: string;
+  phone?: string;
+  contact?: string;
+  antiCorruption?: string;
+  uf?: string;
+  sap?: string;
+  filesName?: string;
+  typeRequestOrder: string;
+  files?: string;
+}
+
+export interface PostDistributorRepresentativesContractResponse
+  extends ErrorResponse {
+  data?: { message: string };
+}
+
+export interface UpdateDistributorRepresentativesContractDTO
+  extends Omit<PostDistributorRepresentativesContractDTO, 'requesterId'> {
+  id: number;
+  requesterId?: number;
+}
+
+export interface UpdateDistributorRepresentativesContractResponse
+  extends ErrorResponse {
+  data: {
+    message: string;
+  };
+}

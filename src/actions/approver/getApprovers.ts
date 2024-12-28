@@ -12,7 +12,6 @@ export async function getApprovers(): Promise<GetApproversResponse> {
       endpoint: `${process.env.NEXT_PUBLIC_BLUE_EXPRESS_API}/approvers`,
       options: {
         method: 'GET',
-        cache: 'force-cache',
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },

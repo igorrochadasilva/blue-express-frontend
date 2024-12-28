@@ -1,40 +1,31 @@
-import Container from '../../../../../../components/Global/Container/Container';
-import { DRCFormDataInputs } from '../../../../../../libs/DRCFormDataInputs';
-import { getRequest } from '../../../../../../actions/requests';
-import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
-import { getUserSession } from '../../../../../../actions/auth/getUserSession';
-import ErrorComponent from '../../../../../../components/Global/Error/Error';
+import { getUserSession } from '@/actions/auth/getUserSession';
+import { Container } from '@/components/Container/Container';
+import { RequestsTitleEnum } from '@/types/requests/enums';
+import { getDistributorRepresentativesById } from '@/actions/requests/distributor-representatives-contract/getDistributorRepresentativesContractById';
+import { DistributorRepresentativesContractId } from './components/DistributorRepresentativesContractId';
 
-interface IDistributorRepresentativeContractRequest {
+interface DistributorRepresentativesContractIdPageProps {
   params: { id: string };
 }
 
-export default async function DistributorRepresentativeContractRequest({
+export default async function DistributorRepresentativesContractIdPage({
   params,
-}: IDistributorRepresentativeContractRequest) {
-  const user = await getUserSession();
+}: DistributorRepresentativesContractIdPageProps) {
   const { id } = params;
-  const requestData = await getRequest(
-    'distributor-representatives-contract',
-    id
-  );
-
-  const { status, data, message } = requestData;
-
-  if (status !== 200) {
-    return <ErrorComponent message={message} />;
-  }
+  const user = await getUserSession();
+  const distributorRepresentativesContractData =
+    await getDistributorRepresentativesById(id);
 
   return (
-    <Container title={data?.requestId}>
-      {data ? (
-        <DynamicRequestContent
-          user={user}
-          requestData={{ ...data.request, files: data.files }}
-          FormDataInputs={DRCFormDataInputs}
-          requestRouteType={'distributor-representatives-contract'}
-        />
-      ) : null}
+    <Container
+      title={`${RequestsTitleEnum.DISTRIBUTOR_REPRESENTATIVES_CONTRACT} -  ${String(distributorRepresentativesContractData?.data?.request.id)}`}
+    >
+      <DistributorRepresentativesContractId
+        user={user}
+        distributorRepresentativesContractData={
+          distributorRepresentativesContractData?.data?.request
+        }
+      />
     </Container>
   );
 }

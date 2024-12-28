@@ -4,9 +4,15 @@ export enum RequestsTitleEnum {
   DISTRIBUTOR_REPRESENTATIVES_CONTRACT = 'Distributor Representatives Contract',
 }
 
+export enum RequestsRoutesEnum {
+  MAINTENANCE_CONTRACT = 'maintenance-contract',
+  SOFTWARE_SERVICE_CONTRACT = 'software-service-contract',
+  DISTRIBUTOR_REPRESENTATIVES_CONTRACT = 'distributor-representatives-contract',
+}
+
 export enum RequestsKeyEnum {
   MAINTENANCE_CONTRACT_KEY = 'MC',
-  DISTRIBUTOR_REPRESENTATIVES_CONTRACT_KEY = ' DRC',
+  DISTRIBUTOR_REPRESENTATIVES_CONTRACT_KEY = 'DRC',
   SOFTWARE_SERVICE_CONTRACT_KEY = 'SSC',
 }
 

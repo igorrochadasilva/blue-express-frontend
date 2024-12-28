@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import {
   DeleteApproverDTO,
   DeleteApproverResponse,
@@ -25,8 +26,9 @@ export async function deleteApprover({
         email: user.email,
         role: user.role,
       },
-      revalidateTag: 'approvers',
     });
+
+    revalidateTag('approvers');
 
     return response;
   } catch (error) {

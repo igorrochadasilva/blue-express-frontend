@@ -1,31 +1,28 @@
-import Container from '../../../../../../components/Global/Container/Container';
-import { MCFormDataInputs } from '../../../../../../libs/MCFormDataInputs';
-import { getRequest } from '../../../../../../actions/requests';
-import { getUserSession } from '../../../../../../actions/auth/getUserSession';
-import DynamicRequestContent from '../../../../../../components/Pages/DynamicRequest/DynamicRequestContent';
+import { getUserSession } from '@/actions/auth/getUserSession';
+import { Container } from '@/components/Container/Container';
+import { MaintenanceContractId } from './components/MaitenanceContractId';
+import { getMaintenanceContractById } from '@/actions/requests/maintenance-contract/getMaintenanceContractById';
+import { RequestsTitleEnum } from '@/types/requests/enums';
 
-interface IMaintenanceContractRequest {
+interface MaintenanceContractIdPageProps {
   params: { id: string };
 }
 
-export default async function MaintenanceContractRequest({
+export default async function MaintenanceContractIdPage({
   params,
-}: IMaintenanceContractRequest) {
-  const user = await getUserSession();
+}: MaintenanceContractIdPageProps) {
   const { id } = params;
-  const requestData = await getRequest('maintenance-contract', id);
-  const { data } = requestData;
+  const user = await getUserSession();
+  const maintenanceContractData = await getMaintenanceContractById(id);
 
   return (
-    <Container title={data?.requestId}>
-      {data ? (
-        <DynamicRequestContent
-          user={user}
-          requestData={{ ...data.request, files: data.files }}
-          FormDataInputs={MCFormDataInputs}
-          requestRouteType={'maintenance-contract'}
-        />
-      ) : null}
+    <Container
+      title={`${RequestsTitleEnum.MAINTENANCE_CONTRACT} -  ${String(maintenanceContractData?.data?.request.id)}`}
+    >
+      <MaintenanceContractId
+        user={user}
+        maintenanceContractData={maintenanceContractData?.data?.request}
+      />
     </Container>
   );
 }

@@ -1,17 +1,17 @@
 'use server';
 
-import Container from '../../../components/Global/Container/Container';
-import NoDataBox from '../../../components/Global/NoDataBox/NoDataBox';
-import DashBoardContent from '../../../components/Pages/Dashboard/DashboardContent';
-import { useGetRequests } from '../../../hooks/useGetRequests';
+import { Container } from '@/components/Container/Container';
+import { getRequests } from '@/hooks/useGetRequests';
+import { DashBoard } from './components/Dashboard';
+import { NoDataBox } from '@/components/NoDataBox/NoDataBox';
 
-export default async function Dashboard() {
-  const requestsData = await useGetRequests();
+export default async function DashboardPage() {
+  const requestsData = await getRequests();
 
   return (
     <Container title="Dashboard">
       {requestsData.length > 0 ? (
-        <DashBoardContent requestsData={requestsData} />
+        <DashBoard requestsData={requestsData} />
       ) : (
         <NoDataBox text="There are no requests to show..." />
       )}
