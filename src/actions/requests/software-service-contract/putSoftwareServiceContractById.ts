@@ -8,7 +8,7 @@ import {
 } from '@/types/requests/softwaerServiceContract';
 import { getUserSession } from '@/actions/auth/getUserSession';
 import { RequestStatusEnum } from '@/types/requests/enums';
-import { isApprobation } from '@/utils/isApprobation';
+import { isApprobation } from '@/utils/validate/isApprobation';
 
 // TODO - Add authorization to update
 export async function putSoftwareServiceContractById(

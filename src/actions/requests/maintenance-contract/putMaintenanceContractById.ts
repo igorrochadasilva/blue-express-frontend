@@ -7,7 +7,7 @@ import {
 } from '../../../types/requests/maintenance.contract';
 import { api } from '../../api';
 import { getUserSession } from '@/actions/auth/getUserSession';
-import { isApprobation } from '@/utils/isApprobation';
+import { isApprobation } from '@/utils/validate/isApprobation';
 import { RequestStatusEnum } from '@/types/requests/enums';
 
 // TODO - Add authorization to update

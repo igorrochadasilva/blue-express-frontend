@@ -7,7 +7,7 @@ import {
   UpdateDistributorRepresentativesContractDTO,
   UpdateDistributorRepresentativesContractResponse,
 } from '@/types/requests/distributorRepresentativesContract';
-import { isApprobation } from '@/utils/isApprobation';
+import { isApprobation } from '@/utils/validate/isApprobation';
 import { RequestStatusEnum } from '@/types/requests/enums';
 
 // TODO - Add authorization to update

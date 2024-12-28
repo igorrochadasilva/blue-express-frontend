@@ -10,14 +10,14 @@ import {
   UpdateSoftwareServiceContractDTO,
 } from '@/types/requests/softwaerServiceContract';
 import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
-import { isValidApprover } from '@/utils/isValidApprover';
+import { isValidApprover } from '@/utils/validate/isValidApprover';
 import {
   RequestsRoutesEnum,
   RequestStatusEnum,
   RequestsTitleEnum,
 } from '@/types/requests/enums';
 import { useApproverModal } from '@/hooks/useApproverModal';
-import { showSaveButtons } from '@/utils/showSaveButtons';
+import { showSaveButtons } from '@/utils/validate/showSaveButtons';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
 

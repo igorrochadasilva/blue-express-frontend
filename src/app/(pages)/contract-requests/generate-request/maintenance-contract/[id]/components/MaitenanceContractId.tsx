@@ -11,14 +11,14 @@ import Request from '../../../components/Request';
 import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
-import { isValidApprover } from '@/utils/isValidApprover';
+import { isValidApprover } from '@/utils/validate/isValidApprover';
 import {
   RequestsRoutesEnum,
   RequestStatusEnum,
   RequestsTitleEnum,
 } from '@/types/requests/enums';
 import { useApproverModal } from '@/hooks/useApproverModal';
-import { showSaveButtons } from '@/utils/showSaveButtons';
+import { showSaveButtons } from '@/utils/validate/showSaveButtons';
 import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
 
 interface MaintenanceContractIdProps {
