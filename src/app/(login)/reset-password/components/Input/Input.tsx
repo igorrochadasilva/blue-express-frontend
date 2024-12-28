@@ -41,7 +41,9 @@ export function Input({
         type={inputType}
       />
       {errors.inputName && (
-        <span className="text-sm text-red-500">{errors.inputName.message}</span>
+        <span className="text-sm text-red-500">
+          {errors?.inputName?.message as string}
+        </span>
       )}
     </>
   );

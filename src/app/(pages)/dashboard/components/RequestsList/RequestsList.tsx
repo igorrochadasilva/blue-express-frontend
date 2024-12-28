@@ -4,8 +4,10 @@ import ListRequests from './List';
 import { RequestsData } from '@/hooks/useGetRequests';
 import { RequestItem } from '@/types/dashboard/dashboard';
 import { Request } from '@/types/global/types';
-import { formatApproverName, formatDate } from '@/libs/utils';
+
 import { generateRouteById } from '@/utils/generateRouteById';
+import { formatDate } from '@/utils/format/formatDate';
+import { formatApproverName } from '@/utils/format/formatApproverName';
 
 const STATUS_COLORS: Record<string, string> = {
   approved: '#00D134',

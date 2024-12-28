@@ -29,7 +29,10 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    ...PUBLIC_ROUTES,
-    ...PROTECTED_ROUTES.map((route) => `${route}/:path*`),
+    '/',
+    '/reset-password',
+    '/dashboard/:path*',
+    '/approvers/:path*',
+    '/contract-requests/:path*',
   ],
 };

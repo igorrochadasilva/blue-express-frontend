@@ -2,9 +2,10 @@ import { useEffect, useState, useCallback } from 'react';
 
 import { Approver, ApproverRow } from '@/types/approvers/approvers';
 import { deleteApprover } from '@/actions/approver/deleteApprover';
-import { formatToUSD } from '@/libs/utils';
+
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { Modal } from '@/components/Modal/Modal';
+import { formatToUSD } from '@/utils/format/formatToUSD';
 
 interface ListProps {
   approvers: Approver[];

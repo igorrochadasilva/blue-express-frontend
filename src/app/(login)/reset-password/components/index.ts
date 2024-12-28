@@ -7,7 +7,7 @@ import { LogoImg } from './LogoImg/LogoImg';
 import { Root } from './Root/Root';
 import { Text } from './Text/Text';
 
-export const ResetPassword = {
+export const ResetPasswordComponent = {
   Text,
   Button,
   Input,
