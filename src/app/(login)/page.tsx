@@ -8,8 +8,16 @@ import { SignInDTO } from '@/types/auth/sign';
 
 import { Loading } from '@/components/Loading/loading';
 import { handleForgetPassword } from '@/actions/auth/handleForgetPassword';
-import { Login } from './components';
 import { notifyMessage } from '@/utils/notifyMessage';
+import { Button } from '@/components/ui/button';
+import { IconClose } from './components/IconClose/IconClose';
+import { Root } from './components/Root/Root';
+import { Form } from './components/Form/Form';
+import { LogoImg } from './components/LogoImg/LogoImg';
+import { Content } from './components/Content/Content';
+import { ForgetPasswordMsg } from './components/ForgetPasswordMsg/ForgetPasswordMessage';
+import { Input } from './components/Input/Input';
+import { ForgetButton } from './components/ForgetButton/ForgetButton';
 
 export default function Home() {
   const router = useRouter();
@@ -61,18 +69,18 @@ export default function Home() {
   if (isLoading) return <Loading />;
 
   return (
-    <Login.Root>
+    <Root>
       {showForgetPassword && (
-        <Login.IconClose
+        <IconClose
           handleShowForgetPassword={handleShowForgetPassword}
           showForgetPassword
         />
       )}
-      <Login.Form onSubmitLogin={handleSubmit(onSubmitForm)}>
-        <Login.LogoImg />
-        <Login.Content>
-          {showForgetPassword && <Login.ForgetPasswordMsg />}
-          <Login.Input
+      <Form onSubmitLogin={handleSubmit(onSubmitForm)}>
+        <LogoImg />
+        <Content>
+          {showForgetPassword && <ForgetPasswordMsg />}
+          <Input
             inputName="email"
             inputType="email"
             labelText="E-mail"
@@ -82,7 +90,7 @@ export default function Home() {
             register={register}
           />
           {!showForgetPassword && (
-            <Login.Input
+            <Input
               inputName="password"
               inputType="password"
               labelText="Password"
@@ -91,14 +99,20 @@ export default function Home() {
               register={register}
             />
           )}
-          <Login.Button showForgetPassword={showForgetPassword} />
+          <Button
+            type="submit"
+            variant={'blue'}
+            size={'lg'}
+            className="rounded my-4"
+          >
+            {showForgetPassword ? 'Continue' : 'Log in'}
+          </Button>
+
           {!showForgetPassword && (
-            <Login.ForgetButton
-              handleShowForgetPassword={handleShowForgetPassword}
-            />
+            <ForgetButton handleShowForgetPassword={handleShowForgetPassword} />
           )}
-        </Login.Content>
-      </Login.Form>
-    </Login.Root>
+        </Content>
+      </Form>
+    </Root>
   );
 }

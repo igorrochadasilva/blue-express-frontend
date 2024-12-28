@@ -10,14 +10,14 @@ import {
   UpdateDistributorRepresentativesContractDTO,
 } from '@/types/requests/distributorRepresentativesContract';
 import { DistributorRepresentativesFormInputs } from '@/libs/Forms/DistributionRepresentativesContractFormInputs';
-import { isValidApprover } from '@/utils/validate/isValidApprover';
+import { isValidApprover } from '@/utils/isValidApprover';
 import {
   RequestsRoutesEnum,
   RequestStatusEnum,
   RequestsTitleEnum,
 } from '@/types/requests/enums';
 import { useApproverModal } from '@/hooks/useApproverModal';
-import { showSaveButtons } from '@/utils/validate/showSaveButtons';
+import { showSaveButtons } from '@/utils/showSaveButtons';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
 
