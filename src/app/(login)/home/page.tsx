@@ -11,7 +11,7 @@ import { Loading } from '@/components/Loading/loading';
 import { handleForgetPassword } from '@/actions/auth/handleForgetPassword';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { Button } from '@/components/ui/button';
-import { Root } from './components/Root';
+import { Root } from '../components/Root';
 import { Input } from '@/components/ui/input';
 import {
   Form,

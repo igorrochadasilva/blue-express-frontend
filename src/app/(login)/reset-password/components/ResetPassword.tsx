@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -7,9 +7,27 @@ import { ResetInput } from '@/types/auth/resetPassword';
 import { handleResetPassword } from '@/actions/auth/handleResetPassword';
 import { Loading } from '@/components/Loading/loading';
 
-import { ResetPasswordComponent } from '.';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { messages } from '@/utils/messages';
+import {
+  resetPasswordSchema,
+  ResetPasswordSchema,
+} from '@/schemas/resetPassword';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Root } from '../../components/Root';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface ResetPasswordProps {
   token: string;
@@ -19,13 +37,14 @@ export const ResetPassword = ({ token }: ResetPasswordProps) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ResetInput>();
+  const form = useForm<ResetPasswordSchema>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      password: '',
+    },
+  });
 
-  const onSubmitLogin: SubmitHandler<ResetInput> = async (data) => {
+  const onSubmit: SubmitHandler<ResetInput> = async (data) => {
     setLoading(true);
     if (!token)
       notifyMessage({
@@ -48,24 +67,54 @@ export const ResetPassword = ({ token }: ResetPasswordProps) => {
   if (loading) return <Loading />;
 
   return (
-    <ResetPasswordComponent.Root>
-      <ResetPasswordComponent.IconClose />
-      <ResetPasswordComponent.Form onSubmitLogin={handleSubmit(onSubmitLogin)}>
-        <ResetPasswordComponent.LogoImg />
-        <ResetPasswordComponent.Content>
-          <ResetPasswordComponent.Text />
-          <ResetPasswordComponent.Input
-            inputName="password"
-            inputType="password"
-            labelText="Enter with your new password."
-            message="min length is 6"
-            errors={errors}
-            minLength={6}
-            register={register}
+    <Root>
+      <Link href={'/'}>
+        <XMarkIcon className="absolute right-0 top-0 h-6 w-6 text-slate-800 text-end cursor-pointer" />
+      </Link>
+      <Image
+        src="/eaton_logo.svg"
+        width={150}
+        height={150}
+        alt="Logo"
+        priority={true}
+      />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full max-w-[300]"
+        >
+          <FormDescription className="mt-4 text-center text-be_second_color text-lg font-bold">
+            Reset Password
+          </FormDescription>
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="password"
+                    placeholder="password"
+                    id="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <ResetPasswordComponent.Button />
-        </ResetPasswordComponent.Content>
-      </ResetPasswordComponent.Form>
-    </ResetPasswordComponent.Root>
+          <Button
+            type="submit"
+            variant={'blue'}
+            size={'lg'}
+            className="rounded my-4 block w-full"
+          >
+            Send
+          </Button>
+        </form>
+      </Form>
+    </Root>
   );
 };
