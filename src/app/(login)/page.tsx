@@ -1,23 +1,29 @@
 'use client';
 
+import Image from 'next/image';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { SignInDTO } from '@/types/auth/sign';
-
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Loading } from '@/components/Loading/loading';
 import { handleForgetPassword } from '@/actions/auth/handleForgetPassword';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { Button } from '@/components/ui/button';
-import { IconClose } from './components/IconClose/IconClose';
-import { Root } from './components/Root/Root';
-import { Form } from './components/Form/Form';
-import { LogoImg } from './components/LogoImg/LogoImg';
-import { Content } from './components/Content/Content';
-import { ForgetPasswordMsg } from './components/ForgetPasswordMsg/ForgetPasswordMessage';
-import { Input } from './components/Input/Input';
-import { ForgetButton } from './components/ForgetButton/ForgetButton';
+import { Root } from './components/Root';
+import { Input } from '@/components/ui/input';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import { loginSchema, LoginSchema } from '@/schemas/login';
 
 export default function Home() {
   const router = useRouter();
@@ -25,11 +31,13 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [showForgetPassword, setShowForgetPassword] = useState<boolean>(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInDTO>();
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const handleShowForgetPassword = () =>
     setShowForgetPassword(!showForgetPassword);
@@ -51,7 +59,7 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  const onSubmitForm: SubmitHandler<SignInDTO> = async (data) => {
+  const onSubmit: SubmitHandler<SignInDTO> = async (data) => {
     setIsLoading(true);
 
     if (!showForgetPassword) return handleLogin(data);
@@ -71,47 +79,85 @@ export default function Home() {
   return (
     <Root>
       {showForgetPassword && (
-        <IconClose
-          handleShowForgetPassword={handleShowForgetPassword}
-          showForgetPassword
+        <XMarkIcon
+          onClick={handleShowForgetPassword}
+          className={`absolute right-0 top-0 h-6 w-6 text-slate-800 text-end cursor-pointer ${showForgetPassword ? 'block' : 'hidden'}`}
         />
       )}
-      <Form onSubmitLogin={handleSubmit(onSubmitForm)}>
-        <LogoImg />
-        <Content>
-          {showForgetPassword && <ForgetPasswordMsg />}
-          <Input
-            inputName="email"
-            inputType="email"
-            labelText="E-mail"
-            message="Entered value does not match email format"
-            patternValue={/\S+@\S+\.\S+/}
-            errors={errors}
-            register={register}
+      <Image
+        src="/eaton_logo.svg"
+        width={150}
+        height={150}
+        alt="Logo"
+        priority={true}
+      />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full max-w-[300]"
+        >
+          {showForgetPassword && (
+            <FormDescription className="mt-4 text-center text-be_second_color text-base">
+              Enter your email and we will send you instructions to reset your
+              password.
+            </FormDescription>
+          )}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="email"
+                    id="email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
           {!showForgetPassword && (
-            <Input
-              inputName="password"
-              inputType="password"
-              labelText="Password"
-              message="Entered value does not match password format"
-              errors={errors}
-              register={register}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="password"
+                      id="password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           )}
           <Button
             type="submit"
             variant={'blue'}
             size={'lg'}
-            className="rounded my-4"
+            className="rounded my-4 block w-full"
           >
             {showForgetPassword ? 'Continue' : 'Log in'}
           </Button>
-
           {!showForgetPassword && (
-            <ForgetButton handleShowForgetPassword={handleShowForgetPassword} />
+            <Button
+              className="w-full"
+              variant={'link'}
+              onClick={handleShowForgetPassword}
+            >
+              Forgot password?
+            </Button>
           )}
-        </Content>
+        </form>
       </Form>
     </Root>
   );
