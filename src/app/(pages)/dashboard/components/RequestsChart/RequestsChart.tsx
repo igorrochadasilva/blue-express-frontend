@@ -38,7 +38,7 @@ const RequestsChart = ({ requests }: RequestsChartProps) => {
     const chartData = statusCounts.map((status) => ({
       text: status.label,
       color: status.color,
-      barSize: (status.count * 240) / maxCount,
+      barSize: status?.count ? (status.count * 240) / maxCount : 0,
       qtd: status.count,
     }));
 

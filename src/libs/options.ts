@@ -1,5 +1,4 @@
 export const periodOptions = [
-  { value: '', label: 'select' },
   { value: '1', label: '1 days' },
   { value: '10', label: '10 days' },
   { value: '30', label: '30 days' },
