@@ -32,7 +32,7 @@ export default function Home() {
   const [showForgetPassword, setShowForgetPassword] = useState<boolean>(false);
 
   const form = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema(showForgetPassword)),
     defaultValues: {
       email: '',
       password: '',
