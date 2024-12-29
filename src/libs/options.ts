@@ -84,7 +84,7 @@ export const typeRequestOrderOptions = [
 ];
 
 export const contractTypesOptions = [
-  { value: '', label: 'select' },
+  { value: 'all', label: 'all' },
   { value: 'waiting for approval', label: 'waiting for approval' },
   { value: 'waiting for information', label: 'waiting for information' },
   { value: 'approved', label: 'approved' },
