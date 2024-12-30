@@ -85,19 +85,6 @@ const ContractRequestContent = ({
             </SelectContent>
           </Select>
         </div>
-        {/* <div className="flex flex-col w-[260px] gap-2 text-be_second_color">
-          <label htmlFor="Status" className="font-semibold">
-            Close to expiration
-          </label>
-          <input
-            className="border-2 border-[#e3e3e3] px-4 py-2 rounded-lg w-[20px] h-[35px]"
-            type="checkbox"
-            id="myCheckbox"
-            name="myCheckbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-          />
-        </div> */}
         <div className="flex justify-end flex-1">
           <Button size={'lg'} className="bg-blue-700  hover:bg-blue-600/90">
             Issue Report
