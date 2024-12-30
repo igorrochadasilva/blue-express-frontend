@@ -12,6 +12,24 @@ import Request from '../../components/Request';
 import { UserSession } from '@/types/auth/sign';
 import { RequestStatusEnum } from '@/types/requests/enums';
 import { useRequestCreate } from '@/hooks/useRequestsCreate';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createMaintenanceContractSchema } from '@/schemas/createMaintenanceContract';
+import {
+  Form as FormShad,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input as InputShad } from '@/components/ui/input';
+import {
+  Select as SelectShad,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const INITIAL_MAINTENANCE_CONTRACT_FORM = {
   requesterId: 0,
@@ -60,7 +78,7 @@ export const MaintenanceContract = ({
   const { createMaintenanceContract } = useRequestCreate();
 
   const methods = useForm<PostMaintenanceContractDTO>({
-    mode: 'all',
+    resolver: zodResolver(createMaintenanceContractSchema()),
     defaultValues: {
       ...INITIAL_MAINTENANCE_CONTRACT_FORM,
       requesterName: userSession.name,
@@ -86,36 +104,58 @@ export const MaintenanceContract = ({
     <FormProvider {...methods}>
       <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
         <Content>
-          <div className="flex flex-col gap-4">
-            {MaintenanceContractFormInputs.map((data) => (
-              <Request.InputGroup key={uuid4()}>
-                {data.map((item) => {
-                  if (item.type === 'input') {
-                    return (
-                      <Request.Input
-                        key={uuid4()}
-                        labelText={item.labelText}
-                        inputName={item.inputName}
-                        inputType={item.inputType}
-                        required={item.required}
-                        readonly={item.id === 1 ? true : false}
-                      />
-                    );
-                  } else {
-                    return (
-                      <Request.Select
-                        key={item.id}
-                        inputName={item.inputName}
-                        labelText={item.labelText}
-                        options={item.options}
-                        required={item.required}
-                      />
-                    );
-                  }
-                })}
-              </Request.InputGroup>
-            ))}
-          </div>
+          <FormShad {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmitForm)}>
+              <div className="flex flex-col gap-4">
+                {MaintenanceContractFormInputs.map((data) => (
+                  <Request.InputGroup key={uuid4()}>
+                    {data.map((item) => {
+                      return (
+                        <FormField
+                          key={item.id}
+                          control={methods.control}
+                          name={item.inputName}
+                          render={({ field }) => (
+                            <FormItem className="flex-1">
+                              <FormLabel>{item.inputName}</FormLabel>
+                              <FormControl>
+                                {item.type === 'input' ? (
+                                  <InputShad
+                                    {...field}
+                                    type={item.inputName}
+                                    placeholder={item.inputName}
+                                    id={item.inputName}
+                                    readOnly={item.id === 1 ? true : false}
+                                  />
+                                ) : (
+                                  <SelectShad>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a period" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {item.options?.map((option) => (
+                                        <SelectItem
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option?.label}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </SelectShad>
+                                )}
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      );
+                    })}
+                  </Request.InputGroup>
+                ))}
+              </div>
+            </form>
+          </FormShad>
         </Content>
         <Request.GroupButtons />
       </Request.Form>

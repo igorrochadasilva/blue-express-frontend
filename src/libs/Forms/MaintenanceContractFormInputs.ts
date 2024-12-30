@@ -9,7 +9,7 @@ import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contrac
 
 export interface MaintenanceContractFormInputsProps {
   id: number;
-  type: 'input' | 'select';
+  type: 'input' | 'select' | 'file';
   labelText: string;
   inputName: keyof PostMaintenanceContractDTO;
   inputType?: string;
@@ -336,7 +336,7 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
       },
       {
         id: 33,
-        type: 'input',
+        type: 'file',
         labelText: 'Upload Files',
         inputType: 'file',
         inputName: 'files',
