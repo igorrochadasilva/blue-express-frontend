@@ -29,11 +29,6 @@ const ContractRequestContent = ({
     requestId: '',
     status: '',
   });
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleCheckboxChange = (event: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) };
-  }) => setIsChecked(event.target.checked);
 
   const applyFilters = useCallback(() => {
     const { requestId, status } = selectedFilters;
