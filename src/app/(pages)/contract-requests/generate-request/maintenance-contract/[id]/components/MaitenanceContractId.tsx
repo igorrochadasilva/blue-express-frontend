@@ -6,7 +6,6 @@ import {
   UpdateMaintenanceContractDTO,
 } from '@/types/requests/maintenance.contract';
 import { UserSession } from '@/types/auth/sign';
-import Request from '../../../components/Request';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { isValidApprover } from '@/utils/isValidApprover';
@@ -23,6 +22,8 @@ import { updateMaintenanceContractSchema } from '@/schemas/maintenanceContract/u
 import { Form } from '@/components/ui/form';
 
 import { FormContent } from '../../../components/FormContent/FormContent';
+import { GroupButtons } from '../../../components/GroupButtons/GroupButtons';
+import { ApproverButtons } from '../../../components/Request/ApproverButtons/ApproverButtons';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
@@ -81,9 +82,9 @@ export const MaintenanceContractId = ({
     <Form {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmitForm)}>
         <FormContent formData={MaintenanceContractFormInputs} />
-        {showApproverButtons && <Request.ApproverButtons />}
+        {showApproverButtons && <ApproverButtons />}
         {showSaveButtonsValidation && (
-          <Request.GroupButtons
+          <GroupButtons
             isFormUpdate={
               maintenanceContractData.status !== RequestStatusEnum.SKETCH
             }

@@ -6,7 +6,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
 
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
-import Request from '../../components/Request';
 import { UserSession } from '@/types/auth/sign';
 import { RequestStatusEnum } from '@/types/requests/enums';
 import { useRequestCreate } from '@/hooks/useRequestsCreate';
@@ -15,6 +14,7 @@ import { createMaintenanceContractSchema } from '@/schemas/maintenanceContract/c
 import { Form } from '@/components/ui/form';
 
 import { FormContent } from '../../components/FormContent/FormContent';
+import { GroupButtons } from '../../components/GroupButtons/GroupButtons';
 
 const INITIAL_MAINTENANCE_CONTRACT_FORM = {
   requesterId: '0',
@@ -89,7 +89,7 @@ export const MaintenanceContract = ({
     <Form {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmitForm)}>
         <FormContent formData={MaintenanceContractFormInputs} />
-        <Request.GroupButtons />
+        <GroupButtons />
       </form>
     </Form>
   );
