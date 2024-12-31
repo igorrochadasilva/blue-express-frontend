@@ -23,7 +23,7 @@ import { Form } from '@/components/ui/form';
 
 import { FormContent } from '../../../components/FormContent/FormContent';
 import { GroupButtons } from '../../../components/GroupButtons/GroupButtons';
-import { ApproverButtons } from '../../../components/Request/ApproverButtons/ApproverButtons';
+import { ApproverButtons } from '../../../components/ApproverButtons/ApproverButtons';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
