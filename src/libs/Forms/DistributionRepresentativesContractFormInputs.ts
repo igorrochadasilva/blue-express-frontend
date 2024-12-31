@@ -13,7 +13,6 @@ export interface DistributorRepresentativesContractFormInputsProps {
   labelText: string;
   inputName: keyof PostDistributorRepresentativesContractDTO;
   inputType?: string;
-  required: boolean;
   readonly: boolean;
   options?: Array<{ value: string; label: string }>;
 }
@@ -27,7 +26,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Requester',
         inputName: 'requesterName',
         inputType: 'text',
-        required: true,
         readonly: true,
       },
       {
@@ -36,7 +34,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'CLM Number (Header)',
         inputName: 'clmHeaderNumber',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -45,7 +42,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'CLM Number (Line)',
         inputName: 'clmLineNumber',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -56,7 +52,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Contract Type',
         inputName: 'typeContract',
         inputType: '',
-        required: true,
         readonly: false,
         options: contractTypeOptions,
       },
@@ -66,7 +61,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Company',
         inputName: 'company',
         inputType: '',
-        required: true,
         readonly: false,
         options: companyOptions,
       },
@@ -76,7 +70,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Start Date/Renewal',
         inputName: 'renewStartDate',
         inputType: 'date',
-        required: true,
         readonly: false,
       },
     ],
@@ -87,7 +80,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'End Date/Renewal',
         inputName: 'renewEndDate',
         inputType: 'date',
-        required: true,
         readonly: false,
       },
       {
@@ -96,7 +88,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Representative / Distributor',
         inputName: 'typeRequestOrder',
         inputType: '',
-        required: true,
         readonly: false,
         options: typeRequestOrderOptions,
       },
@@ -106,7 +97,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Name Representative / Distributor',
         inputName: 'nameRepresentativeDistributor',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -117,7 +107,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Vendor',
         inputName: 'vendor',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -126,7 +115,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Commission Percentage',
         inputName: 'commissionPercentage',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -135,7 +123,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Manager',
         inputName: 'manager',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -146,7 +133,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Activity',
         inputName: 'activity',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -155,7 +141,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Justify',
         inputName: 'justify',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -164,7 +149,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Phone',
         inputName: 'phone',
         inputType: 'tel',
-        required: false,
         readonly: false,
       },
     ],
@@ -175,7 +159,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'AntiCorruption',
         inputName: 'antiCorruption',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -184,7 +167,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'UF',
         inputName: 'uf',
         inputType: '',
-        required: false,
         readonly: false,
         options: ufOptions,
       },
@@ -194,7 +176,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'SAP',
         inputName: 'sap',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -205,7 +186,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Contact',
         inputName: 'contact',
         inputType: 'email',
-        required: false,
         readonly: false,
       },
       {
@@ -214,7 +194,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Approval Level',
         inputName: 'approvalLevel',
         inputType: '',
-        required: true,
         readonly: false,
         options: approverLevelOptions,
       },
@@ -224,7 +203,6 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         labelText: 'Upload Files',
         inputType: 'file',
         inputName: 'files',
-        required: false,
         readonly: false,
       },
     ],

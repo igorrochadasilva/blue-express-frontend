@@ -1,10 +1,8 @@
 'use client';
-import { v4 as uuid4 } from 'uuid';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { UserSession } from '@/types/auth/sign';
-import Request from '../../../components/Request';
-import { Content } from '@/components/Content/Content';
 import {
   DistributorRepresentativesContract,
   UpdateDistributorRepresentativesContractDTO,
@@ -20,6 +18,12 @@ import { useApproverModal } from '@/hooks/useApproverModal';
 import { showSaveButtons } from '@/utils/showSaveButtons';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
+import { updateDistributorRepresentativeContractSchema } from '@/schemas/distributoRepresentativeContract/updateDistributoRepresentativeContract';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form } from '@/components/ui/form';
+import { FormContent } from '../../../components/FormContent/FormContent';
+import { ApproverButtons } from '../../../components/Request/ApproverButtons/ApproverButtons';
+import { GroupButtons } from '../../../components/GroupButtons/GroupButtons';
 
 interface DistributorRepresentativesContractIdProps {
   user: UserSession;
@@ -34,13 +38,10 @@ export const DistributorRepresentativesContractId = ({
   const { updateDistributorRepresentativesContract } = useRequestUpdate();
 
   const methods = useForm<UpdateDistributorRepresentativesContractDTO>({
-    mode: 'all',
+    resolver: zodResolver(updateDistributorRepresentativeContractSchema()),
     defaultValues: {
       ...distributorRepresentativesContractData,
       id: distributorRepresentativesContractData.id,
-      commissionPercentage: Number(
-        distributorRepresentativesContractData.commissionPercentage
-      ),
     },
   });
 
@@ -82,51 +83,20 @@ export const DistributorRepresentativesContractId = ({
   }, []);
 
   return (
-    <FormProvider {...methods}>
-      <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
-        <Content>
-          <div className="flex flex-col gap-4">
-            {DistributorRepresentativesFormInputs.map((data) => (
-              <Request.InputGroup key={uuid4()}>
-                {data.map((item) => {
-                  if (item.type === 'input') {
-                    return (
-                      <Request.Input
-                        key={uuid4()}
-                        labelText={item.labelText}
-                        inputName={item.inputName}
-                        inputType={item.inputType}
-                        required={item.required}
-                        readonly={item.id === 1 ? true : false}
-                      />
-                    );
-                  } else {
-                    return (
-                      <Request.Select
-                        key={item.id}
-                        inputName={item.inputName}
-                        labelText={item.labelText}
-                        options={item.options}
-                        required={item.required}
-                      />
-                    );
-                  }
-                })}
-              </Request.InputGroup>
-            ))}
-          </div>
-        </Content>
-        {showApproverButtons && <Request.ApproverButtons />}
+    <Form {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmitForm)}>
+        <FormContent formData={DistributorRepresentativesFormInputs} />
+        {showApproverButtons && <ApproverButtons />}
         {showSaveButtonsValidation && (
-          <Request.GroupButtons
+          <GroupButtons
             isFormUpdate={
               distributorRepresentativesContractData.status !==
               RequestStatusEnum.SKETCH
             }
           />
         )}
-      </Request.Form>
+      </form>
       {modal && <ApproverModal />}
-    </FormProvider>
+    </Form>
   );
 };

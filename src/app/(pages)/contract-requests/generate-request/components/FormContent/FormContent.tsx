@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DistributorRepresentativesContractFormInputsProps } from '@/libs/Forms/DistributionRepresentativesContractFormInputs';
 import { MaintenanceContractFormInputsProps } from '@/libs/Forms/MaintenanceContractFormInputs';
 import { SoftwareServiceContractFormInputsProps } from '@/libs/Forms/SoftwareServiceFormInputs';
 import { useFormContext } from 'react-hook-form';
@@ -22,7 +23,8 @@ import { v4 as uuid4 } from 'uuid';
 interface FormContentProps {
   formData:
     | MaintenanceContractFormInputsProps[][]
-    | SoftwareServiceContractFormInputsProps[][];
+    | SoftwareServiceContractFormInputsProps[][]
+    | DistributorRepresentativesContractFormInputsProps[][];
 }
 
 export const FormContent = ({ formData }: FormContentProps) => {
