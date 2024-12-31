@@ -9,11 +9,10 @@ import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contrac
 
 export interface MaintenanceContractFormInputsProps {
   id: number;
-  type: 'input' | 'select';
+  type: 'input' | 'select' | 'file';
   labelText: string;
   inputName: keyof PostMaintenanceContractDTO;
   inputType?: string;
-  required: boolean;
   readonly: boolean;
   options?: Array<{ value: string; label: string }>;
 }
@@ -27,7 +26,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Requester',
         inputName: 'requesterName',
         inputType: 'text',
-        required: true,
         readonly: true,
       },
       {
@@ -36,7 +34,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Client Name',
         inputName: 'clientName',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -45,7 +42,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'CLM Number (Header)',
         inputName: 'clmHeaderNumber',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -56,7 +52,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'CLM Number (Line)',
         inputName: 'clmLineNumber',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -65,7 +60,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Contract Type',
         inputName: 'typeContract',
         inputType: '',
-        required: true,
         readonly: false,
         options: contractTypeOptions,
       },
@@ -75,7 +69,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Company',
         inputName: 'company',
         inputType: '',
-        required: true,
         readonly: false,
         options: companyOptions,
       },
@@ -87,7 +80,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Start Date/Renewal',
         inputName: 'renewStartDate',
         inputType: 'date',
-        required: true,
         readonly: false,
       },
       {
@@ -96,7 +88,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'End Date/Renewal',
         inputName: 'renewEndDate',
         inputType: 'date',
-        required: true,
         readonly: false,
       },
       {
@@ -105,7 +96,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Contract Renew Qtd',
         inputName: 'contractRenewQtd',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -116,7 +106,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Frequency',
         inputName: 'frequency',
         inputType: '',
-        required: true,
         readonly: false,
         options: frequencyOptions,
       },
@@ -126,7 +115,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Scope',
         inputName: 'scope',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -135,7 +123,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Contract Total Value',
         inputName: 'contractTotalValue',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -146,7 +133,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Dollar Exchange Rate',
         inputName: 'dollarExchangeRate',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -155,7 +141,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Total Value USD',
         inputName: 'totalValueUSD',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -164,7 +149,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'GM',
         inputName: 'gm',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -175,7 +159,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Renew Index Percentage',
         inputName: 'renewIndexPercentage',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -184,7 +167,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Index',
         inputName: 'index',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -193,7 +175,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Payment Condition',
         inputName: 'paymentCondition',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -204,7 +185,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Inclusion Clauses',
         inputName: 'inclusionClauses',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -213,7 +193,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Inclusion Description',
         inputName: 'inclusionDescription',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -222,7 +201,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'legal Indemnification Obligations',
         inputName: 'legalIndemnificationObligations',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -233,7 +211,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'legal Warranty Obligations',
         inputName: 'legalWarrantyObligations',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -242,7 +219,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'legal Damage Cap',
         inputName: 'legalDamageCap',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -251,7 +227,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Legal Damage Cave',
         inputName: 'legalDamageCave',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -262,7 +237,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Legal Liquidated Damage',
         inputName: 'legalLiquidatedDamages',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -271,7 +245,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Justify',
         inputName: 'justify',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -280,7 +253,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Phone',
         inputName: 'phone',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -291,7 +263,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'AntiCorruption',
         inputName: 'antiCorruption',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -301,7 +272,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         inputName: 'uf',
         inputType: 'text',
         readonly: false,
-        required: false,
         options: ufOptions,
       },
       {
@@ -310,7 +280,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'SAP',
         inputName: 'sap',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -321,7 +290,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Contact',
         inputName: 'contact',
         inputType: 'email',
-        required: false,
         readonly: false,
       },
       {
@@ -330,17 +298,15 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Level Approval',
         inputType: '',
         inputName: 'approvalLevel',
-        required: true,
         readonly: false,
         options: approverLevelOptions,
       },
       {
         id: 33,
-        type: 'input',
+        type: 'file',
         labelText: 'Upload Files',
         inputType: 'file',
         inputName: 'files',
-        required: false,
         readonly: false,
       },
     ],

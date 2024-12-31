@@ -1,17 +1,20 @@
 'use client';
 
 import { useEffect } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { v4 as uuid4 } from 'uuid';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contract';
 
-import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import Request from '../../components/Request';
 import { UserSession } from '@/types/auth/sign';
 import { RequestStatusEnum } from '@/types/requests/enums';
 import { useRequestCreate } from '@/hooks/useRequestsCreate';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createMaintenanceContractSchema } from '@/schemas/maintenanceContract/createMaintenanceContract';
+import { Form } from '@/components/ui/form';
+
+import { FormContent } from '../../components/FormContent/FormContent';
 
 const INITIAL_MAINTENANCE_CONTRACT_FORM = {
   requesterId: '0',
@@ -60,6 +63,7 @@ export const MaintenanceContract = ({
   const { createMaintenanceContract } = useRequestCreate();
 
   const methods = useForm<PostMaintenanceContractDTO>({
+    resolver: zodResolver(createMaintenanceContractSchema()),
     defaultValues: {
       ...INITIAL_MAINTENANCE_CONTRACT_FORM,
       requesterName: userSession.name,
@@ -82,42 +86,11 @@ export const MaintenanceContract = ({
   }, [inputContractTotalValue, inputDollarExchangeRate, methods]);
 
   return (
-    <FormProvider {...methods}>
-      <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
-        <Content>
-          <div className="flex flex-col gap-4">
-            {MaintenanceContractFormInputs.map((data) => (
-              <Request.InputGroup key={uuid4()}>
-                {data.map((item) => {
-                  if (item.type === 'input') {
-                    return (
-                      <Request.Input
-                        key={uuid4()}
-                        labelText={item.labelText}
-                        inputName={item.inputName}
-                        inputType={item.inputType}
-                        required={item.required}
-                        readonly={item.id === 1 ? true : false}
-                      />
-                    );
-                  } else {
-                    return (
-                      <Request.Select
-                        key={item.id}
-                        inputName={item.inputName}
-                        labelText={item.labelText}
-                        options={item.options}
-                        required={item.required}
-                      />
-                    );
-                  }
-                })}
-              </Request.InputGroup>
-            ))}
-          </div>
-        </Content>
+    <Form {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmitForm)}>
+        <FormContent formData={MaintenanceContractFormInputs} />
         <Request.GroupButtons />
-      </Request.Form>
-    </FormProvider>
+      </form>
+    </Form>
   );
 };

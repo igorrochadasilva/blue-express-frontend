@@ -1,6 +1,5 @@
 'use client';
-import { v4 as uuid4 } from 'uuid';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import {
   MaintenanceContract,
@@ -8,7 +7,6 @@ import {
 } from '@/types/requests/maintenance.contract';
 import { UserSession } from '@/types/auth/sign';
 import Request from '../../../components/Request';
-import { Content } from '@/components/Content/Content';
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { isValidApprover } from '@/utils/isValidApprover';
@@ -20,6 +18,11 @@ import {
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { showSaveButtons } from '@/utils/showSaveButtons';
 import { useRequestUpdate } from '@/hooks/useRequestsUpdate';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { updateMaintenanceContractSchema } from '@/schemas/maintenanceContract/updateMaintenanceContract';
+import { Form } from '@/components/ui/form';
+
+import { FormContent } from '../../../components/FormContent/FormContent';
 
 interface MaintenanceContractIdProps {
   user: UserSession;
@@ -34,6 +37,7 @@ export const MaintenanceContractId = ({
   const { updateMaintenanceContract } = useRequestUpdate();
 
   const methods = useForm<UpdateMaintenanceContractDTO>({
+    resolver: zodResolver(updateMaintenanceContractSchema()),
     defaultValues: {
       ...maintenanceContractData,
       id: maintenanceContractData.id,
@@ -72,42 +76,11 @@ export const MaintenanceContractId = ({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(methods.formState.errors);
   return (
-    <FormProvider {...methods}>
-      <Request.Form onSubmitForm={methods.handleSubmit(onSubmitForm)}>
-        <Content>
-          <div className="flex flex-col gap-4">
-            {MaintenanceContractFormInputs.map((data) => (
-              <Request.InputGroup key={uuid4()}>
-                {data.map((item) => {
-                  if (item.type === 'input') {
-                    return (
-                      <Request.Input
-                        key={uuid4()}
-                        labelText={item.labelText}
-                        inputName={item.inputName}
-                        inputType={item.inputType}
-                        required={item.required}
-                        readonly={item.id === 1 ? true : false}
-                      />
-                    );
-                  } else {
-                    return (
-                      <Request.Select
-                        key={item.id}
-                        inputName={item.inputName}
-                        labelText={item.labelText}
-                        options={item.options}
-                        required={item.required}
-                      />
-                    );
-                  }
-                })}
-              </Request.InputGroup>
-            ))}
-          </div>
-        </Content>
+    <Form {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmitForm)}>
+        <FormContent formData={MaintenanceContractFormInputs} />
         {showApproverButtons && <Request.ApproverButtons />}
         {showSaveButtonsValidation && (
           <Request.GroupButtons
@@ -116,8 +89,8 @@ export const MaintenanceContractId = ({
             }
           />
         )}
-      </Request.Form>
+      </form>
       {modal && <ApproverModal />}
-    </FormProvider>
+    </Form>
   );
 };
