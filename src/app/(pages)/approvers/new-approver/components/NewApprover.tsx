@@ -43,6 +43,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ActionButtons } from './ActionButtons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createApproverSchema } from '@/schemas/approver/createApprover';
 
 interface NewApproverProps {
   usersData: User[];
@@ -52,6 +54,7 @@ export const NewApprover = ({ usersData }: NewApproverProps) => {
   const [userApproversList, setUserApproversList] = useState<Approver[]>([]);
 
   const methods = useForm<PostApproverDTO>({
+    resolver: zodResolver(createApproverSchema),
     defaultValues: {
       title: RequestsTitleEnum.MAINTENANCE_CONTRACT,
       company: RequestCompanyEnum.PS,
