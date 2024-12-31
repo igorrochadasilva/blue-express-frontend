@@ -33,7 +33,6 @@ export const SoftwareServiceContractId = ({
   user,
   softwareServiceContractData,
 }: SoftwareServiceContractIdProps) => {
-  console.log('🚀 ~ softwareServiceContractData:', softwareServiceContractData);
   const { modal, showModal, setApprovalDTO } = useApproverModal();
   const { updateSoftwareServiceContract } = useRequestUpdate();
 
@@ -45,7 +44,7 @@ export const SoftwareServiceContractId = ({
       id: softwareServiceContractData.id,
     },
   });
-  console.log(methods.formState.errors);
+
   const onSubmitForm: SubmitHandler<UpdateSoftwareServiceContractDTO> = (
     softwareServiceContractDTO
   ) => {

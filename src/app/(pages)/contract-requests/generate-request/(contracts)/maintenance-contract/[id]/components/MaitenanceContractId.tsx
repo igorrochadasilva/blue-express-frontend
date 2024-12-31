@@ -77,7 +77,7 @@ export const MaintenanceContractId = ({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(methods.formState.errors);
+
   return (
     <Form {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmitForm)}>
