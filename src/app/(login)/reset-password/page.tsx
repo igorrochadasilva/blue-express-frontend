@@ -1,6 +1,6 @@
 import { ResetPassword } from './components/ResetPassword';
 
-export default async function ResetPasswordPage({
+export default function ResetPasswordPage({
   searchParams,
 }: {
   searchParams: { token?: string };

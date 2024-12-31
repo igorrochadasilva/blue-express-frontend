@@ -6,6 +6,6 @@ interface RootProps {
   children: ReactNode;
 }
 
-export const Root = async ({ children }: RootProps) => {
+export const Root = ({ children }: RootProps) => {
   return <div className="flex flex-col w-full ">{children}</div>;
 };

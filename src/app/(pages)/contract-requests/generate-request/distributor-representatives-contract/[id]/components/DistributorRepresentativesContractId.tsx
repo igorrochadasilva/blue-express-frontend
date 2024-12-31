@@ -46,7 +46,7 @@ export const DistributorRepresentativesContractId = ({
 
   const onSubmitForm: SubmitHandler<
     UpdateDistributorRepresentativesContractDTO
-  > = async (distributorRepresentativesContractDTO) => {
+  > = (distributorRepresentativesContractDTO) => {
     updateDistributorRepresentativesContract(
       distributorRepresentativesContractDTO
     );

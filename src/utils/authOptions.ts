@@ -54,7 +54,7 @@ export const nextAuthOptions: NextAuthOptions = {
     maxAge: 1 * 60 * 60,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    jwt({ token, user }) {
       if (user) {
         const userData = user as unknown as UserSession;
 
@@ -69,7 +69,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
       return token;
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       session.user = {
         id: token.id,
         name: token.name,

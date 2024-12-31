@@ -5,6 +5,6 @@ interface PrivateLayoutProps {
   children: ReactNode;
 }
 
-export default async function PrivateLayout({ children }: PrivateLayoutProps) {
+export default function PrivateLayout({ children }: PrivateLayoutProps) {
   return <Layout>{children}</Layout>;
 }

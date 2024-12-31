@@ -50,17 +50,21 @@ export async function api({
     const result = await fetch(url.toString(), normalizedOptions);
 
     if (!result.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const errorDetails = await result.json();
 
       throw {
         statusCode: result.status,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         message: errorDetails.message,
       };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await result.json();
 
     return {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       data: data,
       statusCode: result.status,
     };

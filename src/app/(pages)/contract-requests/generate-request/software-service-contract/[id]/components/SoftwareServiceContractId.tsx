@@ -34,22 +34,12 @@ export const SoftwareServiceContractId = ({
   const { updateSoftwareServiceContract } = useRequestUpdate();
 
   const methods = useForm<UpdateSoftwareServiceContractDTO>({
-    mode: 'all',
     defaultValues: {
       ...softwareServiceContractData,
-      id: softwareServiceContractData.id,
-      contractTotalValue: Number(
-        softwareServiceContractData.contractTotalValue
-      ),
-      dollarExchangeRate: Number(
-        softwareServiceContractData.dollarExchangeRate
-      ),
-      totalValueUSD: Number(softwareServiceContractData.totalValueUSD),
-      gm: Number(softwareServiceContractData.gm),
     },
   });
 
-  const onSubmitForm: SubmitHandler<UpdateSoftwareServiceContractDTO> = async (
+  const onSubmitForm: SubmitHandler<UpdateSoftwareServiceContractDTO> = (
     softwareServiceContractDTO
   ) => {
     updateSoftwareServiceContract(softwareServiceContractDTO);
@@ -75,8 +65,8 @@ export const SoftwareServiceContractId = ({
       typeRequest: RequestsTitleEnum.SOFTWARE_SERVICE_CONTRACT,
       author: user.email,
       userID: user.id,
-      softwareServiceContractID: softwareServiceContractData.id,
-      level: softwareServiceContractData.currentLevel,
+      softwareServiceContractID: Number(softwareServiceContractData.id),
+      level: Number(softwareServiceContractData.currentLevel),
       routeRequest: RequestsRoutesEnum.SOFTWARE_SERVICE_CONTRACT,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

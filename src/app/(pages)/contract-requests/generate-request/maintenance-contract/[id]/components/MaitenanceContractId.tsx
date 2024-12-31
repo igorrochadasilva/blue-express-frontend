@@ -34,21 +34,13 @@ export const MaintenanceContractId = ({
   const { updateMaintenanceContract } = useRequestUpdate();
 
   const methods = useForm<UpdateMaintenanceContractDTO>({
-    mode: 'all',
     defaultValues: {
       ...maintenanceContractData,
       id: maintenanceContractData.id,
-      contractTotalValue: Number(maintenanceContractData.contractTotalValue),
-      dollarExchangeRate: Number(maintenanceContractData.dollarExchangeRate),
-      totalValueUSD: Number(maintenanceContractData.totalValueUSD),
-      gm: Number(maintenanceContractData.gm),
-      renewIndexPercentage: Number(
-        maintenanceContractData.renewIndexPercentage
-      ),
     },
   });
 
-  const onSubmitForm: SubmitHandler<UpdateMaintenanceContractDTO> = async (
+  const onSubmitForm: SubmitHandler<UpdateMaintenanceContractDTO> = (
     maintenanceContractDTO
   ) => {
     updateMaintenanceContract(maintenanceContractDTO);
@@ -74,8 +66,8 @@ export const MaintenanceContractId = ({
       typeRequest: RequestsTitleEnum.MAINTENANCE_CONTRACT,
       author: user.email,
       userID: user.id,
-      maintenanceContractID: maintenanceContractData.id,
-      level: maintenanceContractData.currentLevel,
+      maintenanceContractID: Number(maintenanceContractData.id),
+      level: Number(maintenanceContractData.currentLevel),
       routeRequest: RequestsRoutesEnum.MAINTENANCE_CONTRACT,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

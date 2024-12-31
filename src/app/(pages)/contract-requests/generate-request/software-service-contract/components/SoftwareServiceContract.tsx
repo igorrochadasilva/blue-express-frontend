@@ -15,7 +15,7 @@ import { useRequestCreate } from '@/hooks/useRequestsCreate';
 
 const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContractDTO = {
   requesterName: 'John Doe',
-  requesterId: 1,
+  requesterId: '1',
   clientName: 'Tech Solutions Inc.',
   clmHeaderNumber: 'CLM2024-001',
   clmLineNumber: 'LN002',
@@ -26,10 +26,10 @@ const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContractDTO = {
   renewStartDate: '2024-01-01',
   renewEndDate: '2025-01-01',
   scope: 'Provide annual software maintenance and updates',
-  contractTotalValue: 20,
-  dollarExchangeRate: 5,
-  totalValueUSD: 100,
-  gm: 1,
+  contractTotalValue: '20',
+  dollarExchangeRate: '5',
+  totalValueUSD: '100',
+  gm: '1',
   paymentCondition: 'Quarterly payments',
   inclusionClauses: 'All upgrades and patches are included',
   inclusionDescription: 'Includes major and minor software updates',
@@ -41,7 +41,7 @@ const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContractDTO = {
   justify:
     'This contract ensures continuous software support and upgrades as required by SLA.',
   requestId: '',
-  currentLevel: 1,
+  currentLevel: '1',
   approvalLevel: 'controller',
   phone: '+1-800-555-1234',
   contact: 'support@techsolutions.com',
@@ -60,14 +60,13 @@ export const SoftwareServiceContract = ({
   const { createSoftwareServiceContract } = useRequestCreate();
 
   const methods = useForm<PostSoftwareServiceContractDTO>({
-    mode: 'all',
     defaultValues: {
       ...INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM,
       requesterName: userSession.name,
     },
   });
 
-  const onSubmitForm: SubmitHandler<PostSoftwareServiceContractDTO> = async (
+  const onSubmitForm: SubmitHandler<PostSoftwareServiceContractDTO> = (
     softwareServiceContractDTO
   ) => {
     createSoftwareServiceContract(softwareServiceContractDTO);
@@ -78,8 +77,8 @@ export const SoftwareServiceContract = ({
 
   useEffect(() => {
     const inputTotalValueUSD =
-      inputContractTotalValue / inputDollarExchangeRate;
-    methods.setValue('totalValueUSD', inputTotalValueUSD);
+      Number(inputContractTotalValue) / Number(inputDollarExchangeRate);
+    methods.setValue('totalValueUSD', String(inputTotalValueUSD));
   }, [inputContractTotalValue, inputDollarExchangeRate, methods]);
 
   return (

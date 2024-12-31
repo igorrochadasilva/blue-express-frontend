@@ -6,7 +6,7 @@ interface IButtonProps {
   link: string;
 }
 
-const Button = async ({ text, link }: IButtonProps) => (
+const Button = ({ text, link }: IButtonProps) => (
   <Link
     href={link}
     className="bg-white p-5 flex justify-center rounded shadow-sm font-medium grow hover:bg-white/50"

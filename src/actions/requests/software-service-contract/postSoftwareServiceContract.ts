@@ -23,11 +23,7 @@ export async function postSoftwareServiceContract(
         },
         body: JSON.stringify({
           ...data,
-          contractTotalValue: Number(data.contractTotalValue),
-          dollarExchangeRate: Number(data.dollarExchangeRate),
-          gm: Number(data.gm),
-          requesterId: Number(user.id),
-          totalValueUSD: Number(data.totalValueUSD),
+          requesterId: String(user.id),
         } as PostSoftwareServiceContractDTO),
       },
       params: {

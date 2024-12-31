@@ -15,7 +15,7 @@ interface ContainerProps {
   btnBgHover?: string;
 }
 
-export const Container = async ({
+export const Container = ({
   children,
   title,
   showBtnNavigate = false,

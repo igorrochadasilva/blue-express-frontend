@@ -2,7 +2,7 @@ import { RequestsTitleEnum } from '../types/requests/enums';
 
 interface GenerateRouteById {
   title: string;
-  id: number;
+  id: string | number;
 }
 
 export const generateRouteById = ({ title, id }: GenerateRouteById) => {

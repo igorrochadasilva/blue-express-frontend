@@ -14,7 +14,7 @@ import { RequestStatusEnum } from '@/types/requests/enums';
 import { useRequestCreate } from '@/hooks/useRequestsCreate';
 
 const INITIAL_MAINTENANCE_CONTRACT_FORM = {
-  requesterId: 0,
+  requesterId: '0',
   requesterName: '',
   clientName: 'clientName',
   clmHeaderNumber: 'clmHeaderNumber',
@@ -24,15 +24,15 @@ const INITIAL_MAINTENANCE_CONTRACT_FORM = {
   company: 'PD',
   renewStartDate: '2024-12-06',
   renewEndDate: '2024-12-08',
-  contractRenewQtd: 0,
+  contractRenewQtd: '0',
   frequency: 'monthly',
   scope: 'scope',
-  contractTotalValue: 10,
-  dollarExchangeRate: 5,
-  totalValueUSD: 50,
-  gm: 1,
-  renewIndexPercentage: 1,
-  index: 1,
+  contractTotalValue: '10',
+  dollarExchangeRate: '5',
+  totalValueUSD: '50',
+  gm: '1',
+  renewIndexPercentage: '1',
+  index: '1',
   paymentCondition: 'paymentCondition',
   inclusionClauses: 'inclusionClauses',
   inclusionDescription: 'inclusionDescription',
@@ -60,14 +60,13 @@ export const MaintenanceContract = ({
   const { createMaintenanceContract } = useRequestCreate();
 
   const methods = useForm<PostMaintenanceContractDTO>({
-    mode: 'all',
     defaultValues: {
       ...INITIAL_MAINTENANCE_CONTRACT_FORM,
       requesterName: userSession.name,
     },
   });
 
-  const onSubmitForm: SubmitHandler<PostMaintenanceContractDTO> = async (
+  const onSubmitForm: SubmitHandler<PostMaintenanceContractDTO> = (
     maintenanceContractDTO
   ) => {
     createMaintenanceContract(maintenanceContractDTO);
@@ -78,8 +77,8 @@ export const MaintenanceContract = ({
 
   useEffect(() => {
     const inputTotalValueUSD =
-      inputContractTotalValue / inputDollarExchangeRate;
-    methods.setValue('totalValueUSD', inputTotalValueUSD);
+      Number(inputContractTotalValue) / Number(inputDollarExchangeRate);
+    methods.setValue('totalValueUSD', String(inputTotalValueUSD));
   }, [inputContractTotalValue, inputDollarExchangeRate, methods]);
 
   return (

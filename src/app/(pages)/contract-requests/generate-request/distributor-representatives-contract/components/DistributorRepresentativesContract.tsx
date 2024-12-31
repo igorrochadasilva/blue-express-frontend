@@ -60,7 +60,7 @@ export const DistributorRepresentativesContract = ({
 
   const onSubmitForm: SubmitHandler<
     PostDistributorRepresentativesContractDTO
-  > = async (distributorRepresentativesContractDTO) => {
+  > = (distributorRepresentativesContractDTO) => {
     createDistributorRepresentativesContract(
       distributorRepresentativesContractDTO
     );

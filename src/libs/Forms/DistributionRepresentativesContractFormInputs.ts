@@ -125,7 +125,7 @@ export const DistributorRepresentativesFormInputs: DistributorRepresentativesCon
         type: 'input',
         labelText: 'Commission Percentage',
         inputName: 'commissionPercentage',
-        inputType: 'number',
+        inputType: 'text',
         required: false,
         readonly: false,
       },

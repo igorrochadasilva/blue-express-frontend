@@ -47,7 +47,7 @@ const RequestsList = ({ requests }: RequestsListProps) => {
       request: Request,
       index: number
     ): RequestItem => ({
-      id: request.id,
+      id: Number(request.id),
       type: request.title,
       status: request.status,
       statusColor: STATUS_COLORS[request.status] || '#ccc',
