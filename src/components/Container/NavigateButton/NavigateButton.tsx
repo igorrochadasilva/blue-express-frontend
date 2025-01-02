@@ -12,7 +12,7 @@ interface NavigateButtonProps {
   btnBgHover?: string;
 }
 
-export const NavigateButton = async ({
+export const NavigateButton = ({
   btnNavigateLink,
   btnNavigateText,
   btnTextColor,

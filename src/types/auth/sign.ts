@@ -2,7 +2,7 @@ import { ErrorResponse } from '../error';
 
 export interface SignInDTO {
   email: string;
-  password: string;
+  password?: string;
 }
 
 export interface UserSession {

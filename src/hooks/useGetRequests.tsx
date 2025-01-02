@@ -38,5 +38,6 @@ export async function getRequests() {
 
   const combinedRequests = Object.values(allRequests).flat();
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return combinedRequests;
 }

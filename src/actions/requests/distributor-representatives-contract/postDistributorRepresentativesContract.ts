@@ -24,7 +24,7 @@ export async function postDistributorRepresentativesContract(
         },
         body: JSON.stringify({
           ...data,
-          requesterId: Number(user.id),
+          requesterId: String(user.id),
         }),
       },
       params: {

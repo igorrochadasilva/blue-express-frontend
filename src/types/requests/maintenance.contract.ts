@@ -1,8 +1,7 @@
-import { File } from 'buffer';
 import { ErrorResponse } from '../error';
 
 export interface MaintenanceContract {
-  id: number;
+  id: string;
   title: string;
   requesterName: string;
   clientName: string;
@@ -13,7 +12,7 @@ export interface MaintenanceContract {
   status: string;
   renewStartDate: string;
   renewEndDate: string;
-  contractRenewQtd: number;
+  contractRenewQtd: string;
   frequency: string;
   scope: string;
   contractTotalValue: string;
@@ -21,7 +20,7 @@ export interface MaintenanceContract {
   totalValueUSD: string;
   gm: string;
   renewIndexPercentage: string;
-  index: number;
+  index: string;
   paymentCondition: string;
   inclusionClauses: string;
   inclusionDescription: string;
@@ -31,7 +30,7 @@ export interface MaintenanceContract {
   legalDamageCave: string;
   legalLiquidatedDamages: string;
   justify: string;
-  currentLevel: number;
+  currentLevel: string;
   currentApproverName: string;
   author: string;
   approvalLevel: string;
@@ -55,25 +54,28 @@ export interface GetMaintenanceContractByIdResponse extends ErrorResponse {
 }
 
 export interface PostMaintenanceContractDTO {
-  requesterId: number;
+  requesterId: string;
   requesterName: string;
   clientName: string;
   clmHeaderNumber: string;
   clmLineNumber: string;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   typeContract: 'renovation' | 'new' | string;
   company: string;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   status: 'waiting for approval' | 'approved' | 'disapproved' | string; // Enum can be refined further
   renewStartDate: string; // ISO date string (e.g., "2023-01-01")
   renewEndDate: string; // ISO date string (e.g., "2024-01-01")
-  contractRenewQtd: number;
+  contractRenewQtd: string;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   frequency: 'monthly' | 'yearly' | string; // Enum can be refined further
   scope: string;
-  contractTotalValue: number;
-  dollarExchangeRate: number;
-  totalValueUSD: number;
-  gm: number;
-  renewIndexPercentage: number;
-  index: number;
+  contractTotalValue: string;
+  dollarExchangeRate: string;
+  totalValueUSD: string;
+  gm: string;
+  renewIndexPercentage: string;
+  index: string;
   paymentCondition: string;
   inclusionClauses: string;
   inclusionDescription: string;
@@ -89,7 +91,7 @@ export interface PostMaintenanceContractDTO {
   antiCorruption: string;
   uf: string; // State abbreviation
   sap: string;
-  files?: File[];
+  files?: string | number | readonly string[] | undefined; //File[];
 }
 
 export interface PostMaintenanceContractResponse extends ErrorResponse {
@@ -98,8 +100,8 @@ export interface PostMaintenanceContractResponse extends ErrorResponse {
 
 export interface UpdateMaintenanceContractDTO
   extends Omit<PostMaintenanceContractDTO, 'requesterId'> {
-  id: number;
-  requesterId?: number;
+  id: string;
+  requesterId?: string;
 }
 
 export interface UpdateMaintenanceContractResponse extends ErrorResponse {

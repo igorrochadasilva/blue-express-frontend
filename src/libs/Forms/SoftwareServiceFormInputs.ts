@@ -13,7 +13,6 @@ export interface SoftwareServiceContractFormInputsProps {
   labelText: string;
   inputName: keyof PostSoftwareServiceContractDTO;
   inputType?: string;
-  required: boolean;
   readonly: boolean;
   options?: Array<{ value: string; label: string }>;
 }
@@ -27,7 +26,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Requester',
         inputName: 'requesterName',
         inputType: 'text',
-        required: true,
         readonly: true,
       },
       {
@@ -36,7 +34,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Client Name',
         inputName: 'clientName',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -45,7 +42,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'CLM Number (Header)',
         inputName: 'clmHeaderNumber',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -56,7 +52,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'CLM Number (Line)',
         inputName: 'clmLineNumber',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -65,7 +60,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Contract Type',
         inputName: 'typeContract',
         inputType: '',
-        required: true,
         readonly: false,
         options: contractTypeOptions,
       },
@@ -75,7 +69,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Company',
         inputName: 'company',
         inputType: '',
-        required: true,
         readonly: false,
         options: companyOptions,
       },
@@ -87,7 +80,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Start Date/Renewal',
         inputName: 'renewStartDate',
         inputType: 'date',
-        required: true,
         readonly: false,
       },
       {
@@ -96,7 +88,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'End Date/Renewal',
         inputName: 'renewEndDate',
         inputType: 'date',
-        required: true,
         readonly: false,
       },
       {
@@ -105,7 +96,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Company Type',
         inputName: 'companyType',
         inputType: '',
-        required: true,
         readonly: false,
         options: companyTypeOptions,
       },
@@ -117,7 +107,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Scope',
         inputName: 'scope',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
       {
@@ -126,7 +115,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Payment Condition',
         inputName: 'paymentCondition',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -135,7 +123,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Contract Total Value',
         inputName: 'contractTotalValue',
         inputType: 'text',
-        required: true,
         readonly: false,
       },
     ],
@@ -145,8 +132,7 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         type: 'input',
         labelText: 'Dollar Exchange Rate',
         inputName: 'dollarExchangeRate',
-        inputType: 'number',
-        required: true,
+        inputType: 'text',
         readonly: false,
       },
       {
@@ -154,8 +140,7 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         type: 'input',
         labelText: 'Total Value USD',
         inputName: 'totalValueUSD',
-        inputType: 'number',
-        required: true,
+        inputType: 'text',
         readonly: false,
       },
       {
@@ -163,8 +148,7 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         type: 'input',
         labelText: 'GM',
         inputName: 'gm',
-        inputType: 'number',
-        required: false,
+        inputType: 'text',
         readonly: false,
       },
     ],
@@ -175,7 +159,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Inclusion Clauses',
         inputName: 'inclusionClauses',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -184,7 +167,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Inclusion Description',
         inputName: 'inclusionDescription',
         inputType: '',
-        required: false,
         readonly: false,
       },
       {
@@ -193,7 +175,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'legal Indemnification Obligations',
         inputName: 'legalIndemnificationObligations',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -204,7 +185,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Legal Warranty Obligations',
         inputName: 'legalWarrantyObligations',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -213,7 +193,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'legal Damage Cap',
         inputName: 'legalDamageCap',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -222,7 +201,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Legal Damage Cave',
         inputName: 'legalDamageCave',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -233,7 +211,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Legal Liquidated Damage',
         inputName: 'legalLiquidatedDamages',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -242,7 +219,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Justify',
         inputName: 'justify',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -251,7 +227,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Phone',
         inputName: 'phone',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -262,7 +237,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'AntiCorruption',
         inputName: 'antiCorruption',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
       {
@@ -271,7 +245,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'UF',
         inputName: 'uf',
         inputType: '',
-        required: false,
         readonly: false,
         options: ufOptions,
       },
@@ -281,7 +254,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'SAP',
         inputName: 'sap',
         inputType: 'text',
-        required: false,
         readonly: false,
       },
     ],
@@ -292,7 +264,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Contact',
         inputName: 'contact',
         inputType: 'email',
-        required: false,
         readonly: false,
       },
       {
@@ -301,7 +272,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Approval level',
         inputName: 'approvalLevel',
         inputType: '',
-        required: false,
         readonly: false,
         options: approverLevelOptions,
       },
@@ -311,7 +281,6 @@ export const SoftwareServiceFormInputs: SoftwareServiceContractFormInputsProps[]
         labelText: 'Upload Files',
         inputType: 'file',
         inputName: 'files',
-        required: false,
         readonly: false,
       },
     ],

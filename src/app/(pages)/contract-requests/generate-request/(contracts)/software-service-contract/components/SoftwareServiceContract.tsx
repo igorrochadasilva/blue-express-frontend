@@ -1,0 +1,94 @@
+'use client';
+
+import { useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { UserSession } from '@/types/auth/sign';
+import { RequestStatusEnum } from '@/types/requests/enums';
+import { PostSoftwareServiceContractDTO } from '@/types/requests/softwaerServiceContract';
+import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
+import { useRequestCreate } from '@/hooks/useRequestsCreate';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createSoftwareServiceContractSchema } from '@/schemas/softwareServiceContract/createSoftwareServiceContract';
+import { Form } from '@/components/ui/form';
+import { FormContent } from '../../components/FormContent/FormContent';
+import { GroupButtons } from '../../components/GroupButtons/GroupButtons';
+
+const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContractDTO = {
+  requesterName: 'John Doe',
+  requesterId: '1',
+  clientName: 'Tech Solutions Inc.',
+  clmHeaderNumber: 'CLM2024-001',
+  clmLineNumber: 'LN002',
+  typeContract: 'renovation',
+  companyType: 'public',
+  company: 'PD',
+  status: RequestStatusEnum.WAITING_FOR_APPROVAL,
+  renewStartDate: '2024-01-01',
+  renewEndDate: '2025-01-01',
+  scope: 'Provide annual software maintenance and updates',
+  contractTotalValue: '20',
+  dollarExchangeRate: '5',
+  totalValueUSD: '100',
+  gm: '1',
+  paymentCondition: 'Quarterly payments',
+  inclusionClauses: 'All upgrades and patches are included',
+  inclusionDescription: 'Includes major and minor software updates',
+  legalIndemnificationObligations: 'Provider indemnifies client',
+  legalWarrantyObligations: '12 months on services rendered',
+  legalDamageCap: 'Maximum liability $50,000',
+  legalDamageCave: 'No damages for natural disasters',
+  legalLiquidatedDamages: 'Agreed at $500 per day of delay',
+  justify:
+    'This contract ensures continuous software support and upgrades as required by SLA.',
+  requestId: '',
+  currentLevel: '1',
+  approvalLevel: 'controller',
+  phone: '+1-800-555-1234',
+  contact: 'support@techsolutions.com',
+  antiCorruption: 'No bribery or unethical practices allowed',
+  uf: 'SP',
+  sap: 'SAP54321',
+};
+
+interface SoftwareServiceContractProps {
+  userSession: UserSession;
+}
+
+export const SoftwareServiceContract = ({
+  userSession,
+}: SoftwareServiceContractProps) => {
+  const { createSoftwareServiceContract } = useRequestCreate();
+
+  const methods = useForm<PostSoftwareServiceContractDTO>({
+    resolver: zodResolver(createSoftwareServiceContractSchema()),
+    defaultValues: {
+      ...INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM,
+      requesterName: userSession.name,
+    },
+  });
+
+  const onSubmitForm: SubmitHandler<PostSoftwareServiceContractDTO> = (
+    softwareServiceContractDTO
+  ) => {
+    createSoftwareServiceContract(softwareServiceContractDTO);
+  };
+
+  const inputContractTotalValue = methods.watch('contractTotalValue');
+  const inputDollarExchangeRate = methods.watch('dollarExchangeRate');
+
+  useEffect(() => {
+    const inputTotalValueUSD =
+      Number(inputContractTotalValue) / Number(inputDollarExchangeRate);
+    methods.setValue('totalValueUSD', String(inputTotalValueUSD));
+  }, [inputContractTotalValue, inputDollarExchangeRate, methods]);
+
+  return (
+    <Form {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmitForm)}>
+        <FormContent formData={SoftwareServiceFormInputs} />
+        <GroupButtons />
+      </form>
+    </Form>
+  );
+};

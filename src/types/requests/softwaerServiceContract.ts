@@ -1,7 +1,7 @@
 import { ErrorResponse } from '../error';
 
 export interface SoftwareServiceContract {
-  id: number;
+  id: string;
   title: string;
   requesterName: string;
   clientName: string;
@@ -27,7 +27,7 @@ export interface SoftwareServiceContract {
   legalDamageCave: string;
   legalLiquidatedDamages: string;
   justify: string;
-  currentLevel: number;
+  currentLevel: string;
   currentApproverName: string;
   approvalLevel: string;
   phone: string;
@@ -52,7 +52,7 @@ export interface GetSoftwareServiceContractByIdResponse extends ErrorResponse {
 
 export interface PostSoftwareServiceContractDTO {
   requesterName: string;
-  requesterId: number;
+  requesterId: string;
   clientName: string;
   clmHeaderNumber: string;
   clmLineNumber: string;
@@ -63,10 +63,10 @@ export interface PostSoftwareServiceContractDTO {
   renewStartDate: string;
   renewEndDate: string;
   scope: string;
-  contractTotalValue: number;
-  dollarExchangeRate: number;
-  totalValueUSD: number;
-  gm: number;
+  contractTotalValue: string;
+  dollarExchangeRate: string;
+  totalValueUSD: string;
+  gm: string;
   paymentCondition: string;
   inclusionClauses: string;
   inclusionDescription: string;
@@ -77,7 +77,7 @@ export interface PostSoftwareServiceContractDTO {
   legalLiquidatedDamages: string;
   justify: string;
   requestId: string;
-  currentLevel: number;
+  currentLevel: string;
   approvalLevel: string;
   phone: string;
   contact: string;
@@ -93,8 +93,8 @@ export interface PostSoftwareServiceContractResponse extends ErrorResponse {
 
 export interface UpdateSoftwareServiceContractDTO
   extends Omit<PostSoftwareServiceContractDTO, 'requesterId'> {
-  id: number;
-  requesterId?: number;
+  id: string;
+  requesterId?: string;
 }
 
 export interface UpdateSoftwareServiceContractResponse extends ErrorResponse {

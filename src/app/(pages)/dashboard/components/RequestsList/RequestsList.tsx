@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import ListRequests from './List';
 import { RequestsData } from '@/hooks/useGetRequests';
 import { RequestItem } from '@/types/dashboard/dashboard';
 import { Request } from '@/types/global/types';
-import { formatApproverName, formatDate } from '@/libs/utils';
+
 import { generateRouteById } from '@/utils/generateRouteById';
+import { formatDate } from '@/utils/format/formatDate';
+import { formatApproverName } from '@/utils/format/formatApproverName';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import Link from 'next/link';
 
 const STATUS_COLORS: Record<string, string> = {
   approved: '#00D134',
@@ -36,7 +47,7 @@ const RequestsList = ({ requests }: RequestsListProps) => {
       request: Request,
       index: number
     ): RequestItem => ({
-      id: request.id,
+      id: Number(request.id),
       type: request.title,
       status: request.status,
       statusColor: STATUS_COLORS[request.status] || '#ccc',
@@ -58,32 +69,51 @@ const RequestsList = ({ requests }: RequestsListProps) => {
   }, [requests]);
 
   return (
-    <ListRequests.Root>
-      <ListRequests.Title text="Total status of requests" />
-      <ListRequests.Table>
-        <ListRequests.Thead />
-        <tbody>
+    <div className="flex flex-col text-sm">
+      <TableCaption className="w-full block text-left my-3">
+        Total status of requests
+      </TableCaption>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Type</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Contract Date</TableHead>
+            <TableHead>Requester</TableHead>
+            <TableHead>Approver</TableHead>
+            <TableHead>SLA</TableHead>
+            <TableHead>Contract ID</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {listRequests &&
             listRequests.map((request: RequestItem) => {
               return (
-                <ListRequests.Content
-                  key={request.order}
-                  type={request.type}
-                  status={request.status}
-                  statusColor={request.statusColor}
-                  requestDate={request.requestDate}
-                  order={request.order}
-                  link={request.link}
-                  requestId={request.id}
-                  sla={request.SLA}
-                  requester={request.requester}
-                  approver={request.approver}
-                />
+                <TableRow key={request.order}>
+                  <TableCell>{request.type}</TableCell>
+                  <TableCell style={{ color: request.statusColor }}>
+                    {request.status}
+                  </TableCell>
+                  <TableCell>{request.requestDate}</TableCell>
+                  <TableCell>{request.requester}</TableCell>
+                  <TableCell>{request.approver}</TableCell>
+                  <TableCell>{request.SLA}</TableCell>
+                  <TableCell>{request.id}</TableCell>
+                  <TableCell>
+                    <Link
+                      href={request.link}
+                      className="rounded border-[1px] py-1 px-2 border-[#F3AF25] text-[#F3AF25]"
+                    >
+                      Evaluate
+                    </Link>
+                  </TableCell>
+                </TableRow>
               );
             })}
-        </tbody>
-      </ListRequests.Table>
-    </ListRequests.Root>
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 export default RequestsList;

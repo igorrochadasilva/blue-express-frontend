@@ -46,7 +46,7 @@ export interface GetDistributorRepresentativesContractByIdResponse
 
 export interface PostDistributorRepresentativesContractDTO {
   requesterName?: string;
-  requesterId: number;
+  requesterId: string;
   clmHeaderNumber: string;
   clmLineNumber?: string;
   typeContract: string;
@@ -56,7 +56,7 @@ export interface PostDistributorRepresentativesContractDTO {
   renewEndDate: string;
   nameRepresentativeDistributor: string;
   vendor?: string;
-  commissionPercentage?: number;
+  commissionPercentage?: string;
   manager?: string;
   activity?: string;
   justify: string;
@@ -81,7 +81,7 @@ export interface PostDistributorRepresentativesContractResponse
 export interface UpdateDistributorRepresentativesContractDTO
   extends Omit<PostDistributorRepresentativesContractDTO, 'requesterId'> {
   id: number;
-  requesterId?: number;
+  requesterId?: string;
 }
 
 export interface UpdateDistributorRepresentativesContractResponse

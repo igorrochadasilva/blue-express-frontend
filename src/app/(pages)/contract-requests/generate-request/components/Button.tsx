@@ -1,0 +1,16 @@
+import { ChevronRightIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
+
+interface IButtonProps {
+  text: string;
+  link: string;
+}
+
+export const Button = ({ text, link }: IButtonProps) => (
+  <Link
+    href={link}
+    className="bg-white p-5 flex justify-center rounded shadow-sm font-medium grow hover:bg-white/50"
+  >
+    {text} <ChevronRightIcon className="w-6 ml-3 text-be_first_color" />
+  </Link>
+);

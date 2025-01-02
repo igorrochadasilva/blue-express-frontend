@@ -1,5 +1,4 @@
 export const periodOptions = [
-  { value: '', label: 'select' },
   { value: '1', label: '1 days' },
   { value: '10', label: '10 days' },
   { value: '30', label: '30 days' },
@@ -85,7 +84,7 @@ export const typeRequestOrderOptions = [
 ];
 
 export const contractTypesOptions = [
-  { value: '', label: 'select' },
+  { value: 'all', label: 'all' },
   { value: 'waiting for approval', label: 'waiting for approval' },
   { value: 'waiting for information', label: 'waiting for information' },
   { value: 'approved', label: 'approved' },

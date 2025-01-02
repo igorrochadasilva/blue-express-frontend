@@ -1,4 +1,3 @@
-import { RegisterOptions } from 'react-hook-form';
 import { PostApproverDTO } from './approvers';
 
 export interface NewApproverFormOption {
@@ -19,8 +18,6 @@ export interface NewApproverFormInput {
   labelText: string;
   inputName: keyof PostApproverDTO;
   inputType: string;
-  required: boolean;
   readonly: boolean;
   options?: SelectOptions[] | UserNames[];
-  validation?: RegisterOptions<PostApproverDTO, keyof PostApproverDTO>;
 }

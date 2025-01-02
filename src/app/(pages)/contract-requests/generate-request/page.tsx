@@ -1,25 +1,25 @@
 import { Container } from '@/components/Container/Container';
-import GenerateRequest from './components';
+import { Button } from './components/Button';
 
-export default async function GenerateContractsPage() {
+export default function GenerateContractsPage() {
   return (
     <Container title="Generate Contracts">
-      <GenerateRequest.Root>
-        <GenerateRequest.Button
+      <div className="mt-10 rounded flex justify-between items-center gap-6">
+        <Button
           text="Maintenance Contract"
           link={'/contract-requests/generate-request/maintenance-contract'}
         />
-        <GenerateRequest.Button
+        <Button
           text="Software Service Contract"
           link={'/contract-requests/generate-request/software-service-contract'}
         />
-        <GenerateRequest.Button
+        <Button
           text="Distributor Representative Contract"
           link={
             '/contract-requests/generate-request/distributor-representatives-contract'
           }
         />
-      </GenerateRequest.Root>
+      </div>
     </Container>
   );
 }

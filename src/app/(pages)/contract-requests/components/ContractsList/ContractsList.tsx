@@ -1,9 +1,18 @@
-import { formatApproverName } from '../../../../../libs/utils';
 import { v4 as uuid4 } from 'uuid';
-import ListRequests from './List';
-import { RequestsData } from '../../../../../hooks/useGetRequests';
-import { generateRouteById } from '../../../../../utils/generateRouteById';
-import { Request } from '../../../../../types/global/types';
+import { RequestsData } from '@/hooks/useGetRequests';
+import { generateRouteById } from '@/utils/generateRouteById';
+import { Request } from '@/types/global/types';
+import { formatApproverName } from '@/utils/format/formatApproverName';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import Link from 'next/link';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 
 interface ContractsListProps {
   requests: RequestsData;
@@ -19,10 +28,20 @@ const STATUS_COLORS: Record<string, string> = {
 
 const ContractsList = ({ requests }: ContractsListProps) => {
   return (
-    <ListRequests.Root>
-      <ListRequests.Thead />
-      <tbody>
-        {requests.map((request: Request, index: number) => {
+    <Table className="">
+      <TableHeader className="bg-[#F8F8F8]">
+        <TableRow>
+          <TableHead>Type</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Validity</TableHead>
+          <TableHead>Request ID</TableHead>
+          <TableHead>Level</TableHead>
+          <TableHead>Approver</TableHead>
+          <TableHead></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {requests.map((request: Request) => {
           const statusColor = STATUS_COLORS[request.status] || '#ccc';
           const formattedApprovers = formatApproverName(
             request.currentApproverName
@@ -31,24 +50,27 @@ const ContractsList = ({ requests }: ContractsListProps) => {
             title: request.title,
             id: request.id,
           });
-
           return (
-            <ListRequests.Content
-              key={uuid4()}
-              order={index}
-              type={request.title}
-              statusColor={statusColor}
-              status={request.status}
-              validity={request.renewEndDate}
-              requestId={String(request.id)}
-              level={request.currentLevel}
-              approver={formattedApprovers}
-              link={requestLink}
-            />
+            <TableRow key={uuid4()}>
+              <TableCell>{request.title}</TableCell>
+              <TableCell style={{ color: statusColor }}>
+                {request.status}
+              </TableCell>
+              <TableCell>{request.renewEndDate}</TableCell>
+              <TableCell>{request.id}</TableCell>
+              <TableCell>{request.currentLevel}</TableCell>
+              <TableCell>{formattedApprovers}</TableCell>
+              <TableCell>{request.id}</TableCell>
+              <TableCell>
+                <Link href={requestLink}>
+                  <ArrowTopRightOnSquareIcon className="h-5" />
+                </Link>
+              </TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </ListRequests.Root>
+      </TableBody>
+    </Table>
   );
 };
 
