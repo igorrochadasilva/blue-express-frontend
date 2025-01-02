@@ -6,7 +6,6 @@ import { Approver } from '@/types/approvers/approvers';
 import { UserSession } from '@/types/auth/sign';
 
 import { deleteApprover } from '@/actions/approver/deleteApprover';
-import { Modal } from '@/components/Modal/Modal';
 import { notifyMessage } from '@/utils/notifyMessage';
 import {
   Table,
@@ -16,6 +15,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { TrashIcon } from '@heroicons/react/24/solid';
 
 interface ApproversProps {
@@ -25,18 +34,18 @@ interface ApproversProps {
 
 export const Approvers = ({ approversData }: ApproversProps) => {
   const [approvers, setApprovers] = useState(approversData);
-  const [showTrashModal, setShowTrashModal] = useState(false);
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
   const [selectedApproverId, setSelectedApproverId] = useState<number | null>(
     null
   );
 
   const handleTrashClick = useCallback((id: number) => {
-    setShowTrashModal(true);
+    setIsAlertDialogOpen(true);
     setSelectedApproverId(id);
   }, []);
 
   const closeTrashModal = useCallback(() => {
-    setShowTrashModal(false);
+    setIsAlertDialogOpen(false);
     setSelectedApproverId(null);
   }, []);
 
@@ -94,12 +103,32 @@ export const Approvers = ({ approversData }: ApproversProps) => {
             })}
         </TableBody>
       </Table>
-      <Modal
-        text="Are you sure you want to delete this approver?"
-        showModal={showTrashModal}
-        setCloseModal={closeTrashModal}
-        action={handleDeleteApprover}
-      />
+      <AlertDialog
+        open={isAlertDialogOpen}
+        defaultOpen={isAlertDialogOpen}
+        onOpenChange={() => setIsAlertDialogOpen(false)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to delete this approver?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-500/70"
+              onClick={handleDeleteApprover}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

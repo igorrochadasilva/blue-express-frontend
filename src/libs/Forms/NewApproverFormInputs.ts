@@ -29,7 +29,7 @@ export const NewApproverFormInputs: NewApproverFormInput[][] = [
       type: 'input',
       labelText: 'Approval Level',
       inputName: 'level',
-      inputType: 'number',
+      inputType: 'text',
       readonly: false,
     },
   ],
@@ -39,7 +39,7 @@ export const NewApproverFormInputs: NewApproverFormInput[][] = [
       type: 'input',
       labelText: 'Competence',
       inputName: 'competence',
-      inputType: 'number',
+      inputType: 'text',
       readonly: false,
     },
     {
