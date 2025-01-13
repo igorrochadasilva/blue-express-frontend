@@ -13,9 +13,9 @@ import {
   PostDistributorRepresentativesContractDTO,
   PostDistributorRepresentativesContractResponse,
 } from '@/types/requests/distributorRepresentativesContract';
-import { postDistributorRepresentativesContract } from '@/actions/requests/distributor-representatives-contract/postDistributorRepresentativesContract';
-import { postSoftwareServiceContract } from '@/actions/requests/software-service-contract/postSoftwareServiceContract';
-import { postMaintenanceContract } from '@/actions/requests/maintenance-contract/postMaintenanceContract';
+import { postDistributorRepresentativesContract } from '@/services/requests/distributor-representatives-contract/postDistributorRepresentativesContract';
+import { postSoftwareServiceContract } from '@/services/requests/software-service-contract/postSoftwareServiceContract';
+import { postMaintenanceContract } from '@/services/requests/maintenance-contract/postMaintenanceContract';
 
 export const useRequestCreate = () => {
   const router = useRouter();

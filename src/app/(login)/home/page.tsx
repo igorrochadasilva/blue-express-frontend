@@ -8,7 +8,7 @@ import { signIn } from 'next-auth/react';
 import { SignInDTO } from '@/types/auth/sign';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loading } from '@/components/Loading/loading';
-import { handleForgetPassword } from '@/actions/auth/handleForgetPassword';
+import { handleForgetPassword } from '@/services/auth/handleForgetPassword';
 import { notifyMessage } from '@/utils/notifyMessage';
 import { Button } from '@/components/ui/button';
 import { Root } from '../components/Root';

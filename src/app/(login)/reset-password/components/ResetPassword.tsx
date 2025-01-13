@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ResetInput } from '@/types/auth/resetPassword';
-import { handleResetPassword } from '@/actions/auth/handleResetPassword';
+import { handleResetPassword } from '@/services/auth/handleResetPassword';
 import { Loading } from '@/components/Loading/loading';
 
 import { notifyMessage } from '@/utils/notifyMessage';

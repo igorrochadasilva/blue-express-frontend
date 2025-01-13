@@ -1,8 +1,8 @@
 'use server';
 
-import { getDistributorRepresentativesContract } from '../actions/requests/distributor-representatives-contract/getDistributorRepresentativesContract';
-import { getMaintenanceContract } from '../actions/requests/maintenance-contract/getMaintenanceContract';
-import { getServiceContract } from '../actions/requests/software-service-contract/getSoftwareServiceContract';
+import { getDistributorRepresentativesContract } from '../services/requests/distributor-representatives-contract/getDistributorRepresentativesContract';
+import { getMaintenanceContract } from '../services/requests/maintenance-contract/getMaintenanceContract';
+import { getServiceContract } from '../services/requests/software-service-contract/getSoftwareServiceContract';
 import { DistributorRepresentativesContract } from '../types/requests/distributorRepresentativesContract';
 import { MaintenanceContract } from '../types/requests/maintenance.contract';
 import { SoftwareServiceContract } from '../types/requests/softwaerServiceContract';

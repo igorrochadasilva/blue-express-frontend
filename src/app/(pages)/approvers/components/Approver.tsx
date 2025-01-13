@@ -5,7 +5,7 @@ import { useState, useCallback } from 'react';
 import { Approver } from '@/types/approvers/approvers';
 import { UserSession } from '@/types/auth/sign';
 
-import { deleteApprover } from '@/actions/approver/deleteApprover';
+import { deleteApprover } from '@/services/approver/deleteApprover';
 import { notifyMessage } from '@/utils/notifyMessage';
 import {
   Table,

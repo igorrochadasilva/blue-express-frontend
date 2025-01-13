@@ -1,7 +1,7 @@
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { Container } from '@/components/Container/Container';
 import { RequestsTitleEnum } from '@/types/requests/enums';
-import { getSoftwareServiceContractById } from '@/actions/requests/software-service-contract/getSoftwareServiceContractById';
+import { getSoftwareServiceContractById } from '@/services/requests/software-service-contract/getSoftwareServiceContractById';
 import { SoftwareServiceContractId } from './components/SoftwareServiceContractId';
 
 interface SoftwareServiceContractIdPageProps {
