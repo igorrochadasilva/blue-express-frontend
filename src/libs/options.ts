@@ -37,14 +37,10 @@ export const companyTypeOptions = [
 ];
 
 export const approverLevelOptions = [
-  { value: 'controller', label: 'controller' },
+  { value: 'analyst', label: 'analyst' },
   { value: 'supervisor', label: 'supervisor' },
   { value: 'manager', label: 'manager' },
-  { value: 'local business manager', label: 'local business manager' },
-  { value: 'division', label: 'division' },
-  { value: 'president', label: 'president' },
-  { value: 'group', label: 'group' },
-  { value: 'sector', label: 'sector' },
+  { value: 'director', label: 'director' },
   { value: 'ceo', label: 'ceo' },
 ];
 

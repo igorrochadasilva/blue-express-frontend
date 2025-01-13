@@ -2,7 +2,6 @@ import { Buttons } from './Buttons/Buttons';
 import { Close } from './Close/Close';
 import { Content } from './Content/Content';
 import { Justify } from './Justify/Justify';
-import { NextLevel } from './NextLevel/NextLevel';
 import { Root } from './Root/Root';
 
 export const ApproverModalComponents = {
@@ -10,6 +9,5 @@ export const ApproverModalComponents = {
   Content,
   Close,
   Justify,
-  NextLevel,
   Buttons,
 };

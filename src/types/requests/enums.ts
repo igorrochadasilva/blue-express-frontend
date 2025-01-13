@@ -25,16 +25,20 @@ export enum RequestCompanyEnum {
 }
 
 export enum RequestOfficeEnum {
-  CONTROLLER = 'controller',
+  ANALYST = 'analyst',
   SUPERVISOR = 'supervisor',
   MANAGER = 'manager',
-  LOCAL_BUSINESS_MANAGER = 'local business manager',
-  DIVISION = 'division',
-  PRESIDENT = 'president',
-  GROUP = 'group',
-  SECTOR = 'sector',
+  DIRECTOR = 'director',
   CEO = 'ceo',
 }
+
+export const OfficeLevelMap: Record<RequestOfficeEnum, number> = {
+  [RequestOfficeEnum.ANALYST]: 1,
+  [RequestOfficeEnum.SUPERVISOR]: 2,
+  [RequestOfficeEnum.MANAGER]: 3,
+  [RequestOfficeEnum.DIRECTOR]: 4,
+  [RequestOfficeEnum.CEO]: 5,
+};
 
 export enum RequestStatusEnum {
   WAITING_FOR_APPROVAL = 'waiting for approval',

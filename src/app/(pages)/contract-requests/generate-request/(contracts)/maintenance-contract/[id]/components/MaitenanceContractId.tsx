@@ -42,6 +42,8 @@ export const MaintenanceContractId = ({
     defaultValues: {
       ...maintenanceContractData,
       id: maintenanceContractData.id,
+      contractRenewQtd: String(maintenanceContractData.contractRenewQtd),
+      index: String(maintenanceContractData.index),
     },
   });
 

@@ -89,7 +89,6 @@ export const Approvers = ({ approversData }: ApproversProps) => {
                   <TableCell>{approver.title}</TableCell>
                   <TableCell>{approver.competence}</TableCell>
                   <TableCell>{approver.approverName}</TableCell>
-                  <TableCell>{approver.competence}</TableCell>
                   <TableCell>{approver.level}</TableCell>
                   <TableCell>{approver.company}</TableCell>
                   <TableCell>

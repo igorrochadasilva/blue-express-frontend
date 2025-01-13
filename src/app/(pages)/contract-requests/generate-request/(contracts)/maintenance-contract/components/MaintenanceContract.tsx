@@ -7,7 +7,7 @@ import { PostMaintenanceContractDTO } from '@/types/requests/maintenance.contrac
 
 import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
 import { UserSession } from '@/types/auth/sign';
-import { RequestStatusEnum } from '@/types/requests/enums';
+import { RequestOfficeEnum, RequestStatusEnum } from '@/types/requests/enums';
 import { useRequestCreate } from '@/hooks/useRequestsCreate';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createMaintenanceContractSchema } from '@/schemas/maintenanceContract/createMaintenanceContract';
@@ -45,7 +45,7 @@ const INITIAL_MAINTENANCE_CONTRACT_FORM = {
   legalDamageCave: 'legalDamageCave',
   legalLiquidatedDamages: 'legalLiquidatedDamages',
   justify: 'justify',
-  approvalLevel: 'supervisor',
+  approvalLevel: RequestOfficeEnum.SUPERVISOR,
   phone: '11111',
   contact: 'igor082011@gmail.com',
   antiCorruption: 'yes',

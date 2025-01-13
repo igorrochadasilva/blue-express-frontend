@@ -11,7 +11,7 @@ const nextConfig = {
       hmrRefreshes: true,
     },
   },
-  output: 'standalone',
+  output: process.env.BUILD_STANDALONE === 'true' ? 'standalone' : undefined,
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
