@@ -6,7 +6,7 @@ import {
   SoftwareServiceContract,
   UpdateSoftwareServiceContractDTO,
 } from '@/types/requests/softwaerServiceContract';
-import { SoftwareServiceFormInputs } from '@/libs/Forms/SoftwareServiceFormInputs';
+import { SoftwareServiceFormInputs } from '@/lib/Forms/SoftwareServiceFormInputs';
 import { isValidApprover } from '@/utils/isValidApprover';
 import {
   RequestsRoutesEnum,

@@ -6,7 +6,7 @@ import {
   UpdateMaintenanceContractDTO,
 } from '@/types/requests/maintenance.contract';
 import { UserSession } from '@/types/auth/sign';
-import { MaintenanceContractFormInputs } from '@/libs/Forms/MaintenanceContractFormInputs';
+import { MaintenanceContractFormInputs } from '@/lib/Forms/MaintenanceContractFormInputs';
 import { ApproverModal } from '@/components/ApproverModal/ApproverModal';
 import { isValidApprover } from '@/utils/isValidApprover';
 import {

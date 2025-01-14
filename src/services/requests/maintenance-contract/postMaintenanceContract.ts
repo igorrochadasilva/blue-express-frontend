@@ -24,7 +24,7 @@ export async function postMaintenanceContract(
         body: JSON.stringify({
           ...data,
           requesterId: String(user.id),
-        } as PostMaintenanceContractDTO),
+        }),
       },
       params: {
         email: user.email,

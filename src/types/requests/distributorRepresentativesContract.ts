@@ -21,7 +21,7 @@ export interface DistributorRepresentativesContract {
   antiCorruption: string;
   typeContract: string;
   requesterName: string;
-  currentLevel: number;
+  currentLevel: string;
   status: string;
   approvalDate: string; // ISO date string
   currentApproverName: string;
@@ -70,7 +70,7 @@ export interface PostDistributorRepresentativesContractDTO {
   sap?: string;
   filesName?: string;
   typeRequestOrder: string;
-  files?: string;
+  files?: File[];
 }
 
 export interface PostDistributorRepresentativesContractResponse

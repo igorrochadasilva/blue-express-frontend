@@ -91,7 +91,7 @@ export interface PostMaintenanceContractDTO {
   antiCorruption: string;
   uf: string; // State abbreviation
   sap: string;
-  files?: string | number | readonly string[] | undefined; //File[];
+  files?: File[];
 }
 
 export interface PostMaintenanceContractResponse extends ErrorResponse {

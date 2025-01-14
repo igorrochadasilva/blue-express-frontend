@@ -1,4 +1,6 @@
+import { PostDistributorRepresentativesContractDTO } from './distributorRepresentativesContract';
 import { PostMaintenanceContractDTO } from './maintenance.contract';
+import { PostSoftwareServiceContractDTO } from './softwaerServiceContract';
 
 export interface FormInputBase {
   id: number;
@@ -31,3 +33,8 @@ export enum UserRole {
   APPROVER = 2,
   ADMIN = 3,
 }
+
+export type PostContractsDTO =
+  | PostMaintenanceContractDTO
+  | PostSoftwareServiceContractDTO
+  | PostDistributorRepresentativesContractDTO;

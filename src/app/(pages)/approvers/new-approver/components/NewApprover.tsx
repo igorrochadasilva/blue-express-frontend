@@ -17,7 +17,7 @@ import { UserNames } from '@/types/approvers/newApprover';
 import { User } from '@/types/approvers/user';
 import { getUserApprovers } from '@/services/user/getUsersById';
 import { Content } from '@/components/Content/Content';
-import { NewApproverFormInputs } from '@/libs/Forms/NewApproverFormInputs';
+import { NewApproverFormInputs } from '@/lib/Forms/NewApproverFormInputs';
 import {
   Form,
   FormControl,

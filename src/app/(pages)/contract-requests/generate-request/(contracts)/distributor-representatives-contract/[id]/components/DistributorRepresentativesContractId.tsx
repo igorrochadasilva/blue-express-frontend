@@ -7,7 +7,7 @@ import {
   DistributorRepresentativesContract,
   UpdateDistributorRepresentativesContractDTO,
 } from '@/types/requests/distributorRepresentativesContract';
-import { DistributorRepresentativesFormInputs } from '@/libs/Forms/DistributionRepresentativesContractFormInputs';
+import { DistributorRepresentativesFormInputs } from '@/lib/Forms/DistributionRepresentativesContractFormInputs';
 import { isValidApprover } from '@/utils/isValidApprover';
 import {
   RequestsRoutesEnum,
@@ -76,7 +76,7 @@ export const DistributorRepresentativesContractId = ({
       userID: user.id,
       distributorRepresentativesContractID:
         distributorRepresentativesContractData.id,
-      level: distributorRepresentativesContractData.currentLevel,
+      level: Number(distributorRepresentativesContractData.currentLevel),
       routeRequest: RequestsRoutesEnum.DISTRIBUTOR_REPRESENTATIVES_CONTRACT,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
