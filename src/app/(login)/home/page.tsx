@@ -89,7 +89,7 @@ export default function Home() {
         width={150}
         height={150}
         alt="Logo"
-        priority={true}
+        priority
       />
       <Form {...form}>
         <form

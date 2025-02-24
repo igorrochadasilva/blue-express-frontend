@@ -1,4 +1,5 @@
 import { Content } from '@/components/Content/Content';
+import { Button } from '@/components/ui/button';
 import {
   FormControl,
   FormField,
@@ -14,9 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { DistributorRepresentativesContractFormInputsProps } from '@/libs/Forms/DistributionRepresentativesContractFormInputs';
-import { MaintenanceContractFormInputsProps } from '@/libs/Forms/MaintenanceContractFormInputs';
-import { SoftwareServiceContractFormInputsProps } from '@/libs/Forms/SoftwareServiceFormInputs';
+import { useAlertUploadFile } from '@/hooks/useAlertUploadFile';
+import { DistributorRepresentativesContractFormInputsProps } from '@/lib/Forms/DistributionRepresentativesContractFormInputs';
+import { MaintenanceContractFormInputsProps } from '@/lib/Forms/MaintenanceContractFormInputs';
+import { SoftwareServiceContractFormInputsProps } from '@/lib/Forms/SoftwareServiceFormInputs';
 import { useFormContext } from 'react-hook-form';
 import { v4 as uuid4 } from 'uuid';
 
@@ -29,6 +31,7 @@ interface FormContentProps {
 
 export const FormContent = ({ formData }: FormContentProps) => {
   const { control } = useFormContext();
+  const { setIsAlertDialogOpen } = useAlertUploadFile();
 
   return (
     <Content>
@@ -39,14 +42,18 @@ export const FormContent = ({ formData }: FormContentProps) => {
             key={uuid4()}
           >
             {data.map((item) => {
+              const isFileInput = item.inputType === 'file';
+
               return (
                 <FormField
                   key={item.id}
                   control={control}
                   name={item.inputName}
                   render={({ field: { value, onChange, ...fieldProps } }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>{item.inputName}</FormLabel>
+                    <FormItem
+                      className={`flex-1 ${isFileInput && 'flex items-end'}`}
+                    >
+                      {!isFileInput && <FormLabel>{item.labelText}</FormLabel>}
                       <FormControl>
                         {item.type === 'select' ? (
                           <Select
@@ -67,6 +74,14 @@ export const FormContent = ({ formData }: FormContentProps) => {
                               ))}
                             </SelectContent>
                           </Select>
+                        ) : isFileInput ? (
+                          <Button
+                            variant="blue"
+                            size="default"
+                            onClick={() => setIsAlertDialogOpen(true)}
+                          >
+                            Attach file
+                          </Button>
                         ) : (
                           <Input
                             {...fieldProps}
@@ -74,26 +89,8 @@ export const FormContent = ({ formData }: FormContentProps) => {
                             placeholder={item.inputName}
                             id={item.inputName}
                             readOnly={item.readonly}
-                            value={
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                              item.inputType === 'file' ? undefined : value
-                            }
-                            multiple={item.inputType === 'file'}
-                            accept={
-                              item.inputType === 'file'
-                                ? 'image/*,application/pdf'
-                                : undefined
-                            }
-                            onChange={(event) => {
-                              if (item.inputType === 'file') {
-                                const file = event.target.files
-                                  ? event.target.files[0]
-                                  : null;
-                                onChange(file);
-                              } else {
-                                onChange(event.target.value);
-                              }
-                            }}
+                            value={value as string}
+                            onChange={(event) => onChange(event.target.value)}
                           />
                         )}
                       </FormControl>

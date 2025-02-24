@@ -76,7 +76,7 @@ export const ResetPassword = ({ token }: ResetPasswordProps) => {
         width={150}
         height={150}
         alt="Logo"
-        priority={true}
+        priority
       />
       <Form {...form}>
         <form
