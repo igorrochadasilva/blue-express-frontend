@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useMemo, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
-import { postApprover } from '@/actions/approver/postApprover';
+import { postApprover } from '@/services/approver/postApprover';
 import { Approver, PostApproverDTO } from '@/types/approvers/approvers';
 import { notifyMessage } from '@/utils/notifyMessage';
 import {
@@ -15,9 +15,9 @@ import {
 } from '@/types/requests/enums';
 import { UserNames } from '@/types/approvers/newApprover';
 import { User } from '@/types/approvers/user';
-import { getUserApprovers } from '@/actions/user/getUsersById';
+import { getUserApprovers } from '@/services/user/getUsersById';
 import { Content } from '@/components/Content/Content';
-import { NewApproverFormInputs } from '@/libs/Forms/NewApproverFormInputs';
+import { NewApproverFormInputs } from '@/lib/Forms/NewApproverFormInputs';
 import {
   Form,
   FormControl,

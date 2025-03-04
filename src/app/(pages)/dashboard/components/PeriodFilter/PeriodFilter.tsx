@@ -1,4 +1,4 @@
-import { periodOptions } from '@/libs/options';
+import { periodOptions } from '@/lib/options';
 import { SelectOptions } from '@/types/approvers/newApprover';
 import {
   Select,

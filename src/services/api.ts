@@ -22,13 +22,21 @@ export async function api({
 }: APIProps) {
   const url = new URL(endpoint);
 
+  let headers: HeadersInit = {
+    Accept: 'application/json',
+    ...options?.headers,
+  };
+
+  if (!(options?.body instanceof FormData)) {
+    headers = {
+      ...headers,
+      'Content-Type': 'application/json',
+    };
+  }
+
   const normalizedOptions: RequestInit = {
     ...options,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
+    headers,
     ...(ignoreCache
       ? { cache: 'no-store' }
       : {
@@ -48,14 +56,11 @@ export async function api({
 
   try {
     const result = await fetch(url.toString(), normalizedOptions);
-
     if (!result.ok) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const errorDetails = await result.json();
+      const errorDetails = (await result.json()) as { message: string };
 
       throw {
         statusCode: result.status,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         message: errorDetails.message,
       };
     }
@@ -70,8 +75,6 @@ export async function api({
     };
   } catch (e: unknown) {
     const error = e as ErrorResponse;
-
-    //TODO REMOVER
     console.error('Fetch failed:', {
       endpoint: url.toString(),
       options: normalizedOptions,

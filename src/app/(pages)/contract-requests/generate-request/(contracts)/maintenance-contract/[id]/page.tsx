@@ -1,7 +1,7 @@
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { Container } from '@/components/Container/Container';
 import { MaintenanceContractId } from './components/MaitenanceContractId';
-import { getMaintenanceContractById } from '@/actions/requests/maintenance-contract/getMaintenanceContractById';
+import { getMaintenanceContractById } from '@/services/requests/maintenance-contract/getMaintenanceContractById';
 import { RequestsTitleEnum } from '@/types/requests/enums';
 
 interface MaintenanceContractIdPageProps {

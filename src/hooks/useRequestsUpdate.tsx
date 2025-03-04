@@ -5,7 +5,7 @@ import {
   UpdateMaintenanceContractDTO,
   UpdateMaintenanceContractResponse,
 } from '@/types/requests/maintenance.contract';
-import { putMaintenanceContractById } from '@/actions/requests/maintenance-contract/putMaintenanceContractById';
+import { putMaintenanceContractById } from '@/services/requests/maintenance-contract/putMaintenanceContractById';
 import {
   UpdateSoftwareServiceContractDTO,
   UpdateSoftwareServiceContractResponse,
@@ -14,8 +14,8 @@ import {
   UpdateDistributorRepresentativesContractDTO,
   UpdateDistributorRepresentativesContractResponse,
 } from '@/types/requests/distributorRepresentativesContract';
-import { putSoftwareServiceContractById } from '@/actions/requests/software-service-contract/putSoftwareServiceContractById';
-import { putDistributorRepresentativesContractById } from '@/actions/requests/distributor-representatives-contract/putDistributorRepresentativesContractById';
+import { putSoftwareServiceContractById } from '@/services/requests/software-service-contract/putSoftwareServiceContractById';
+import { putDistributorRepresentativesContractById } from '@/services/requests/distributor-representatives-contract/putDistributorRepresentativesContractById';
 
 export const useRequestUpdate = () => {
   const router = useRouter();

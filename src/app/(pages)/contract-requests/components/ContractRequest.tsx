@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { contractTypesOptions } from '@/libs/options';
+import { contractTypesOptions } from '@/lib/options';
 import { Button } from '@/components/ui/button';
 
 interface ContractRequestContentProps {

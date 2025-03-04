@@ -1,4 +1,4 @@
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { Container } from '@/components/Container/Container';
 import { RequestsTitleEnum } from '@/types/requests/enums';
 import { DistributorRepresentativesContract } from './components/DistributorRepresentativesContract';

@@ -1,4 +1,4 @@
-import { api } from '@/actions/api';
+import { api } from '@/services/api';
 import { PostSignInResponse, SignInDTO, UserSession } from '@/types/auth/sign';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';

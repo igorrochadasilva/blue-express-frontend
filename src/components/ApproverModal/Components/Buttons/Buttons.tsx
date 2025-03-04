@@ -1,6 +1,6 @@
 import { useApproverModal } from '@/hooks/useApproverModal';
 import { IModalOptions } from '../../ApproverModal';
-import { postApproval } from '@/actions/approval/postApproval';
+import { postApproval } from '@/services/approval/postApproval';
 import {
   RequestsRoutesEnum,
   RequestStatusEnum,

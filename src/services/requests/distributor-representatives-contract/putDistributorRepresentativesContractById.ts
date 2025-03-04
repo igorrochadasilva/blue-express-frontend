@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 import { api } from '../../api';
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import {
   UpdateDistributorRepresentativesContractDTO,
   UpdateDistributorRepresentativesContractResponse,

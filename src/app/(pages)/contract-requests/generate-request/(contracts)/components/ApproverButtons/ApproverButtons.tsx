@@ -31,15 +31,6 @@ export const ApproverButtons = () => {
           Disapprove
         </Button>
         <Button
-          onClick={() =>
-            handleShowModal(RequestStatusEnum.WAITING_FOR_APPROVAL)
-          }
-          type="button"
-          className="flex-1 border-[1px] border-be_first_color text-be_first_color  px-5 py-2 rounded font-normal bg-white hover:bg-slate-200"
-        >
-          Approve and forward
-        </Button>
-        <Button
           onClick={() => handleShowModal(RequestStatusEnum.APPROVED)}
           type="button"
           className="flex-1 border-[1px] border-be_first_color text-white px-5 py-2 rounded font-normal bg-be_first_color hover:bg-blue-500"

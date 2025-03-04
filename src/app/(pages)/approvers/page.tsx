@@ -1,5 +1,5 @@
-import { getApprovers } from '@/actions/approver/getApprovers';
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getApprovers } from '@/services/approver/getApprovers';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { Container } from '@/components/Container/Container';
 import { Content } from '@/components/Content/Content';
 import { NoDataBox } from '@/components/NoDataBox/NoDataBox';

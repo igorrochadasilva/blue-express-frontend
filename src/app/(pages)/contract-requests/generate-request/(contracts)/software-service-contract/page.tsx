@@ -1,4 +1,4 @@
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { SoftwareServiceContract } from './components/SoftwareServiceContract';
 import { Container } from '@/components/Container/Container';
 

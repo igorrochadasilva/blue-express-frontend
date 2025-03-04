@@ -1,6 +1,6 @@
 'use server';
 
-import { getUsers } from '@/actions/user/getUsers';
+import { getUsers } from '@/services/user/getUsers';
 import { NewApprover } from './components/NewApprover';
 import { Container } from '@/components/Container/Container';
 

@@ -5,7 +5,7 @@ import { useState, useCallback } from 'react';
 import { Approver } from '@/types/approvers/approvers';
 import { UserSession } from '@/types/auth/sign';
 
-import { deleteApprover } from '@/actions/approver/deleteApprover';
+import { deleteApprover } from '@/services/approver/deleteApprover';
 import { notifyMessage } from '@/utils/notifyMessage';
 import {
   Table,
@@ -89,7 +89,6 @@ export const Approvers = ({ approversData }: ApproversProps) => {
                   <TableCell>{approver.title}</TableCell>
                   <TableCell>{approver.competence}</TableCell>
                   <TableCell>{approver.approverName}</TableCell>
-                  <TableCell>{approver.competence}</TableCell>
                   <TableCell>{approver.level}</TableCell>
                   <TableCell>{approver.company}</TableCell>
                   <TableCell>

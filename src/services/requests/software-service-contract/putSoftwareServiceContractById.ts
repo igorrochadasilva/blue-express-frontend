@@ -6,7 +6,7 @@ import {
   UpdateSoftwareServiceContractDTO,
   UpdateSoftwareServiceContractResponse,
 } from '@/types/requests/softwaerServiceContract';
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { RequestStatusEnum } from '@/types/requests/enums';
 import { isApprobation } from '@/utils/isApprobation';
 

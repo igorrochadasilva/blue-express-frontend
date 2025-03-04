@@ -6,7 +6,7 @@ import {
   UpdateMaintenanceContractResponse,
 } from '../../../types/requests/maintenance.contract';
 import { api } from '../../api';
-import { getUserSession } from '@/actions/auth/getUserSession';
+import { getUserSession } from '@/services/auth/getUserSession';
 import { isApprobation } from '@/utils/isApprobation';
 import { RequestStatusEnum } from '@/types/requests/enums';
 
