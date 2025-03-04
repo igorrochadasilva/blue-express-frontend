@@ -36,4 +36,5 @@ export const INITIAL_MAINTENANCE_CONTRACT_FORM: PostMaintenanceContractDTO = {
   antiCorruption: 'yes',
   uf: 'SP',
   sap: 'sp',
+  files: [],
 };

@@ -27,4 +27,5 @@ export const INITIAL_DISTRIBUTOR_REPRESENTATIVES_CONTRACT_FORM: PostDistributorR
     sap: 'SAP-12345',
     filesName: 'file1.pdf,file2.pdf',
     typeRequestOrder: 'representative',
+    files: [],
   };

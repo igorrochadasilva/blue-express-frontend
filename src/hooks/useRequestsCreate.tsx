@@ -19,10 +19,43 @@ import { PostContractsDTO } from '@/types/requests/requests';
 import { postFiles } from '@/services/upload/postFiles';
 import { RequestsKeyEnum, RequestsTitleEnum } from '@/types/requests/enums';
 import { postMaintenanceContract } from '@/services/requests/maintenance-contract/postMaintenanceContract';
+import { MAX_FILE_SIZE } from '@/utils/constant';
+import { useUploadFile } from './useUploadFile';
+
+const handleFileUpload = async (
+  files: File[],
+  additionalData: {
+    contractId: string;
+    contractType: RequestsTitleEnum;
+    requestAcronym: RequestsKeyEnum;
+  }
+) => {
+  const oversizedFiles = files.filter((file) => file.size > MAX_FILE_SIZE);
+
+  if (oversizedFiles.length > 0) {
+    const message = `Files exceeding 5MB: ${oversizedFiles.map((f) => f.name).join(', ')}`;
+    notifyMessage({ message, statusCode: 400 });
+    return { statusCode: 400, message };
+  }
+
+  // Create FormData on the client side
+  const formData = new FormData();
+  files.forEach((file) => {
+    formData.append('files', file);
+  });
+
+  // Add additional data
+  Object.entries(additionalData).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
+  return postFiles({ formData });
+};
 
 export const useRequestCreate = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { setSelectedFileUploadFile } = useUploadFile();
 
   const handleRequestCreate = async <T extends PostContractsDTO>(
     requestAcronym: RequestsKeyEnum,
@@ -37,36 +70,50 @@ export const useRequestCreate = () => {
     >
   ) => {
     setIsLoading(true);
-    const response = await createFunction(data);
 
-    notifyMessage({
-      message: response?.data?.message ?? response?.message,
-      statusCode: response?.statusCode,
-    });
-    console.log('🚀 ~ useRequestCreate ~ data:', data);
-    if (response.statusCode === 201) {
-      if (data.files && data.files.length > 0)
-        await postFiles({
-          files: data.files,
-          additionalData: {
-            contractId: '20',
-            contractType,
-            requestAcronym,
-          },
+    const { files, ...dataWithoutFiles } = data;
+    const response = await createFunction(dataWithoutFiles as T);
+
+    if (response.statusCode === 201 && files?.length) {
+      const contractId = response.data?.message?.split('-')[1]?.split(' ')[0];
+
+      if (!contractId) {
+        notifyMessage({
+          message: 'Failed to get contract ID',
+          statusCode: 400,
         });
-      return router.push('/contract-requests');
+        setIsLoading(false);
+        return;
+      }
+
+      const uploadResponse = (await handleFileUpload(files, {
+        contractId,
+        contractType,
+        requestAcronym,
+      })) as { statusCode: number };
+
+      if (uploadResponse.statusCode === 201) {
+        notifyMessage({
+          message: response?.data?.message ?? response?.message,
+          statusCode: response?.statusCode,
+        });
+        router.push('/contract-requests');
+      }
+    } else if (response.statusCode === 201) {
+      notifyMessage({
+        message: response?.data?.message ?? response?.message,
+        statusCode: response?.statusCode,
+      });
+      router.push('/contract-requests');
     }
 
+    setSelectedFileUploadFile([]);
     setIsLoading(false);
   };
 
   const createMaintenanceContract = async (
     maintenanceContractDTO: PostMaintenanceContractDTO
   ) => {
-    console.log(
-      '🚀 ~ useRequestCreate ~ maintenanceContractDTO:',
-      maintenanceContractDTO
-    );
     await handleRequestCreate(
       RequestsKeyEnum.MAINTENANCE_CONTRACT_KEY,
       RequestsTitleEnum.MAINTENANCE_CONTRACT,

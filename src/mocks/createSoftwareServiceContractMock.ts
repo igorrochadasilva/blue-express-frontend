@@ -31,10 +31,11 @@ export const INITIAL_SOFTWARE_SERVICE_CONTRACT_FORM: PostSoftwareServiceContract
       'This contract ensures continuous software support and upgrades as required by SLA.',
     requestId: '',
     currentLevel: '1',
-    approvalLevel: 'controller',
+    approvalLevel: 'analyst',
     phone: '+1-800-555-1234',
     contact: 'support@techsolutions.com',
     antiCorruption: 'No bribery or unethical practices allowed',
     uf: 'SP',
     sap: 'SAP54321',
+    files: [],
   };

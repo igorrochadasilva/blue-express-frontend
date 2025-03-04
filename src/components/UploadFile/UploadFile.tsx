@@ -1,7 +1,7 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useRef } from 'react';
 
 import {
   AlertDialog,
@@ -11,66 +11,80 @@ import {
   AlertDialogDescription,
   AlertDialogTitle,
 } from '../ui/alert-dialog';
-import { useAlertUploadFile } from '@/hooks/useAlertUploadFile';
+import { useUploadFile } from '@/hooks/useUploadFile';
 import {
   ArrowUpOnSquareStackIcon,
   PhotoIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { useFormContext } from 'react-hook-form';
+import { formatFileSize } from '@/utils/format/formatFileSize';
 
-export const AlertUploadFile = () => {
-  const { isAlertDialogOpen, setIsAlertDialogOpen } = useAlertUploadFile();
-  const [selectedFile, setSelectedFile] = useState<
-    { url: string; size: number }[]
-  >([]);
+interface FileData {
+  url: string;
+  size: number;
+  file: File;
+}
+
+export const UploadFile = () => {
+  const {
+    isUploadFileOpen,
+    selectedFileUploadFile,
+    setIsUploadFileOpen,
+    setSelectedFileUploadFile,
+  } = useUploadFile();
+  const { setValue } = useFormContext();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-
-    if (files) {
-      const fileReaders: Promise<{ url: string; size: number }>[] = Array.from(
-        files
-      ).map((file) => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () =>
-            resolve({ url: reader.result as string, size: file.size });
-          reader.readAsDataURL(file);
+  const createFileData = (file: File): Promise<FileData> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () =>
+        resolve({
+          url: reader.result as string,
+          size: file.size,
+          file,
         });
-      });
-
-      Promise.all(fileReaders).then((fileData) => {
-        setSelectedFile((prev) => [...prev, ...fileData]);
-      });
-    }
+      reader.readAsDataURL(file);
+    });
   };
 
-  const handleRemoveSingleFile = (indexToRemove: number) => {
-    setSelectedFile((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+
+    const fileDataPromises = Array.from(files).map(createFileData);
+    const newFileData = await Promise.all(fileDataPromises);
+
+    const updatedFiles = [...selectedFileUploadFile, ...newFileData];
+    setSelectedFileUploadFile(updatedFiles);
+    setValue(
+      'files',
+      updatedFiles.map((f) => f.file)
     );
   };
 
-  const handleIconClick = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
+  const handleRemoveSingleFile = (indexToRemove: number) => {
+    const newFiles = selectedFileUploadFile.filter(
+      (_, index) => index !== indexToRemove
+    );
+    setSelectedFileUploadFile(newFiles);
+    // Update form state with remaining files
+    setValue(
+      'files',
+      newFiles.map((f) => f.file)
+    );
   };
 
-  const formatFileSize = (size: number) => {
-    return size < 1024
-      ? `${size} B`
-      : size < 1024 * 1024
-        ? `${(size / 1024).toFixed(2)} KB`
-        : `${(size / (1024 * 1024)).toFixed(2)} MB`;
-  };
-
-  const handleCloseAlert = () => setIsAlertDialogOpen(false);
+  const handleIconClick = () => fileInputRef?.current?.click();
+  const handleCloseAlert = () => setIsUploadFileOpen(false);
 
   return (
     <AlertDialog
-      open={isAlertDialogOpen}
-      defaultOpen={isAlertDialogOpen}
+      open={isUploadFileOpen}
+      defaultOpen={isUploadFileOpen}
       onOpenChange={handleCloseAlert}
     >
       <AlertDialogContent>
@@ -99,14 +113,14 @@ export const AlertUploadFile = () => {
           />
         </AlertDialogHeader>
         <AlertDialogDescription className="mt-2 space-y-2">
-          {selectedFile.length > 0 ? (
-            selectedFile.map((file, index) => (
+          {selectedFileUploadFile.length > 0 ? (
+            selectedFileUploadFile.map((file, index) => (
               <div
                 key={index}
                 className="flex items-center gap-4 border p-2 rounded-md shadow-sm"
               >
                 <Image
-                  src={file?.url}
+                  src={file.url}
                   width={200}
                   height={200}
                   alt={`Selected file ${index + 1}`}
