@@ -272,7 +272,6 @@ export const MaintenanceContractFormInputs: MaintenanceContractFormInputsProps[]
         labelText: 'Level Approval',
         inputType: '',
         inputName: 'approvalLevel',
-
         options: approverLevelOptions,
       },
       {

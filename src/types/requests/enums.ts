@@ -47,3 +47,49 @@ export enum RequestStatusEnum {
   DISAPPROVED = 'disapproved',
   SKETCH = 'sketch',
 }
+
+export enum ContractTypeEnum {
+  NEW = 'new',
+  RENOVATION = 'renovation',
+  READJUSTMENT = 'readjustment',
+  OTHERS = 'others',
+}
+
+export enum FrequencyEnum {
+  MONTHLY = 'monthly',
+  BIMONTHLY = 'bimonthly',
+  QUARTERLY = 'quarterly',
+  SEMI_ANNUAL = 'semi-annual',
+  YEARLY = 'Yearly',
+  MIXED_DIVERSE = 'mixed/diverse',
+}
+
+export enum UFEnum {
+  AC = 'AC',
+  AL = 'AL',
+  AM = 'AM',
+  AP = 'AP',
+  BA = 'BA',
+  CE = 'CE',
+  DF = 'DF',
+  ES = 'ES',
+  GO = 'GO',
+  MA = 'MA',
+  MG = 'MG',
+  MS = 'MS',
+  MT = 'MT',
+  PA = 'PA',
+  PB = 'PB',
+  PE = 'PE',
+  PI = 'PI',
+  PR = 'PR',
+  RJ = 'RJ',
+  RN = 'RN',
+  RO = 'RO',
+  RR = 'RR',
+  RS = 'RS',
+  SC = 'SC',
+  SE = 'SE',
+  SP = 'SP',
+  TO = 'TO',
+}
